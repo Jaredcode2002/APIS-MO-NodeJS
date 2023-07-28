@@ -12,8 +12,8 @@ export const ContrProducto = {
   },
   postProducto: async (req, res) => {
     try {
-      const { IdMarca, IdModelo, precio, cantidadMin, cantidadMax, descripcion } = req.body;
-      const result = await ModProducto.postInsertProducto ({IdMarca, IdModelo, precio, cantidadMin, cantidadMax, descripcion });
+      const {IdModelo, precio, cantidadMin, cantidadMax, descripcion } = req.body;
+      const result = await ModProducto.postInsertProducto ({IdModelo, precio, cantidadMin, cantidadMax, descripcion });
       res.status(201).json({ id: result.id });
     } catch (error) {
       console.log(error);
@@ -23,8 +23,6 @@ export const ContrProducto = {
   putProducto: async (req, res) => {
     try {
       const {
-        IdMarca,
-        IdModelo,
         precio,
         cantidadMin,
         cantidadMax,
@@ -33,8 +31,6 @@ export const ContrProducto = {
 
       } = req.body;
       const result = await ModProducto.putUpdateProducto({
-        IdMarca,
-        IdModelo,
         precio,
         cantidadMin,
         cantidadMax,

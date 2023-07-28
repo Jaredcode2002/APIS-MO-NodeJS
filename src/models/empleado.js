@@ -97,6 +97,24 @@ export const ModEmpleados = {
           throw new Error("Error al obtener lista de géneros");
         } 
     },
+
+    empleadoExist: async (empleado) => {
+      try {
+        const conexion = await connectDB();
+        const [filas] = await conexion.query(
+          "select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.numeroIdentidad from tbl_empleado as e where numeroIdentidad = ?;",
+          [empleado.numId]
+        );
+  
+        if (filas.length === 1) {
+          return filas;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
    
 
 }

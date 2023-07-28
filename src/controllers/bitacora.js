@@ -2,7 +2,18 @@ import { ModBitacora } from "../models/bitacora.js";
 
 export const ContrBitacora = {
 
-    //-----------LOGIN---------------
+
+//----------Llamado a toda la bitacora---------------------
+
+getBitacora: async (req,res)=> {
+
+    const bitacora = await ModBitacora.getBitacora()
+    res.json(bitacora)
+   
+},
+
+//-----------LOGIN---------------
+
 
     postInsertLogin : async (req,res)=> {
         try {
@@ -16,10 +27,52 @@ export const ContrBitacora = {
 
 //------Cierre de Secion -----
 
+
+    postCerrarSesion : async (req,res)=> {
+        try {
+            const{Id}=req.body;
+            const result = await ModBitacora.postCerrarSesion ({Id});
+            res.status(201).json({ id: result.id });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+//CONFIGURACION 
+ //------Ingreso a las pantallas de Configuración----------
+ postPantallaConfig: async (req,res)=> {
+        try {
+            const{Id}=req.body;
+            const result = await ModBitacora.postPantallaConfig({Id});
+            res.status(201).json({ id: result.id });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+//------Ingreso a la pantalla de Lista de Bitacora----------
+postListaBitacora: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postListaBitacora({Id});
+=======
 postCerrarSesion : async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postCerrarSesion ({Id});
+
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+
+//------Salir de la pantalla de Lista de Bitacora----------
+postSalirLB: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirLB({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);
@@ -98,6 +151,18 @@ postCerrarSesion : async (req,res)=> {
         }
     },
 
+//----------Salir de la pantalla de Registro de Empleado------------------
+postBotonSalirRE: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postBotonSalirRE({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+
+},
+
 //--------- Ver lista de empleados-------------
     postVerListaEmpleados : async (req,res)=> {
         try {
@@ -108,7 +173,17 @@ postCerrarSesion : async (req,res)=> {
             console.log(error);
         }
     },
+//----------Salir de la pantalla de Lista de Empleados ------------------
+postBotonSalirLE: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postBotonSalirLE({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
 
+},
     //-----------Actualizacion de datos en empleados--------
     postActualizarEmpleado: async (req,res)=> {
         try {
@@ -156,6 +231,18 @@ postInsertUsuario:async(req,res)=> {
     }
 },
 
+//----------Salir de la pantalla de Registro de Usuario------------------
+postBotonSalirRu: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postBotonSalirRu({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+
+},
+
 //-------------Lista de Usuario------------
 postListaUsuario:async(req,res)=>{
     try {
@@ -165,6 +252,17 @@ postListaUsuario:async(req,res)=>{
     } catch (error) {
         console.log(error)
     }
+},
+//----------Salir de la pantalla de lista de Usuario------------------
+postBotonSalirLU: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postBotonSalirLU({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+
 },
 //---------Actualizar Usuario-----------------
 postActualizarUsuario:async(req,res)=>{

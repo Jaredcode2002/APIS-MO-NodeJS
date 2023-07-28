@@ -45,7 +45,8 @@ export const ModTipoPago = {
   delTipoPago: async (TipoPago) => {
     try {
       const conexion = await connectDB();
-      await conexion.query("DELETE FROM tbl_TipoPago WHERE IdTipoPago = ?;", [
+      await conexion.query("DELETE FROM tbl_TipoPago WHERE IdTipoPago = ?;", 
+      [
         TipoPago.IdTipoPago,
       ]);
       return { state: "ok" };

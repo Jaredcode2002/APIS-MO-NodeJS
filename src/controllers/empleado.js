@@ -69,6 +69,16 @@ export const ContrEmpleado = {
         const gene = await ModEmpleados.getGenero();
         res.json(gene);
     },
+    getEmpleadoExist: async (req, res) => {
+        try {
+          const { numId } = req.body;
+          const result = await ModEmpleados.empleadoExist({ numId });
+          res.status(201).json(result);
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Error creating employe" });
+        }
+      },
     
 };
 

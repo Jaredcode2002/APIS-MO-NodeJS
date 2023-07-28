@@ -18,7 +18,7 @@ export const ContrPromocion = {
   putPromocion: async (req, res) => {
     try {
       const {
-        fechaInicio,
+        fechaInicial,
         fechaFinal,
         estado, 
         descPorcent,
@@ -27,7 +27,7 @@ export const ContrPromocion = {
 
       } = req.body;
       const result = await ModPromocion.putUpdatePromocion({
-        fechaInicio,
+        fechaInicial,
         fechaFinal,
         estado, 
         descPorcent,

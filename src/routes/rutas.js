@@ -34,8 +34,16 @@ import { ContrProveedor } from "../controllers/proveedor.js";
 import { ContrBitacora } from "../controllers/bitacora.js";
 
 import { TokenContr } from "../controllers/token.js";
-import { ContrAutoReg } from "../controllers/autoregistro.js";
+import { ContrExpediente } from "../controllers/expediente.js";
+import { ContrExpedineteDetalle } from "../controllers/expedientedetalle.js";
+
 import { ContrEstado } from "../controllers/estado.js";
+import { ContrSucursal } from "../controllers/sucursal.js";
+import{ContrAutoReg} from "../controllers/autoregistro.js"
+import { ContrDepto } from "../controllers/departamento.js";
+import { ContrCiudad } from "../controllers/ciudad.js";
+import { ContrPais } from "../controllers/pais.js";
+
 
 const router = express.Router();
 
@@ -108,7 +116,23 @@ router.delete('/Rol/RolEliminado',ContrRol.deleteRol)
 //AutoRegistro
 router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
 
+//Pais
+router.get('/paises', ContrPais.getPaises)
+router.post('/pais/crear', ContrPais.postPais)
+router.put('/pais/actualizar', ContrPais.putPais)
+router.delete('/pais/eliminar', ContrPais.delPais)
 
+//Departamento
+router.get('/departamentos', ContrDepto.getDepartamentos)
+router.post('/departamento/crear', ContrDepto.postDepto)
+router.put('/departamento/actualizar', ContrDepto.putDepto)
+router.delete('/departamento/eliminar', ContrDepto.delDepto)
+
+//Ciudad
+router.get('/ciudades', ContrCiudad.getCiudades)
+router.post('/ciudad/crear', ContrCiudad.postCiudad)
+router.put('/ciudad/actualizar', ContrCiudad.putCiudad)
+router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
 //empleado
@@ -119,6 +143,7 @@ router.put('/empleado/actualizar',ContrEmpleado.putEmpleado)
 router.delete('/empleado/eliminar',ContrEmpleado.delEmpleado)
 router.get('/empleado/sucursal',ContrEmpleado.getSucursales)
 router.get('/empleado/genero',ContrEmpleado.getGeneros)
+router.post('/empleado/RegistroInvalido',ContrEmpleado.getEmpleadoExist) //Para consultar empleado existente
 
 
 //preguntas
@@ -127,8 +152,10 @@ router.post('/preguntas/agregar',ContrPreguntas.postPreguntas)
 router.get('/preguntas/respuestas',ContrPreguntas.getRespuestas)
 router.post('/preguntas/respuestas/agregar',ContrPreguntas.postRespuestas)
 router.post('/preguntas/compararR',ContrPreguntas.compararRespuesta)
+
 router.post('/correo/existe',ContrPreguntas.getUser) 
 router.post('/pregYresp',ContrPreguntas.getPyR)
+
 
 //ventaDetallePromocion
 router.get('/ventaDetallePromocion',ContrVentaDetalleProm.getVentDetalleProm)
@@ -151,6 +178,14 @@ router.delete('/proveedor/EliminarProveedor',ContrProveedor.deleteProveedor)
 
 
 //BITACORA
+
+//LLamado a toda la bitacora 
+router.get('/bitacora',ContrBitacora.getBitacora)
+//--------Configuracion-----
+router.post('/bitacora/Configuracion',ContrBitacora.postPantallaConfig)
+router.post('/bitacora/ListaBitacora',ContrBitacora.postListaBitacora)
+router.post('/bitacora/SalirListaBitacora',ContrBitacora.postSalirLB)
+
 //--Login y Recuperacion de Contraseña--
 router.post('/bitacora/Login',ContrBitacora.postInsertLogin)
 router.post('/bitacora/Cierre',ContrBitacora.postCerrarSesion)
@@ -161,13 +196,19 @@ router.post('/bitacora/RespuestaSeguridad',ContrBitacora.postPrgunta)
 //--Empleado--
 router.post('/bitacora/Empleado',ContrBitacora.postInsertModEmpleado)
 router.post('/bitacora/RegistroEmpleado',ContrBitacora.postInsertRegistroEmpleado)
+router.post('/bitacora/SalirRegistroEmpleado',ContrBitacora.postBotonSalirRE)
 router.post('/bitacora/ListaEmpleado',ContrBitacora.postVerListaEmpleados)
+router.post('/bitacora/SalirListaEmpleado',ContrBitacora.postBotonSalirLE)
 router.post('/bitacora/ActualizarEmpleado',ContrBitacora.postActualizarEmpleado)
 router.post('/bitacora/ErrorInsertEmpleado',ContrBitacora.postErrorInsertEmpleado)
 router.post('/bitacora/EliminarEmpleado',ContrBitacora.postEliminarEmpleado)
 //--Usuario--
 router.post('/bitacora/InsertUsuario',ContrBitacora.postInsertUsuario)
+
+router.post('/bitacora/SalirRegistroUsuario',ContrBitacora.postBotonSalirRu)
+
 router.post('/bitacora/ListaUsuario',ContrBitacora.postListaUsuario)
+router.post('/bitacora/SalirListaUsuarios',ContrBitacora.postBotonSalirLU)
 router.post('/bitacora/ActualizacionUsuario',ContrBitacora.postActualizarUsuario)
 router.post('/bitacora/EliminarUsuario',ContrBitacora.postEliminarUsuario)
 //--Venta--
@@ -253,6 +294,12 @@ router.post('/promocionmarca/crear', ContrPromocionMarca.postPromoMarca)
 router.put('/promocionmarca/actualizar', ContrPromocionMarca.putPromoMarca)
 router.delete('/promocionmarca/eliminar', ContrPromocionMarca.delPromoMarca)
 
+//Sucursal
+router.get('/sucursales',ContrSucursal.getSucursales)
+router.post('/sucursal/crear',ContrSucursal.postInsertSucursal)
+router.put('/sucursal/actualizar',ContrSucursal.putUpdateSucursal)
+router.delete('/sucursal/eliminar',ContrSucursal.deleteSucursal)
+
 
 //TipoPago
 router.get('/tipopago', ContrTipoPago.getTipoPagos)
@@ -283,8 +330,22 @@ router.post('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.PostVentaDetal
 router.put('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.PutVentaDetalleDescuento)
 router.delete('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.DeleteVentaDetalleDescuento)
 
+//Expediente
+
+router.get('/Expediente',ContrExpediente.getExpediente)
+router.post('/Expediente/NuevoExpediente',ContrExpediente.postInsertExpediente)
+//router.put('/Expediente/UpdateExpediente',ContrExpediente.putUpdateExpediente)
+router.delete('/Expediente/DeleteExpediente',ContrExpediente.deleteExpediente)
+
+//ExpedienteDetalle
+router.get('/ExpedienteDetalle',ContrExpedineteDetalle.getExpedienteDetalle)
+router.post('/ExpedienteDetalle/NuevoExpedinteDetalle',ContrExpedineteDetalle.postExpedienteDetalle)
+router.put('/ExpedienteDetalle/UpdateExpedinteDetalle',ContrExpedineteDetalle.putExpedienteDetalle)
+router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle',ContrExpedineteDetalle.deleteExpedienteDetalle)
+
 //Estados
 router.put('/Estado/Activo',ContrEstado.updActivo)
 router.put('/Estado/Inactivo',ContrEstado.updInactivo)
+ 
 
 export default router

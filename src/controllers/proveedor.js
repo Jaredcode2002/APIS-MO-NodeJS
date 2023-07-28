@@ -9,8 +9,8 @@ export const ContrProveedor= {
 
     postInsertProveedor:async(req,res)=>{
         try {
-            const{nombreProveedor,encargado,pais,ciudad,codigoPostal,direccion,telefono,correoElectronico}= req.body;
-            const result = await ModProveedor.postInsertProveedor({nombreProveedor,encargado,pais,ciudad,codigoPostal,direccion,telefono,correoElectronico});
+            const{CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico}= req.body;
+            const result = await ModProveedor.postInsertProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico});
             res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);
@@ -19,8 +19,8 @@ export const ContrProveedor= {
 
     putUpdateProveedor:async(req,res)=>{
         try {
-            const{nombreProveedor,encargado,pais,ciudad,codigoPostal,direccion,telefono,correoElectronico,IdProveedor}= req.body;
-            const result = await ModProveedor.putUpdateProveedor({nombreProveedor,encargado,pais,ciudad,codigoPostal,direccion,telefono,correoElectronico,IdProveedor});
+            const{CiaProveedora,encargado,IdPaisais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor}= req.body;
+            const result = await ModProveedor.putUpdateProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor});
             res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);

@@ -5,7 +5,7 @@ export const ModModelo = {
   getModelo: async () => {
     try {
     const conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT mo.`IdModelo`,ma.descripcion as Marca ,mo.detalle FROM tbl_modelo as mo INNER JOIN tbl_marca as ma  ON ma.`idMarca`=mo.`idMarca`");
+      const [filas] = await conexion.query("SELECT mo.`IdModelo`,ma.descripcion as Marca ,mo.detalle as Modelo, mo.anio FROM tbl_modelo as mo INNER JOIN tbl_marca as ma  ON ma.`idMarca`=mo.`idMarca`");
       return filas;
     } catch (error) {
       console.log(error);
