@@ -4,8 +4,7 @@ export const ModGarantia = {
 
   getGarantias: async () => {
     try {
-      const conexion = await connectDB(); 
-                                         
+      const conexion = await connectDB();                                       
       const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, g.estado, p.descripcion AS producto FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca;");
       return filas;
     } catch (error) {
