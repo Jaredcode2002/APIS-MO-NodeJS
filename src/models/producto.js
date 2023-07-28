@@ -5,7 +5,7 @@ export const ModProducto = {
   getProductos: async () => {
     try {
       const conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT pro.`IdProducto`, pro.descripcion as producto, ma.descripcion as marca, mo.detalle as modelo, pro.precio,pro.`cantidadMin`,pro.`cantidadMax`FROM tbl_producto as pro INNER JOIN tbl_modelo as mo ON pro.`IdModelo`=mo.`IdModelo`inner join tbl_Marca as ma ON pro.IdMarca = ma.IdMarca;");
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca;");
       return filas;
     } catch (error) {
       console.log(error);
@@ -15,9 +15,8 @@ export const ModProducto = {
   postInsertProducto: async (producto) => {
     try {
       const conexion = await connectDB();
-      const [filas] = await conexion.query("INSERT INTO tbl_producto (IdMarca, IdModelo, precio, cantidadMin, cantidadMax, descripcion) VALUES (?,?,?,?,?,?);",
+      const [filas] = await conexion.query("INSERT INTO tbl_producto (IdModelo, precio, cantidadMin, cantidadMax, descripcion) VALUES (?,?,?,?,?);",
         [
-          producto.IdMarca,
           producto.IdModelo,
           producto.precio,
           producto.cantidadMin,
@@ -34,10 +33,8 @@ export const ModProducto = {
   putUpdateProducto: async (producto) => {
     try {
       const conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_producto  SET  IdMarca=?, `IdModelo`=?,precio=?,`cantidadMin`=?,`cantidadMax`=?,descripcion=?  WHERE `IdProducto`=?;",
+      const [filas] = await conexion.query("UPDATE tbl_producto  SET  precio=?,`cantidadMin`=?,`cantidadMax`=?,descripcion=?  WHERE `IdProducto`=?;",
         [
-          producto.IdMarca,
-          producto.IdModelo,
           producto.precio,
           producto.cantidadMin,
           producto.cantidadMax,
