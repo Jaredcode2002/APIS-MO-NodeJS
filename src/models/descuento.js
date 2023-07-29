@@ -7,7 +7,7 @@ export const ModDescuento = {
     {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ("SELECT * FROM tbl_descuento LIMIT 100")
+            const [filas] = await conexion.query ("SELECT * FROM tbl_descuento")
             return filas;
         
         } catch (error) {

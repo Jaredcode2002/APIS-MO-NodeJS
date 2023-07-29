@@ -5,20 +5,22 @@ export const ModModelo = {
   getModelo: async () => {
     try {
     const conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT mo.`IdModelo`,ma.descripcion as Marca ,mo.detalle FROM tbl_modelo as mo INNER JOIN tbl_marca as ma  ON ma.`idMarca`=mo.`idMarca`");
+      const [filas] = await conexion.query("SELECT mo.`IdModelo`,ma.descripcion as Marca ,mo.detalle, mo.anio FROM tbl_modelo as mo INNER JOIN tbl_marca as ma  ON ma.`idMarca`=mo.`idMarca`");
       return filas;
     } catch (error) {
       console.log(error);
       throw new Error("Error al obtener modelos");
     } 
   },
+
   postInsertModelo: async (modelo) => {
     try {
     const conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle) values (?,?);",
+      const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle, anio) values (?,?,?);",
         [
           modelo.IdMarca,
           modelo.detalle,
+          modelo.anio,
         ]
       );
       return { id: filas.insertId };
@@ -27,13 +29,15 @@ export const ModModelo = {
       throw new Error("Error al crear modelo");
     }
   },
+
   putUpdateModelo: async (modelo)=>{
       try {
         const conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ? WHERE IdModelo= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=? WHERE IdModelo= ?;",
         [
           modelo.IdMarca,
           modelo.detalle,
+          modelo.anio,
           modelo.IdModelo,
         ]
         )

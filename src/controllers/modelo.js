@@ -5,27 +5,27 @@ export const ContrModelo = {
     const modelos = await ModModelo.getModelo();
     res.status(200).json(modelos);
   },
+
   postModelo: async (req, res) => {
     try {
       const { IdMarca, detalle } = req.body;
-      const result = await ModModelo.postInsertModelo({IdMarca, detalle,});
+      const result = await ModModelo.postInsertModelo({IdMarca, detalle,anio});
       res.status(201).json({ id: result.id });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error creating model" });
     }
   },
+
   putModelo: async (req, res) => {
     try {
-      const {
-        IdMarca,
-        detalle,
-        IdModelo,
+      const {IdMarca,detalle,anio,IdModelo,
         
       } = req.body;
       const result = await ModModelo.putUpdateModelo({
         IdMarca,
         detalle,
+        anio,
         IdModelo,
       });
       res.status(200).json({response:"Ok"})

@@ -40,6 +40,8 @@ import { ContrExpedineteDetalle } from "../controllers/expedientedetalle.js";
 import { ContrEstado } from "../controllers/estado.js";
 import { ContrAutoReg } from "../controllers/autoregistro.js";
 import { ContrDescuento } from "../controllers/descuento.js";
+import { ContrPermisos } from "../controllers/permisos.js";
+// import { ContrPermisos } from "../controllers/permisos.js";
 
 
 const router = express.Router();
@@ -316,6 +318,10 @@ router.get('/Descuento',ContrDescuento.getDescuento)
 router.post('/Descuento/NuevoDescuento',ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento',ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento',ContrDescuento.deleteDescuento)
- 
+
+//PERIMISO
+router.get ("/Permisos", ContrPermisos.getPermisos)
+
+
 
 export default router
