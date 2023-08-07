@@ -43,7 +43,10 @@ import{ContrAutoReg} from "../controllers/autoregistro.js"
 import { ContrDepto } from "../controllers/departamento.js";
 import { ContrCiudad } from "../controllers/ciudad.js";
 import { ContrPais } from "../controllers/pais.js";
+import { ContrGenero } from "../controllers/genero.js";
+import { ContrPermisos } from "../controllers/permisos.js";
 
+import {ContrRecordatorio} from"../controllers/recordatorio.js"
 
 const router = express.Router();
 
@@ -92,8 +95,6 @@ router.delete('/clientes/eliminar',ContrClientes.delCliente)
 //Compra
 router.get('/compra',ContrCompra.getCompras)
 router.post('/compra/NuevaCompra',ContrCompra.postInsertCompra)
-router.put('/compra/ActualizarCompra',ContrCompra.putUpdateCompra)
-router.delete('/compra/EliminarCompra',ContrCompra.deleteCompra)
 
 //Ventas
 router.get('/Ventas',ContrVentas.getVentas)
@@ -155,6 +156,11 @@ router.post('/preguntas/compararR',ContrPreguntas.compararRespuesta)
 
 router.post('/correo/existe',ContrPreguntas.getUser) 
 router.post('/pregYresp',ContrPreguntas.getPyR)
+router.delete('/eliminarRespuesta',ContrPreguntas.delRespuestas)
+router.put('/pyr/editar',ContrPreguntas.putRespuestas)
+router.get('/respuesta',ContrPreguntas.getRespuesta)
+router.get('/pregunta',ContrPreguntas.getPregunta)
+
 
 
 //ventaDetallePromocion
@@ -226,7 +232,6 @@ router.post('/bitacora/EliminarGarantia',ContrBitacora.postEliminarGarantia)
 
 
 
-
 //Garantias
 router.get('/garantias', ContrGarantia.getGarantias)
 router.post('/garantias/crear', ContrGarantia.postGarantia)
@@ -260,7 +265,7 @@ router.delete('/pagos/eliminar', ContrPago.delPago)
 //Parametros
 router.get('/parametros', ContrParametro.getParametros)
 router.get('/parametros', ContrParametro.getIntentos)
-router.get('/parametros', ContrParametro.getPreguntas)
+router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
 router.put('/parametros/actualizar', ContrParametro.putParametro)
@@ -322,6 +327,7 @@ router.delete('/VentasDetalles',ContrVentaDetalle.DeleteVentaDetalle)
 
 //Kardex
 router.get('/kardex',ContrKardex.GetKardex)
+router.post('/ProductoKardex',ContrKardex.postProductoKardexFiltro)
 router.post('/kardex',ContrKardex.PostKardex)
 
 //VentaDetalleDescuento
@@ -338,7 +344,7 @@ router.post('/Expediente/NuevoExpediente',ContrExpediente.postInsertExpediente)
 router.delete('/Expediente/DeleteExpediente',ContrExpediente.deleteExpediente)
 
 //ExpedienteDetalle
-router.get('/ExpedienteDetalle',ContrExpedineteDetalle.getExpedienteDetalle)
+router.post('/ExpedienteDetalle',ContrExpedineteDetalle.getExpedienteDetalle)
 router.post('/ExpedienteDetalle/NuevoExpedinteDetalle',ContrExpedineteDetalle.postExpedienteDetalle)
 router.put('/ExpedienteDetalle/UpdateExpedinteDetalle',ContrExpedineteDetalle.putExpedienteDetalle)
 router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle',ContrExpedineteDetalle.deleteExpedienteDetalle)
@@ -346,6 +352,23 @@ router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle',ContrExpedineteDetalle
 //Estados
 router.put('/Estado/Activo',ContrEstado.updActivo)
 router.put('/Estado/Inactivo',ContrEstado.updInactivo)
- 
+
+//Genero
+router.get('/Genero',ContrGenero.getGenero)
+router.post('/Genero/insertar',ContrGenero.postInsertGenero)
+router.put('/Genero/actualizar',ContrGenero.putInsertGenero)
+router.delete('/Genero/borrar',ContrGenero.deleteGenero)
+
+//Permisos
+router.get("/permisos", ContrPermisos.getPermisos)
+
+//Recordatorio
+router.get('/recordatorios',ContrRecordatorio.getCitas)
+router.get('/recordatorio',ContrRecordatorio.getCita)
+router.post('/recordatorioCitas/agregar',ContrRecordatorio.postCitas)
+router.delete('/eliminarCita',ContrRecordatorio.deleteCita)
+router.put('/actualizarCita',ContrRecordatorio.putCitas)
+router.post('/recordatorios/fecha',ContrRecordatorio.getFecha)
+
 
 export default router

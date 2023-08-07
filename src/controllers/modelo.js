@@ -7,8 +7,8 @@ export const ContrModelo = {
   },
   postModelo: async (req, res) => {
     try {
-      const { IdMarca, detalle } = req.body;
-      const result = await ModModelo.postInsertModelo({IdMarca, detalle,});
+      const { IdMarca, detalle, anio} = req.body;
+      const result = await ModModelo.postInsertModelo({IdMarca, detalle,anio});
       res.status(201).json({ id: result.id });
     } catch (error) {
       console.log(error);
@@ -20,12 +20,14 @@ export const ContrModelo = {
       const {
         IdMarca,
         detalle,
+        anio,
         IdModelo,
         
       } = req.body;
       const result = await ModModelo.putUpdateModelo({
         IdMarca,
         detalle,
+        anio,
         IdModelo,
       });
       res.status(200).json({response:"Ok"})

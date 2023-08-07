@@ -3,20 +3,24 @@ import { connectDB } from "../config/Conn.js";
 export const ModCompraDetalle = {
   
     getCompraDetalle: async () => {
+      let conexion
       try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
         const [filas] = await conexion.query("select * from tbl_compradetalle");
+        conexion.end()
         return filas;
       } catch (error) {
         console.log(error);
+        conexion.end()
         throw new Error("Error al obtener el detalle de la compra");
       } 
    
     },
   
     post_CompraDetalle: async (compra) => {
+      let conexion
       try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
         const [filas] = await conexion.query("INSERT INTO  tbl_compradetalle (IdCompra,cantidad,idProducto,costoCompra) VALUES(?,?,?,?);",
           [
               compra.IdCompra,
@@ -25,16 +29,19 @@ export const ModCompraDetalle = {
               compra.costoCompra,
           ]
         );
+        conexion.end()
         return { estado:"ok"};
       } catch (error) {
         console.log(error);
+        conexion.end()
         throw new Error("Error al crear registro");
       }
   },
 
   put_CompraDetalle: async (compra)=>{
+    let conexion
     try {
-      const conexion = await connectDB()
+      conexion = await connectDB()
       const [filas] = await conexion.query("UPDATE tbl_compradetalle  SET IdCompra=?, cantidad=?,idProducto=?,costoCompra=? WHERE IdCompraDetalle =?;",
       [
             compra.IdCompra,
@@ -44,24 +51,28 @@ export const ModCompraDetalle = {
             compra.IdCompraDetalle,
       ]
       );
+      conexion.end()
       return {estado:"ok"}
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar el registro")
     }
 },
   
 delete_CompraDetalle: async(compra)=>{
+  let conexion
   try {
-      const conexion = await connectDB()
+       conexion = await connectDB()
       const [filas] = await conexion.query("DELETE FROM tbl_compradetalle WHERE IdCompraDetalle =?;",
     [
       compra.IdCompraDetalle,
     ]
     );
-      
+    conexion.end()
   } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al eliminar el registro")
   }
 },

@@ -2,21 +2,25 @@ import { connectDB } from "../config/Conn.js";
 
 export const ModExpedienteDetalle = { 
 
-    getExpedienteDetalle:async ()=> {
+    posttExpedienteDetalle:async (expediente)=> {
+        let conexion
         try {
-            const conexion = await connectDB();
-            const [filas]=await conexion.query ("SELECT * FROM tbl_expedientedetalle")
+            conexion = await connectDB();
+        const [filas]=await conexion.query ("SELECT * FROM tbl_expedientedetalle WHERE `IdExpediente` =?",[expediente.id])
+        conexion.end()
         return filas;
         } catch (error) {
             console.log (error);
+            conexion.end()
             throw new error ("Error al consultar el API");
         }
 
     },
 
     postExpedienteDetalle :async (expedientedetalle)=> {
-        const conexion = await connectDB ();
+        let conexion
  try {
+    conexion = await connectDB ();
     const [filas]=await conexion.query("INSERT INTO tbl_expedientedetalle(IdExpediente, diagnostico, Optometrista, AsesorVenta, Antecedentes, ODEsfera, OIEsfera, ODCilindro, OICilindro, ODEje, OIEje, ODAdicion, OIAdicion, ODAltura, OIAltura, ODDistanciaPupilar, OIDistanciaPupilar,fechaConsulta,fechaExpiracion)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
     [
     expedientedetalle.IdExpediente,
@@ -40,16 +44,19 @@ export const ModExpedienteDetalle = {
     expedientedetalle.fechaExpiracion,
     ]    
     );
+    conexion.end()
     return {estado:"OK"};
  } catch (error) {
     console.log(error);
+    conexion.end()
     throw new error ("Error al consultar el API");
  }
     },
 
     putExpedienteDetalle :async (expedientedetalle)=> {
+        let conexion
         try {
-            const conexion = await connectDB()
+             conexion = await connectDB()
             const [filas] = await conexion.query("UPDATE tbl_expedientedetalle SET IdExpediente=?, diagnostico=?, Optometrista=?, AsesorVenta=?, Antecedentes=?, ODEsfera=?, OIEsfera=?, ODCilindro=?, OICilindro=?, ODEje=?, OIEje=?, ODAdicion=?, OIAdicion=?, ODAltura=?, OIAltura=?, ODDistanciaPupilar=?, OIDistanciaPupilar=?,fechaConsulta=?,fechaExpiracion=? WHERE  IdExpedienteDetalle=?;",
             [
                 expedientedetalle.IdExpediente,
@@ -74,24 +81,29 @@ export const ModExpedienteDetalle = {
                 expedientedetalle.IdExpedienteDetalle,
             ]
             );
+            conexion.end()
             return  { estado:"Okay"}
         } catch (error) {
             console.log(error);
+            conexion.end()
       throw new Error("Error al consultar el API")
         }
     },
 
     deleteExpedienteDetalle: async (expedientedetalle)=> {
+        let conexion
         try {
-    const conexion = await connectDB();
+     conexion = await connectDB();
       await conexion.query("DELETE FROM tbl_expedientedetalle WHERE  IdExpedienteDetalle=?;",
       [
         expedientedetalle.IdExpedienteDetalle,
       ]
       );
+      conexion.end()
       return  { estado:"Okay"}
         } catch (error) {
             console.log(error);
+            conexion.end()
       throw new Error("Error al consultar el API")
         }
     },

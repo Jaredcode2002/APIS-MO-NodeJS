@@ -1,68 +1,68 @@
-import { compare } from "bcrypt";
 import { connectDB } from "../config/Conn.js";
+import { ModKardex } from "./Kardex.js";
+import { ModInventario } from "./inventario.js";
 
 export const ModCompras = {
-
-  getCompras : async ()=>  {
+  getCompras: async () => {
+    let conexion
     try {
-      const conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT * FROM tbl_compra as cmp INNER JOIN  tbl_proveedor as pvd ON cmp.IdProveedor=pvd.IdProveedor")
+       conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "SELECT * FROM tbl_compra as cmp INNER JOIN  tbl_proveedor as pvd ON cmp.IdProveedor=pvd.IdProveedor"
+      );
+      conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al obtener compras");
     }
   },
 
-  postInsertCompra: async (compra)=>{
-    const conexion = await connectDB();
+  postCompras: async () => {
+    let conexion
     try {
-      const [filas] = await conexion.query ("INSERT INTO tbl_compra (idProveedor,fechaCompra,totalCompra) VALUES(?,?,?);",
-      [
-      compra.idProveedor,
-      compra.fechaCompra,
-      compra.totalCompra,
-      ]
+      conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "INSERT INTO tbl_compra (totalCompra) VALUES (null)"
       );
-      return {estado:"OK"}; 
+      conexion.end()
+      return filas.insertId;
     } catch (error) {
-      console.log(error);
-      throw new Error("Error al crear una nueva compra");
-      
+      conexion.end()
+      throw new Error("Error al insertar compra");
     }
   },
 
-  putUpdateCompra: async (compra)=>{
-    const conexion = await connectDB();
-  try {
-    const[filas]=await conexion.query ("UPDATE tbl_compra SET  IdProveedor=?, fechaCompra=?, totalCompra=? where IdCompra =?;",
-    [
-      compra.IdProveedor,
-      compra.fechaCompra,
-      compra.totalCompra,
-      compra.IdCompra,
-    ]
-    );
-   return {estado:"OK"}; 
-  } catch (error) {
-    console.log(error);
-      throw new Error("Error al actualizar la compra");
-  }
+  postCompraDetalle: async (detalles,compraId) => {
+    let conexion
+    try {
+       conexion = await connectDB();
+  
+      const promises = detalles.map(async (detalle) => {
+        await ModInventario.putUpdateInventarioCompras(detalle)
+        await ModKardex.postKardexCompra(detalle)
+        await conexion.query(
+          "INSERT INTO tbl_compraDetalle (IdCompra, idProveedor, cantidad, idProducto, costoCompra) VALUES (?,?, ?, ?, ?)",
+          [compraId, detalle.idProveedor, detalle.cantidad, detalle.idProducto, detalle.costo]
+        );
+      });
+      await Promise.all(promises);
+  
+      const [sumResult] = await conexion.query(
+        "SELECT SUM(costoCompra) AS totalCosto FROM tbl_compraDetalle WHERE IdCompra = ?",
+        [compraId]
+      );
+  
+      const totalCosto = sumResult[0].totalCosto || 0; //
+      await conexion.query(
+        "UPDATE tbl_compra SET totalCompra = ? WHERE IdCompra = ?",
+        [totalCosto, compraId]
+      );
+      conexion.end()
+    } catch (error) {
+      conexion.end()
+      throw new Error("Error al insertar el detalle de compra");
+    }
   },
-
-  deleteCompra : async (compra) =>{
-try {
-  const conexion = await connectDB()
-  const [filas] = await conexion.query("DELETE FROM tbl_compra where IdCompra = ?;",
-  [
-    compra.IdCompra,
-  ]);
- return {estado:"OK"}; 
-
-} catch (error) {
-  console.log(error);
-      throw new Error("Error al eliminar la compra");
-}
-},
-
-}
+};

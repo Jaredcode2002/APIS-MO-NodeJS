@@ -5,8 +5,9 @@ import { ModUsuarios } from "./usuario.js";
 export const ModAutoReg = {
 
     postInsertEmpleadoAutoRegistro: async (empleado) => {
+      let conexion
         try {
-        const conexion = await connectDB();
+         conexion = await connectDB();
           const [filas] = await conexion.query("INSERT INTO  tbl_empleado (nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad) VALUES(?,?,?,3,?,?);",
             [
               empleado.nombre,
@@ -16,14 +17,17 @@ export const ModAutoReg = {
               empleado.numeroIdentidad,
             ]
           );
+          conexion.end()
           return { id: filas.insertId };
         } catch (error) {
           console.log(error);
+          conexion.end()
           throw new Error("Error al crear empleado autoregistrado");
         }
     },
     
     postInsertUsuarioAutoRegistro: async (usuario) => {
+        let conexion
         const rondasSalto = 10;
         let hash
         try {
@@ -33,7 +37,7 @@ export const ModAutoReg = {
           throw new Error(error);
         }    
         try {
-          const conexion = await connectDB();
+           conexion = await connectDB();
           const [filas] = await conexion.query(
             "insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia, Id_Rol, Correo_Electronico, Fecha_Vencimiento, idEmpleado, fecha_creacion,fecha_modificacion) values (?, ?, ?, 3, ? ,date_add(current_date(),interval 90 day), ?, current_timestamp(), current_timestamp());",
             [
@@ -51,9 +55,11 @@ export const ModAutoReg = {
           }
     
           const result2= await ModUsuarios.postHistPasswrd(data)
+          conexion.end()
           return { id: filas.insertId };
         } catch (error) {
           console.log(error);
+          conexion.end()
           throw new Error("Error al crear usuarios");
         }
       },

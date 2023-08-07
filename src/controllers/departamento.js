@@ -36,10 +36,9 @@ export const ContrDepto = {
     try {
       const {IdDepartamento} = req.body
       const result = await ModDepartamento.delDepto({IdDepartamento})
-      res.status(200).json(result)
+      res.status(201).json({ id: result.id});
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

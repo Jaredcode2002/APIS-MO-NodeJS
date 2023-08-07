@@ -5,6 +5,7 @@ export const ContrPais = {
     const pais = await ModPais.getPaises();
     res.status(200).json(pais);
   },
+  
   postPais: async (req, res) => {
     try {
       const { pais } = req.body;

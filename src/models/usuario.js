@@ -3,33 +3,40 @@ import bcrypt from "bcrypt";
 import { ModLogin } from "./login.js";
 
 export const ModUsuarios = {
+
   getUsuarios: async () => {
+    let conexion
     try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
       const [filas] = await conexion.query(
         "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol`;"
       );
+      conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al obtener usuarios");
     }
   },
   getUsuario: async(usuario)=>{
+    let conexion
     try {
-        const conexion = await connectDB()
+       conexion = await connectDB()
         const [filas] = await conexion.query("SELECT u.`Id_Usuario`, u.`Contrasenia`, u.`Nombre_Usuario`, e.nombre, e.apellido, e.`numeroIdentidad`,r.`Rol`, u.`Correo_Electronico`, u.`idEmpleado` FROM tbl_ms_usuario as u INNER JOIN tbl_empleado as e on  u.`idEmpleado`=e.`idEmpleado`  INNER JOIN tbl_ms_roles as r on  u.`Id_Rol`=r.`Id_Rol` WHERE u.`Correo_Electronico`=? ",
         [usuario.Correo_Electronico] );
-       
+        conexion.end()
         return filas[0];
         
     } catch (error) {
         console.log(error);
+        conexion.end()
         throw new Error("Error al traer usuario")
     }
 },
 
   postInsertUsuario: async (usuario) => {
+    let conexion
     const rondasSalto = 10;
     let hash
     try {
@@ -39,7 +46,7 @@ export const ModUsuarios = {
       throw new Error(error);
     }    
     try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
       const [filas] = await conexion.query(
         'insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia,Id_Rol, Correo_Electronico, idEmpleado, fecha_creacion,fecha_modificacion,Estado_Usuario,Fecha_Vencimiento)values (?, ?, ?, ?, ?, ?, current_timestamp(), current_timestamp(),"Nuevo",date_add(current_date(),interval 90 day));',
         [
@@ -57,17 +64,20 @@ export const ModUsuarios = {
         autor:usuario.nombre
       }
       ModUsuarios.postHistPasswrd(data)
+      conexion.end()
       return { id: filas.insertId };
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al crear usuarios");
     }
   },
 
   compararContraVSHistorial: async (Usuario)=>{
+    let conexion
        
     try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
        const [filas] = await conexion.query(
         "SELECT `Contrasenia` FROM tbl_ms_hist_contrasenia where `Id_Usuario`=? ORDER BY `Id_Historial` DESC ",
         [
@@ -84,12 +94,13 @@ export const ModUsuarios = {
         psswrd: Usuario.clave,
         hashed:filas[0].Contrasenia
       }
-
+      conexion.end()
       return await ModLogin.comparePass(data)
       
 
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar el usuario");
     }
     
@@ -99,6 +110,7 @@ export const ModUsuarios = {
   },
 
   putUpdateUsuario: async (usuario) => {
+    let conexion
     const rondasSalto = 10;
     let hash
     try {
@@ -109,7 +121,7 @@ export const ModUsuarios = {
     }  
     console.log(hash);
     try {
-      const conexion = await connectDB();
+     conexion = await connectDB();
       const [filas] = await conexion.query(
         "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Estado_Usuario = ?, Contrasenia = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
         [
@@ -122,31 +134,37 @@ export const ModUsuarios = {
           usuario.idUsuario,
         ]
       );
+      conexion.end()
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar el usuario");
     }
   },
 
   delUsuario: async (usuario) => {
+    let conexion
     try {
-      const conexion = await connectDB();
+      conexion = await connectDB();
       await conexion.query("DELETE FROM TBL_MS_USUARIO WHERE Id_Usuario = ?;", [
         usuario.id,
       ]);
+      conexion.end()
       return { state: "ok" };
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al eliminar el usuario");
     }
   },
 
   getFechaExp: async (usuario) => {
+    let conexion
     try {
       const obj = { correo: usuario.correo };
       const { correo } = obj;
-      const conexion = await connectDB();
+     conexion = await connectDB();
       const [filas] = await conexion.query(
         "SELECT `Fecha_Vencimiento` from tbl_ms_usuario WHERE `Correo_Electronico` = ?;",
         [usuario.correo]
@@ -159,7 +177,7 @@ export const ModUsuarios = {
       const fechaActual = fechaAc.toISOString().substring(0, 10);
 
       //console.log(fechaActual>fecha?"fecha actual es mayor a expiracion":"aun no expira");
-
+      conexion.end()
       if (fechaActual>fecha) {
         const result = await ModUsuarios.putUpdateEstado({correo})
         return { state: "F" };  
@@ -168,70 +186,83 @@ export const ModUsuarios = {
 
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al obtener la fecha exp");
     }
   },
   putUpdateEstado: async (usuario) => {
+    let conexion
     try {
-      const conexion = await connectDB();
+     conexion = await connectDB();
       const [filas] = await conexion.query(
         'UPDATE tbl_ms_usuario set `Estado_Usuario` ="Inactivo" where `Correo_Electronico` = ?;',
         [usuario.correo]
       );
+      conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar el estado");
     }
   },
 
   putUpdateEstadoActivo: async (usuario) => {
+    let conexion
     try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
       const [filas] = await conexion.query(
         'UPDATE tbl_ms_usuario set `Estado_Usuario` ="Activo" where `Correo_Electronico` = ?;',
         [usuario.correo]
       );
+      conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar el estado");
     }
   },
   
 
   putUpdatePassword: async (usuario) => {
+    let conexion
     try {
       const clave = { psswrd: usuario.clave };
       const { psswrd } = clave;
-      const conexion = await connectDB();
+     conexion = await connectDB();
       const contra = await ModLogin.passEncript({ psswrd });
       const [filas] = await conexion.query(
         "update tbl_ms_usuario set `Contrasenia` = ? where `Correo_Electronico` = ?",
         [contra, usuario.correo]
       );
+      conexion.end()
       return { state: "ok" };
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al actualizar la contraseña");
     }
   },
 
   postHistPasswrd: async (usuario) => {
+    let conexion
     try {
       console.log(usuario);
       const clave = { psswrd: usuario.clave };
       const { psswrd } = clave;
       let contra = await ModLogin.passEncript({ psswrd });
 
-      const conexion = await connectDB();
+     conexion = await connectDB();
       const [filas] = await conexion.query(
         "INSERT into tbl_ms_hist_contrasenia (Id_Usuario,Contrasenia,creado_por) values(?,?,?)",
         [usuario.id, contra, usuario.autor]
       );
+      conexion.end()
       return { state: "ok" };
     } catch (error) {
       console.log(error);
+      conexion.end()
       throw new Error("Error al registrar la contraseña");
     }
   },

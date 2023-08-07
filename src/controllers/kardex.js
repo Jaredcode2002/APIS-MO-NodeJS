@@ -10,6 +10,16 @@ export const ContrKardex = {
             res.status(500).json("Error al consumir la API");
         }
     },
+    postProductoKardexFiltro:async (req,res)=>{
+        try {
+            const {idProducto}=req.body
+            const result = await ModKardex.postProductoKardexFiltro({idProducto})
+            res.status(200).json(result)
+        } catch (error) {
+            
+        }
+    },
+
     PostKardex: async (req, res) => {
         try {
             const { IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad} = req.body;

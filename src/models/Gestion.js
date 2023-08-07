@@ -3,20 +3,24 @@ import { connectDB } from "../config/Conn.js";
 export const ModGestion ={ 
 
 getSucursal : async ()=> {
+    let conexion
     try {
-        const conexion = await connectDB();
+         conexion = await connectDB();
         const [filas]= await conexion.query("SELECT * FROM tbl_sucursal")
+        conexion.end()
         return filas;
 
     } catch (error) {
         console.log(error);
+        conexion.end()
         throw new Error("Error al obtener sucursales");    
     }
 },
 
 postInsertSucursal: async (sucursal)=> {
-    const conexion = await connectDB();
+    let conexion
     try {
+        conexion = await connectDB ();
         const [filas]=await conexion.query ("INSERT INTO  tbl_sucursal (departamento,ciudad,direccion,telefono) VALUES(?,?,?,?);",
         [
             sucursal.departamento,
@@ -25,16 +29,19 @@ postInsertSucursal: async (sucursal)=> {
             sucursal.telefono,
         ]
         );
+        conexion.end()
         return{estado:"OK"};
     } catch (error) {
         console.log(error);
+        conexion.end()
         throw new Error("Error al crear una nueva sucursal");
     }
 },
 
 putInsertSucursal : async (sucursal)=>{
-    const conexion = await connectDB();
+    let conexion
     try {
+        conexion = await connectDB ();
         const[filas]=await conexion.query ("UPDATE tbl_sucursal SET departamento=?, ciudad=?, direccion=?, telefono=? where IdSucursal =?;",
         [
             sucursal.departamento,
@@ -44,9 +51,11 @@ putInsertSucursal : async (sucursal)=>{
             sucursal.IdSucursal,
         ]
         );
+        conexion.end()
         return {estado:"OK"}; 
     } catch (error) {
         console.log(error);
+        conexion.end()
       throw new Error("Error al actualizar la sucursal");
         
     }
@@ -54,17 +63,20 @@ putInsertSucursal : async (sucursal)=>{
 
 
 deleteSucursal: async (sucursal)=> {
+    let conexion
 try {
-    const conexion = await connectDB()
+     conexion = await connectDB()
   const [filas] = await conexion.query ("DELETE FROM tbl_sucursal where IdSucursal = ?;",
   [
     sucursal.IdSucursal,
   ]
   );
+  conexion.end()
   return {estado:"OK"}; 
 
 } catch (error) {
     console.log(error);
+    conexion.end()
       throw new Error("Error al eliminar la suscursal");
     
 }

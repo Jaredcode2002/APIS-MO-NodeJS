@@ -3,8 +3,8 @@ import { ModExpedienteDetalle } from "../models/expedientedetalle.js";
 export const ContrExpedineteDetalle = {
 
     getExpedienteDetalle:async (req,res)=> {
-
-        const expedientedetalle = await ModExpedienteDetalle.getExpedienteDetalle()
+        const {id} = req.body
+        const expedientedetalle = await ModExpedienteDetalle.posttExpedienteDetalle({id})
         res.json(expedientedetalle)
        
     },

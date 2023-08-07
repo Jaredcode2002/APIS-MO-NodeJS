@@ -11,17 +11,32 @@ export const ModKardex = {
         console.log(error);
         throw new Error("Error al obtener el registro");
       } 
-   
+    },
+    postProductoKardexFiltro:async (kardex)=>{
+      let conexion
+      try {
+         conexion = await connectDB();
+              const [filas] = await conexion.query("SELECT p.descripcion as Producto, k.cantidad as Cantidad, tm.descripcion as Movimiento FROM tbl_kardex AS k INNER JOIN tbl_producto AS p ON p.`IdProducto` = k.`IdProducto` inner join tbl_tipomovimiento as tm on k.`IdTipoMovimiento`=tm.`IdTipoMovimiento` where k.`IdProducto`=?",
+            [
+              kardex.idProducto,
+            ]
+          );
+          conexion.end()
+          return filas;
+        } catch (error) {
+          console.log(error);
+          conexion.end()
+          throw new Error("Error al obtener los productos");
+        }
     },
   
-    post_Kardex: async (kardex) => {
+    postKardexCompra: async (kardex) => {
       try {
       const conexion = await connectDB();
-            const [filas] = await conexion.query("INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(?,?,?,?,?);",
+            const [filas] = await conexion.query("INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(1,?,?,?,?);",
           [
-            kardex.IdTipoMovimiento,
-            kardex.IdProducto,
-            kardex.Id_Usuario,
+            kardex.idProducto,
+            kardex.idUsuario,
             kardex.fechaYHora,
             kardex.cantidad,
           ]

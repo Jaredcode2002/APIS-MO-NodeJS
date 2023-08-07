@@ -38,6 +38,7 @@ export const ContrParametro = {
     const Parametro = await ModParametro.getIntentos();
     res.status(200).json(Parametro);
   },
+  //Usado en la pantalla del perfil en agregar preguntas según el parámetro
   getPreguntas: async (req,res) => {
     const Parametro = await ModParametro.getPreguntas();
     res.status(200).json(Parametro);

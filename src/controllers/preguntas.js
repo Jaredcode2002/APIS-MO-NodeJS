@@ -75,6 +75,63 @@ export const ContrPreguntas = {
             res.status(500).json({ message: "Error al obtener la lista" });
         }
     },
+    delRespuestas:async(req, res)=>{
+        try {
+            const {Id_Pregunta} = req.body;
+            const result = await ModPreguntas.DeleteRespuestas({Id_Pregunta});
+            res.status(200).json({ response: "Ok" })
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+        }
+    },
+
+    putRespuestas: async (req, res) => {
+        try {
+          const {Respuesta, idUser, modificado_por,  Id_Pregunta} = req.body;
+          const result = await ModPreguntas.putRespuestas({
+            Respuesta, 
+            idUser,
+            modificado_por,
+            Id_Pregunta,
+          });
+          res.status(200).json({response:"Ok"})
+        } catch (error) {
+          console.log(error);
+          throw new Error("Error al consumir el api")
+        }
+    },
+
+    getRespuesta: async (req, res) => {
+        try {
+            const {Id_Pregunta } = req.body;
+            const result = await ModPreguntas.getRespuesta({
+              Id_Pregunta,
+            });
+            //res.status(200).json({response:"Ok"})
+            res.json(result);
+          } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+          }
+    },
+    getPregunta: async (req, res) => {
+        try {
+            const {Id_Pregunta } = req.body;
+            const result = await ModPreguntas.getPregunta({
+              Id_Pregunta,
+            });
+            //res.status(200).json({response:"Ok"})
+            res.json(result);
+          } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+          }
+
+       
+    },
+
+    
     
 
 

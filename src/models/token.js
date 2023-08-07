@@ -4,23 +4,28 @@ import { connectDB } from "../config/Conn.js";
 
 export const TokenMod = {
   guardarToken: async (destinatario, token) => {
+    let conexion
     try {
-      const conexion = await connectDB();
+       conexion = await connectDB();
       const [filas] = await conexion.query(
         'INSERT INTO tbl_token (`Id_Usuario`,`NombreToken`,`descripcion`) VALUES (?,"Cambio de contraseña",?);',
         [destinatario, token]
       );
+      conexion.end()
     } catch (err) {
       console.log(err);
+      conexion.end()
     }
   },
   obtenerToken: async (idUsuario) => {
+    let conexion
     try {
-      const conexion = await connectDB();
+      conexion = await connectDB();
       const [rows] = await conexion.execute(
         "SELECT * FROM TBL_Token WHERE Id_Usuario = ? ORDER BY IdToken DESC LIMIT 1;",
         [idUsuario]
       );
+      conexion.end()
       if (rows.length > 0) {
         return rows[0].descripcion;
       } else {
@@ -28,6 +33,7 @@ export const TokenMod = {
       }
     } catch (error) {
       console.log(error);
+      conexion.end()
     }
   },
   enviarCodigoVerificacion: async (destinatario) => {
@@ -91,12 +97,15 @@ export const TokenMod = {
     }
   },
   obtenerId:async (correo)=>{
+    let conexion
     try {
-      const conexion = await connectDB()
+     conexion = await connectDB()
       const [rows] = await conexion.query('SELECT `Id_Usuario` FROM tbl_ms_usuario where `Correo_Electronico`=?',
       [correo.correo])
+      conexion.end()
       return rows[0].Id_Usuario     
     } catch (error) {
+      conexion.end()
       return error
     }
 
