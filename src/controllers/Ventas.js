@@ -12,8 +12,8 @@ export const ContrVentas ={
     postInsertVentas: async (req, res) => {
         
         try {
-            const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN} = req.body
-            const result = await ModVentas.postInsertVentas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN})
+            const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,precioLente,cantidad,IdProducto,idUsuario} = req.body
+            const result = await ModVentas.postInsertVentas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,precioLente,cantidad,IdProducto,idUsuario})
             res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);

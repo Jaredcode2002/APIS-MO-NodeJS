@@ -3,9 +3,7 @@ import { ContrUsuario } from "../controllers/usuario.js";
 import { ContrLogin } from "../controllers/login.js";
 import { Mailer } from "../controllers/correos.js";
 import { ContrCompraDetalle } from "../controllers/ComprasDetalle.js";
-import { ContrVentaDetalle } from "../controllers/VentasDetalles.js";
 import { ContrKardex } from "../controllers/kardex.js";
-import { ContrVentaDetalleDescuento } from "../controllers/VentasDetalleDescuentos.js";
 
 
 import { ContrGarantia } from "../controllers/garantia.js";
@@ -22,8 +20,6 @@ import { ContrParametro } from "../controllers/parametros.js";
 
 import { ContrEmpleado } from "../controllers/empleado.js";
 import { ContrPreguntas } from "../controllers/preguntas.js";
-import { ContrVentaDetalleProm } from "../controllers/ventaDetallePromocion.js";
-import { ContrVentaDetallePromMarca } from "../controllers/ventaDetallePromocionMarca.js";
 
 import { ContrCompra } from "../controllers/compra.js";
 import { ContrGestion } from "../controllers/Gestion.js";
@@ -39,7 +35,7 @@ import { ContrExpedineteDetalle } from "../controllers/expedientedetalle.js";
 
 import { ContrEstado } from "../controllers/estado.js";
 import { ContrSucursal } from "../controllers/sucursal.js";
-import{ContrAutoReg} from "../controllers/autoregistro.js"
+import {ContrAutoReg} from "../controllers/autoregistro.js"
 import { ContrDepto } from "../controllers/departamento.js";
 import { ContrCiudad } from "../controllers/ciudad.js";
 import { ContrPais } from "../controllers/pais.js";
@@ -48,8 +44,6 @@ import { ContrPermisos } from "../controllers/permisos.js";
 
 import {ContrRecordatorio} from"../controllers/recordatorio.js"
 import { ContrDescuento } from "../controllers/descuento.js";
-import { ContrLente } from "../controllers/lente.js";
-import { ContrDescuentoLente } from "../controllers/descuentoLente.js";
 
 const router = express.Router();
 
@@ -164,20 +158,6 @@ router.put('/pyr/editar',ContrPreguntas.putRespuestas)
 router.get('/respuesta',ContrPreguntas.getRespuesta)
 router.get('/pregunta',ContrPreguntas.getPregunta)
 
-
-
-//ventaDetallePromocion
-router.get('/ventaDetallePromocion',ContrVentaDetalleProm.getVentDetalleProm)
-router.post('/ventaDetallePromocion',ContrVentaDetalleProm.InsertVentaDetallePromo)
-router.put('/ventaDetallePromocion',ContrVentaDetalleProm.UpdateVentaDetallePromo)
-router.delete('/ventaDetallePromocion',ContrVentaDetalleProm.DeleteVentaDetallePromo)
-
-
-//ventaDetallePromocionMarca
-router.get('/ventaDetallePromocionMarca',ContrVentaDetallePromMarca.getdetallemarca)
-router.post('/ventaDetallePromocionMarca',ContrVentaDetallePromMarca.InsertVentaDetalleMarca)
-router.put('/ventaDetallePromocionMarca',ContrVentaDetallePromMarca.UpdateVentaDetalleMarca)
-router.delete('/ventaDetallePromocionMarca',ContrVentaDetallePromMarca.DeleteVentaDetalleMarca)
 
 //PROVEEDORES
 router.get('/proveedor',ContrProveedor.getProveedores)
@@ -353,22 +333,12 @@ router.delete('/tipopago/eliminar',ContrTipoPago.delTipoPago)
  router.put('/ComprasDetalle',ContrCompraDetalle.PutCompraDetalle)
  router.delete('/ComprasDetalle',ContrCompraDetalle.DeleteCompraDetalle)
 
-//DetalleVenta
-router.get('/VentasDetalles',ContrVentaDetalle.GetVentaDetalle)
-router.post('/VentasDetalles',ContrVentaDetalle.PostVentaDetalle)
-router.put('/VentasDetalles',ContrVentaDetalle.PutVentaDetalle)
-router.delete('/VentasDetalles',ContrVentaDetalle.DeleteVentaDetalle)
 
 //Kardex
 router.get('/kardex',ContrKardex.GetKardex)
 router.post('/ProductoKardex',ContrKardex.postProductoKardexFiltro)
 router.post('/kardex',ContrKardex.PostKardex)
 
-//VentaDetalleDescuento
-router.get('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.GetVentaDetalleDescuento)
-router.post('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.PostVentaDetalleDescuento)
-router.put('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.PutVentaDetalleDescuento)
-router.delete('/VentasDetalleDescuentos',ContrVentaDetalleDescuento.DeleteVentaDetalleDescuento)
 
 //Expediente
 
@@ -421,18 +391,6 @@ router.post('/Descuento/NuevoDescuento',ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento',ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento',ContrDescuento.deleteDescuento)
 
-//LENTES
-router.get('/lentes', ContrLente.getLentes)
-router.post('/lente/crear', ContrLente.postLente)
-router.put('/lente/actualizar', ContrLente.putLente)
-router.delete('/lente/eliminar', ContrLente.delLente)
-
-
-//DescuentosdeLentes
-router.get('/DescuentosLentes',ContrDescuentoLente.getDescuentosLentes)
-router.post('/DescuentoLente/NuevoDescuentoLente',ContrDescuentoLente.postInsertDescuentoLente)
-router.put('/DescuentoLente/ActualizarDescuentoLente',ContrDescuentoLente.putDescuentoLente)
-router.delete('/DescuentoLente/BorrarDescuentoLente',ContrDescuentoLente.deleteDescuentoLente)
 
 
 

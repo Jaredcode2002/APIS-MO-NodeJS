@@ -51,6 +51,25 @@ export const ModInventario = {
       throw new Error("Error al actualizar el producto dentro de Inventario")
     }
   },
+  putUpdateInventarioVentas: async (inventario) => {
+    let conexion
+    try {
+       conexion = await connectDB()
+      const [filas] = await conexion.query("UPDATE tbl_inventario set cantidad =(SELECT cantidad from tbl_inventario where `IdProducto`=?)-? WHERE `IdProducto`=?;",
+        [
+          inventario.IdProducto,
+          inventario.cantidad,
+          inventario.IdProducto
+        ]
+      )
+      conexion.end()
+      return { estado: "okss" }
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al actualizar el producto dentro de Inventario")
+    }
+  },
   delInventario: async (inventario) => {
     let conexion
     try {

@@ -12,8 +12,8 @@ export const ContrKardex = {
     },
     postProductoKardexFiltro:async (req,res)=>{
         try {
-            const {idProducto}=req.body
-            const result = await ModKardex.postProductoKardexFiltro({idProducto})
+            const {IdProducto}=req.body
+            const result = await ModKardex.postProductoKardexFiltro({IdProducto})
             res.status(200).json(result)
         } catch (error) {
             

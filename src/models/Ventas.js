@@ -1,5 +1,6 @@
-import { compare } from "bcrypt";
 import { connectDB } from "../config/Conn.js";
+import { ModKardex } from "./Kardex.js";
+import { ModInventario } from "./inventario.js";
 
 export const ModVentas = {
 
@@ -33,9 +34,10 @@ export const ModVentas = {
         }
     },
 
-    postInsertVentas: async (venta) => {
-        const conexion = await connectDB();
+    InsertVenta: async (venta) => {
+        let conexion ;
         try {
+            conexion= await connectDB();
             const [filas] = await conexion.query("INSERT INTO tbl_venta(`fechaEntrega`, `fechaLimiteEntrega`, `IdCliente`, `idEmpleado`, `RTN`) VALUES (?, ?, ?, ?, ?);",
                 [
                     venta.fechaEntrega,
@@ -45,10 +47,60 @@ export const ModVentas = {
                     venta.RTN,
                 ]
             );
-            return { estado: "OK" };
+            return { id:filas.insertId };
         } catch (error) {
             console.log(error);
             throw new Error("Error al crear una nueva venta");
+        }
+    },
+
+    postInsertVentas:async(venta)=>{
+        let conexion
+        try {
+            conexion = await connectDB();
+            
+            const idVenta = await ModVentas.InsertVenta(venta)
+            const [PorcentajePromocion] = await conexion.query("select p.descPorcent as Promocion from tbl_promocion as p where IdPromocion=?;",
+            [venta.IdPromocion])//valor de la promocion
+            const [descuentoAro] = await conexion.query("select d.descPorcent as DescuentoAro from tbl_descuento as d where IdDescuento=?; ",
+            [venta.IdDescuento]//valor del descuento del aro
+            );
+            const [precioAro] = await conexion.query("select p.precio as precioAro from tbl_producto as p where IdProducto=?;",
+                [venta.IdProducto]//valor del precio del aro
+            );
+           
+
+            const aroRebajado = precioAro[0].precioAro - (precioAro[0].precioAro * descuentoAro[0].DescuentoAro)
+            let subtotal = venta.cantidad * (aroRebajado +venta.precioLente)
+            let rebaja = subtotal*PorcentajePromocion[0].Promocion
+            const total = subtotal-rebaja
+
+            console.log(aroRebajado);
+            //InsertVentaDetalle
+            const [filas] = await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `precioLente`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?);",
+                [
+                    idVenta.id,
+                    venta.IdGarantia,
+                    venta.IdPromocion,
+                    venta.IdDescuento,
+                    venta.IdProducto,
+                    aroRebajado,
+                    venta.precioLente,
+                    venta.cantidad,
+                    subtotal,
+                    rebaja,
+                    total,
+                ])
+            await ModInventario.putUpdateInventarioVentas(venta)
+            await ModKardex.postKardexVenta(venta)
+            await conexion.query("UPDATE tbl_venta  SET `valorVenta` = ? WHERE (`IdVenta` = ?);",[
+                total,idVenta.id
+            ])
+            conexion.end()
+            return {state:"ok"}
+        } catch (error) {
+            conexion.end()
+            throw error
         }
     },
 

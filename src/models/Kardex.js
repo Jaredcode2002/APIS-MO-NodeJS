@@ -18,7 +18,7 @@ export const ModKardex = {
          conexion = await connectDB();
               const [filas] = await conexion.query("SELECT p.descripcion as Producto, k.cantidad as Cantidad, tm.descripcion as Movimiento FROM tbl_kardex AS k INNER JOIN tbl_producto AS p ON p.`IdProducto` = k.`IdProducto` inner join tbl_tipomovimiento as tm on k.`IdTipoMovimiento`=tm.`IdTipoMovimiento` where k.`IdProducto`=?",
             [
-              kardex.idProducto,
+              kardex.IdProducto,
             ]
           );
           conexion.end()
@@ -47,5 +47,22 @@ export const ModKardex = {
         throw new Error("Error al agregar registro");
       }
   },
+  postKardexVenta: async (kardex) => {
+    try {
+    const conexion = await connectDB();
+          const [filas] = await conexion.query("INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(2,?,?,?,?);",
+        [
+          kardex.IdProducto,
+          kardex.idUsuario,
+          kardex.fechaYHora,
+          kardex.cantidad,
+        ]
+      );
+      return { estado:"ok"};
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al agregar registro");
+    }
+},
 
   };
