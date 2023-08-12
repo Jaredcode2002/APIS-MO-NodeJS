@@ -95,9 +95,10 @@ router.post('/compra/NuevaCompra',ContrCompra.postInsertCompra)
 
 //Ventas
 router.get('/Ventas',ContrVentas.getVentas)
+router.post('/VentaDetalle',ContrVentas.getVentaDetalle)
 router.post('/Ventas/NuevaVenta',ContrVentas.postInsertVentas)
-router.put('/Ventas/ActualizarVenta',ContrVentas.putUpdateVenta)
-router.delete('/Ventas/EliminarVenta',ContrVentas.deleteVenta)
+
+
 
 //Gestion 
 router.get('/Gestion',ContrGestion.getSucursal)
