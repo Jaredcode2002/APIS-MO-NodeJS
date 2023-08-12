@@ -97,7 +97,7 @@ export const ModVentas = {
                 total,idVenta.id
             ])
             conexion.end()
-            return {state:"ok"}
+            return {total:total,id:idVenta.id}
         } catch (error) {
             conexion.end()
             throw error

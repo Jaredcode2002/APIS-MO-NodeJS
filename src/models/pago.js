@@ -20,17 +20,41 @@ export const ModPago = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_Pago (IdVenta, IdTipoPago, saldoAbono, saldoRestante) values (?,?,?,?);",
-        [
-          Pago.IdVenta,
-          Pago.IdTipoPago,
-          Pago.saldoAbono,
-          Pago.saldoRestante,
-
-        ]
-      );
-      conexion.end()
+     if (isNaN(Pago.saldoAbono)){
+      return false
+     }else if (Pago.saldoAbono===null) {
+      return false
+     }else if (Pago.saldoAbono<Pago.saldoRestante) {
+        const [filas] = await conexion.query('insert into tbl_Pago (IdVenta, IdTipoPago, saldoAbono, saldoRestante,estado) values (?,?,?,?,"Pendiente");',
+          [
+            Pago.IdVenta,
+            Pago.IdTipoPago,
+            Pago.saldoAbono,
+            Pago.saldoRestante,
+  
+          ]
+        );
+        conexion.end()
       return { id: filas.insertId };
+      }else if (Pago.saldoAbono>=Pago.saldoRestante) {
+        const [filas] = await conexion.query('insert into tbl_Pago (IdVenta, IdTipoPago, saldoAbono, saldoRestante,estado) values (?,?,?,?,"Pagado");',
+          [
+            Pago.IdVenta,
+            Pago.IdTipoPago,
+            Pago.saldoRestante,
+            Pago.saldoRestante,
+  
+          ]
+        );
+        conexion.end()
+        
+      return { id: filas.insertId };
+      }else if (Pago.saldoAbono<=0) {
+        return false
+      }else  {
+        return false
+      }
+      
     } catch (error) {
       console.log(error);
       conexion.end()

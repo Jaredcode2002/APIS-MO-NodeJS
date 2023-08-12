@@ -9,6 +9,9 @@ export const ContrPago = {
     try {
       const { IdVenta, IdTipoPago, saldoAbono, saldoRestante } = req.body;
       const result = await ModPago.postInsertPago({IdVenta, IdTipoPago, saldoAbono, saldoRestante});
+      if (result===false) {
+        res.status(500).json("error");  
+      }
       res.status(201).json({ id: result.id });
     } catch (error) {
       console.log(error);
