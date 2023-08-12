@@ -1167,6 +1167,23 @@ postIngresoPerfil: async (idusuario)=>{
 
 
    //-------------------RECORDATORIOS-------------------------
+
+   postIngresaPCita: async (idusuario)=>{
+    let conexion
+       try {
+           conexion = await connectDB();
+           const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Ingresar","El usuario ingresó a la pantalla de citas")',
+           idusuario.Id,
+           );
+           conexion.end()
+           return {estado:"OK"}; 
+       } catch (error) {
+           console.log(error);
+           conexion.end()
+           throw new Error("Error al crear el API");
+        }
+   },
+
    postNuevaCita: async (idusuario)=>{
     let conexion
        try {
@@ -1213,6 +1230,22 @@ postIngresoPerfil: async (idusuario)=>{
            conexion.end()
            throw new Error("Error al crear el API");
        }
+   },
+
+   postSalirPCita: async (idusuario)=>{
+    let conexion
+       try {
+           conexion = await connectDB();
+           const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Salir","El usuario salió de la pantalla de citas")',
+           idusuario.Id,
+           );
+           conexion.end()
+           return {estado:"OK"}; 
+       } catch (error) {
+           console.log(error);
+           conexion.end()
+           throw new Error("Error al crear el API");
+        }
    },
 //----------------MANTENIMIENTO------------------------------------
 //-------------------NUEVA SUCURSAL---------------------

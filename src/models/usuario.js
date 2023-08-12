@@ -35,6 +35,28 @@ export const ModUsuarios = {
     }
 },
 
+PutUsuarioPerfil: async(usuario)=>{
+  let conexion
+  try {
+     conexion = await connectDB()
+      const [filas] = await conexion.query("UPDATE tbl_ms_usuario AS u INNER JOIN tbl_empleado AS e ON u.idEmpleado = e.idEmpleado SET e.nombre =?, e.apellido =?, e.numeroIdentidad =?, u.Correo_Electronico =? WHERE u.Id_usuario =?;",
+      [
+        usuario.nombre,
+        usuario.apellido,
+        usuario.numeroIdentidad,
+        usuario.Correo_Electronico,
+        usuario.id,
+      ] 
+      );
+      conexion.end()
+      return { estado: "ok" };
+  } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al traer el usuario")
+  }
+},
+
   postInsertUsuario: async (usuario) => {
     let conexion
     const rondasSalto = 10;

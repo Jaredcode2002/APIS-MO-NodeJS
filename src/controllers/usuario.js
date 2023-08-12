@@ -16,6 +16,18 @@ export const ContrUsuario = {
         throw new Error("Error al consumir el api")
     }
 },
+
+putUpdUsuarioPerfil:async(req, res)=>{
+  try {
+      const {nombre, apellido,numeroIdentidad, Correo_Electronico, id} = req.body;
+    
+      const result = await ModUsuarios.PutUsuarioPerfil({nombre, apellido,numeroIdentidad, Correo_Electronico, id});
+      res.status(200).json(result);
+  } catch (error) {
+      console.log(error);
+      throw new Error("Error al consumir el api")
+  }
+},
   postUsuario: async (req, res) => {
     try {
       const { id, usuario, nombre, clave, correo, rol } = req.body;
