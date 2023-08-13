@@ -6,7 +6,7 @@ export const ModPago = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago, p.saldoAbono, p.saldoRestante FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago;");
+      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago,p.fecha, p.saldoAbono, p.saldoRestante,p.estado FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -25,12 +25,13 @@ export const ModPago = {
      }else if (Pago.saldoAbono===null) {
       return false
      }else if (Pago.saldoAbono<Pago.saldoRestante) {
+      let saldoRestante = Pago.saldoRestante-Pago.saldoAbono
         const [filas] = await conexion.query('insert into tbl_Pago (IdVenta, IdTipoPago, saldoAbono, saldoRestante,estado) values (?,?,?,?,"Pendiente");',
           [
             Pago.IdVenta,
             Pago.IdTipoPago,
             Pago.saldoAbono,
-            Pago.saldoRestante,
+            saldoRestante,
   
           ]
         );
@@ -42,7 +43,7 @@ export const ModPago = {
             Pago.IdVenta,
             Pago.IdTipoPago,
             Pago.saldoRestante,
-            Pago.saldoRestante,
+            0,
   
           ]
         );
