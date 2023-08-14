@@ -13,47 +13,47 @@ export const ContrPermisos= {
     },
     putPermisosXRolOBJ1:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ1({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ1({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ2:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ2({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ2({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ3:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ3({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ3({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ4:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ4({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ4({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ5:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ5({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ5({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ6:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ6({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ6({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ7:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ7({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ7({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ8:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ8({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ8({idRol,insert,del,select,upd})
         res.json(permisos)
     },
     putPermisosXRolOBJ9:async(req,res)=>{
         const {idRol,insert,del,select,upd} = req.body
-        const permisos =await ModPermisos.getPermisosXRolOBJ9({idRol,insert,del,select,upd})
+        const permisos =await ModPermisos.putPermisosXRolOBJ9({idRol,insert,del,select,upd})
         res.json(permisos)
     },
 
