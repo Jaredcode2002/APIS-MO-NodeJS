@@ -44,6 +44,7 @@ import { ContrPermisos } from "../controllers/permisos.js";
 
 import {ContrRecordatorio} from"../controllers/recordatorio.js"
 import { ContrDescuento } from "../controllers/descuento.js";
+import { ContrLente } from "../controllers/lente.js";
 
 const router = express.Router();
 
@@ -239,10 +240,12 @@ router.post('/bitacora/perfil',ContrBitacora.postIngresoPerfil)
 router.post('/bitacora/cambiocontrasena',ContrBitacora.postContrModifi)
 router.post('/bitacora/cambiopreguntas',ContrBitacora.postPreModifi)
 router.post('/bitacora/salirperfil',ContrBitacora.postSalirPerfil)
-//Recordatotio
+//Citas
+router.post('/bitacora/citas',ContrBitacora.postIngresoPCita)
 router.post('/bitacora/agregarcita',ContrBitacora.postNuevaCita)
 router.post('/bitacora/eliminarcita',ContrBitacora.postBorrarCita)
 router.post('/bitacora/actualizarcita',ContrBitacora.postActualizarCita)
+router.post('/bitacora/citasSalir',ContrBitacora.postSalirCita)
 //Producto
 router.post('/bitacora/insertoproducto',ContrBitacora.postInsertProductoB)
 router.post('/bitacora/saliolistaproductos',ContrBitacora.postSalirListaProductoB)
@@ -441,7 +444,11 @@ router.post('/Descuento/NuevoDescuento',ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento',ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento',ContrDescuento.deleteDescuento)
 
-
+//Lentes
+router.get('/Lentes',ContrLente.getLente)
+router.post('/Lentes/NuevoLente',ContrLente.postInsertLente)
+router.put('/Lentes/ActualizarLente',ContrLente.putUpdLente)
+router.delete('/Lentes/BorrarLente',ContrLente.deleteLente)
 
 
 export default router
