@@ -484,26 +484,12 @@ postPantallaPromocio: async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postPantallaPromocio({Id});
+    } catch (error) {
+        console.log(error);
+    }
+},
 
-    postBorrarCita: async (req, res) => {
-        try {
-            const { Id } = req.body;
-            const result = await ModBitacora.postBorrarCita({ Id });
-            res.status(201).json({ id: result.id });
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    postSalirCita: async (req, res) => {
-        try {
-            const { Id } = req.body;
-            const result = await ModBitacora.postSalirPCita({ Id });
-            res.status(201).json({ id: result.id });
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    //-------------------------------MANTENIMIENTO---------------------------
+//-----------------------------MANTENIMIENTO---------------------------
 
 //-------------------INGRESO A LA PANTALLA DE SUCURSAL-----------------
 postPantallaSucursal : async (req,res)=> {
@@ -522,7 +508,11 @@ postInsertBPromocion: async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postInsertBPromocion({Id});
-=======
+    } catch (error) {
+        console.log(error);
+    }
+},
+
 
 //---------------Nuevo Sucursal--------------------
 postInsertBSucursal: async (req,res)=> {
@@ -1402,12 +1392,4 @@ postEliminarGenero:  async (req,res)=> {
         console.log(error);
     }
 },
-
-
-
-
-
-
-
-
 }
