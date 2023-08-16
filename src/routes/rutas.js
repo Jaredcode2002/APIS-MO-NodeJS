@@ -44,6 +44,7 @@ import { ContrPermisos } from "../controllers/permisos.js";
 
 import {ContrRecordatorio} from"../controllers/recordatorio.js"
 import { ContrDescuento } from "../controllers/descuento.js";
+import { ContrLente } from "../controllers/lente.js";
 
 const router = express.Router();
 
@@ -443,7 +444,11 @@ router.post('/Descuento/NuevoDescuento',ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento',ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento',ContrDescuento.deleteDescuento)
 
-
+//Lentes
+router.get('/Lentes',ContrLente.getLente)
+router.post('/Lentes/NuevoLente',ContrLente.postInsertLente)
+router.put('/Lentes/ActualizarLente',ContrLente.putUpdLente)
+router.delete('/Lentes/BorrarLente',ContrLente.deleteLente)
 
 
 export default router
