@@ -20,8 +20,19 @@ export const ContrVentas ={
     postInsertVentas: async (req, res) => {
         
         try {
-            const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,precioLente,cantidad,IdProducto,idUsuario} = req.body
-            const result = await ModVentas.postInsertVentas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,precioLente,cantidad,IdProducto,idUsuario})
+            const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,cantidad,IdProducto,idUsuario,IdLente} = req.body
+            const result = await ModVentas.postInsertVentas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,IdLente,cantidad,IdProducto,idUsuario})
+            res.status(201).json(result);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    postInsertVentasDeberitasDeberitas: async (req, res) => {
+        
+        try {
+            const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,cantidad,IdProducto,IdLente,precioLente,subtotal,total,nuevoPrecio,rebaja,idUsuario} = req.body
+            const result = await ModVentas.postInsertDeberitasDeberitas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,IdLente,cantidad,IdProducto,rebaja,precioLente,subtotal,total,nuevoPrecio,idUsuario})
             res.status(201).json(result);
         } catch (error) {
             console.log(error);

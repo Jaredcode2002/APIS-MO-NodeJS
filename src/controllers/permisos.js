@@ -56,5 +56,10 @@ export const ContrPermisos= {
         const permisos =await ModPermisos.putPermisosXRolOBJ9({idRol,insert,del,select,upd})
         res.json(permisos)
     },
+    postPermisosObj:async (req,res)=>{
+        const {idRol,idObj}=req.body
+        const permisos = await ModPermisos.postPermisosObj({idRol,idObj})
+        res.json(permisos)
+    },
 
 }

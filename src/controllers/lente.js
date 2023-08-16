@@ -22,8 +22,8 @@ export const ContrLente = {
 
     putUpdLente: async (req, res) => {
         try {
-            const { lente, precio } = req.body;
-            const result = await ModLente.putUpdLente({ lente, precio });
+            const { lente, precio, IdLente } = req.body;
+            const result = await ModLente.putLente({ lente, precio, IdLente });
             res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);

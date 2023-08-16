@@ -36,7 +36,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=1;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -50,12 +50,13 @@ export const ModPermisos = {
     },
     putPermisosXRolOBJ2: async (permisos) => {
         let conexion
+        console.log(permisos);
         try {
          conexion = await connectDB();
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=2;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -74,7 +75,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=3;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -93,7 +94,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=4;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -112,7 +113,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=5;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -131,7 +132,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=6;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -150,7 +151,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=7;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -169,7 +170,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=8;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -188,7 +189,7 @@ export const ModPermisos = {
             const [filas] = await conexion.query("UPDATE tbl_permisos set `Permiso_Insercion`=?,`Permiso_Eliminacion`=?,`Permiso_Actualizacion`=?,`Permiso_Consultar`=? WHERE `Id_Rol`=? and `Id_Objeto`=9;",
             [
             permisos.insert,
-            permisos.delete,
+            permisos.del,
             permisos.upd,
             permisos.select,
             permisos.idRol])
@@ -200,6 +201,17 @@ export const ModPermisos = {
             throw new error("Error al consumir el API")
         }
     },
+    postPermisosObj:async (permisos)=>{
+        let conexion
+        try {
+            conexion=await connectDB()
+            const [filas] = await conexion.query("SELECT `Permiso_Insercion` as insertar,`Permiso_Eliminacion` as eliminar, `Permiso_Actualizacion` as actualizar, `Permiso_Consultar` as consultar FROM tbl_permisos where `Id_Rol`=? and `Id_Objeto`=?",[permisos.idRol,permisos.idObj])
+            conexion.end()
+            return filas
+        } catch (error) {
+            
+        }
+    }
 
 
 }
