@@ -8,13 +8,14 @@ export const ModAutoReg = {
       let conexion
         try {
          conexion = await connectDB();
-          const [filas] = await conexion.query("INSERT INTO  tbl_empleado (nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad) VALUES(?,?,?,3,?,?);",
+          const [filas] = await conexion.query("INSERT INTO  tbl_empleado (nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad) VALUES(?,?,?,1,?,?);",
             [
               empleado.nombre,
               empleado.apellido,
               empleado.telefonoEmpleado,
-              empleado.IdGenero,
-              empleado.numeroIdentidad,
+              empleado.IdSucursal, //Faltaba que se le asignara una sucursal, en este caso se le asigna la 1 por default, para no mostrar tonteras en la tabla
+              empleado.IdGenero, //No esta obteniendo el IdGenero en el AutoRegistro
+              empleado.numeroIdentidad, //No lo obtiene correctamente
             ]
           );
           conexion.end()
@@ -38,8 +39,8 @@ export const ModAutoReg = {
         }    
         try {
            conexion = await connectDB();
-          const [filas] = await conexion.query(
-            "insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia, Id_Rol, Correo_Electronico, Fecha_Vencimiento, idEmpleado, fecha_creacion,fecha_modificacion) values (?, ?, ?, 3, ? ,date_add(current_date(),interval 90 day), ?, current_timestamp(), current_timestamp());",
+          const [filas] = await conexion.query( //Se le asigna un rol=2 de asesor en crudo solo para crearlo.
+            "insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia, Id_Rol, Correo_Electronico, Fecha_Vencimiento, idEmpleado, fecha_creacion,fecha_modificacion) values (?, ?, ?, 2, ? ,date_add(current_date(),interval 90 day), ?, current_timestamp(), current_timestamp());",
             [
               usuario.usuario,
               usuario.nombre,
