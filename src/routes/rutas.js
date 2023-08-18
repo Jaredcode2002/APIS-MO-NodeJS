@@ -114,6 +114,7 @@ router.delete('/Rol/RolEliminado',ContrRol.deleteRol)
 
 //AutoRegistro
 router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo',ContrAutoReg.putUpdateEstadoActivo)
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
