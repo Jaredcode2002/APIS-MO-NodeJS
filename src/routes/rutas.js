@@ -44,6 +44,7 @@ import { ContrPermisos } from "../controllers/permisos.js";
 
 import {ContrRecordatorio} from"../controllers/recordatorio.js"
 import { ContrDescuento } from "../controllers/descuento.js";
+import { ContrLente } from "../controllers/lente.js";
 
 const router = express.Router();
 
@@ -97,6 +98,7 @@ router.post('/compra/NuevaCompra',ContrCompra.postInsertCompra)
 router.get('/Ventas',ContrVentas.getVentas)
 router.post('/VentaDetalle',ContrVentas.getVentaDetalle)
 router.post('/Ventas/NuevaVenta',ContrVentas.postInsertVentas)
+router.post('/Ventas/NuevaVentaDbdb',ContrVentas.postInsertVentasDeberitasDeberitas)
 
 //Gestion 
 router.get('/Gestion',ContrGestion.getSucursal)
@@ -112,6 +114,7 @@ router.delete('/Rol/RolEliminado',ContrRol.deleteRol)
 
 //AutoRegistro
 router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo',ContrAutoReg.putUpdateEstadoActivo)
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
@@ -418,6 +421,7 @@ router.delete('/Genero/borrar',ContrGenero.deleteGenero)
 //Permisos
 router.get("/permisos", ContrPermisos.getPermisos)
 router.post("/permisosRol", ContrPermisos.getPermisosXRol)
+router.post("/permiso/consulta",ContrPermisos.postPermisosObj)
 router.put("/permisosOBJ1",ContrPermisos.putPermisosXRolOBJ1)
 router.put("/permisosOBJ2",ContrPermisos.putPermisosXRolOBJ2)
 router.put("/permisosOBJ3",ContrPermisos.putPermisosXRolOBJ3)
@@ -443,7 +447,11 @@ router.post('/Descuento/NuevoDescuento',ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento',ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento',ContrDescuento.deleteDescuento)
 
-
+//Lentes
+router.get('/Lentes',ContrLente.getLente)
+router.post('/Lentes/NuevoLente',ContrLente.postInsertLente)
+router.put('/Lentes/ActualizarLente',ContrLente.putUpdLente)
+router.delete('/Lentes/BorrarLente',ContrLente.deleteLente)
 
 
 export default router

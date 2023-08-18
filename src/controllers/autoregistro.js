@@ -12,7 +12,7 @@ export const ContrAutoReg = {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         telefonoEmpleado: req.body.telefonoEmpleado,
-        IdSucursal: req.body.IdSucursal,
+        //IdSucursal: req.body.IdSucursal,
         IdGenero: req.body.IdGenero,
         numeroIdentidad: req.body.numeroIdentidad
       });
@@ -33,5 +33,18 @@ export const ContrAutoReg = {
       res.status(500).json({ message: "Error creating user" });
     }
   },
+
+  putUpdateEstadoActivo: async (req, res) => {
+    try {
+      const { Id_Usuario } = req.body;
+      const result = await ModAutoReg.putUpdateEstadoActivo({ Id_Usuario });
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al consumir el api");
+    }
+  },
+
+
   
 };
