@@ -1,6 +1,7 @@
 import { ModUsuarios } from "../models/usuario.js";
 
 export const ContrUsuario = {
+  
   getUsuarios: async (req, res) => {
     const users = await ModUsuarios.getUsuarios();
     res.json(users);
