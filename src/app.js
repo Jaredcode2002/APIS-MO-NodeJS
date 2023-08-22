@@ -15,4 +15,4 @@ app.use(morgan('dev'))
 app.use('/api',router)
 
 
-app.listen(PORT,()=>console.log(`Servidor corriendo en puerto ${PORT}`))
+app.listen(PORT,()=>console.log(`Servidor corriendo en puerto ${PORT}`)) 
