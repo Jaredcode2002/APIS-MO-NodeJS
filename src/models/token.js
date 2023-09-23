@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { MailMod } from "./correo.js";
-import { connectDB } from "../config/Conn.js";
+import { MailMod } from "../models/correo.js";
+import { connectDB } from "./config/Conn.js";
 
 export const TokenMod = {
   guardarToken: async (destinatario, token) => {
