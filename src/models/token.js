@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { MailMod } from "./correo.js";
+//import { MailMod } from "./correo.js";
 import { connectDB } from "../config/Conn.js";
 
 export const TokenMod = {
