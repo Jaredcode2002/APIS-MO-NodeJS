@@ -4,8 +4,10 @@ import router from "./routes/rutas.js";
 import cors from "cors";
 import morgan from 'morgan'//desinstalable
 
-const PORT = process.env.PORT || 4000
-const app = express()
+const app = express();
+app.set('port', process.env.PORT || 4000);
+//const PORT = process.env.PORT || 4000;
+app.use(express.json());
 
 app.use(cors())
 app.use(bodyParser.json())
