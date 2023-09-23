@@ -1,4 +1,4 @@
-import  {TokenMod}  from "../Models/token.js";
+import  {TokenMod}  from "../models/token.js";
 
 
     export const TokenContr = {
