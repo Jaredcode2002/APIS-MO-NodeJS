@@ -6,7 +6,7 @@ export const ModTipoPago = {
     let conexion
     try {
     conexion = await connectDB();
-      const [filas] = await conexion.query("select * from tbl_TipoPago");
+      const [filas] = await conexion.query("select * from tbl_tipopago");
       conexion.end()
       return filas;
     } catch (error) {
@@ -20,7 +20,7 @@ export const ModTipoPago = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_TipoPago (descripcion) values (?);",
+      const [filas] = await conexion.query("insert into tbl_tipopago (descripcion) values (?);",
         [
           TipoPago.descripcion,
         ]
@@ -37,7 +37,7 @@ export const ModTipoPago = {
     let conexion
       try {
          conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_TipoPago set descripcion = ? WHERE IdTipoPago= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_tipopago set descripcion = ? WHERE IdTipoPago= ?;",
         [
           TipoPago.descripcion,
           TipoPago.IdTipoPago
@@ -55,7 +55,7 @@ export const ModTipoPago = {
     let conexion
     try {
        conexion = await connectDB();
-      await conexion.query("DELETE FROM tbl_TipoPago WHERE IdTipoPago = ?;", 
+      await conexion.query("DELETE FROM tbl_tipopago WHERE IdTipoPago = ?;", 
       [
         TipoPago.IdTipoPago,
       ]);
