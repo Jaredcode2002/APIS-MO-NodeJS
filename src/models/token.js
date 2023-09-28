@@ -22,7 +22,7 @@ export const TokenMod = {
     try {
       conexion = await connectDB();
       const [rows] = await conexion.execute(
-        "SELECT * FROM TBL_Token WHERE Id_Usuario = ? ORDER BY IdToken DESC LIMIT 1;",
+        "SELECT * FROM tbl_token WHERE Id_Usuario = ? ORDER BY IdToken DESC LIMIT 1;",
         [idUsuario]
       );
       conexion.end()
