@@ -66,6 +66,7 @@ router.put('/usuario/UpdContra', ContrUsuario.putUpdatePassword)
 router.put('/usuario/ActualizarContra', ContrUsuario.ActualizarContra)//por algun pedo futuro. Att: Jared del pasado
 router.post('/usuario/compararContra', ContrUsuario.compararContraVSHistorial)
 router.post('/usuario/histPasswrd', ContrUsuario.postHistPassword)
+router.put('/actualizarPerfil', ContrUsuario.putUpdUsuarioPerfil)
 
 
 //token
