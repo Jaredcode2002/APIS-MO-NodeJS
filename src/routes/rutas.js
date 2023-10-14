@@ -66,6 +66,7 @@ router.put('/usuario/UpdContra', ContrUsuario.putUpdatePassword)
 router.put('/usuario/ActualizarContra', ContrUsuario.ActualizarContra)//por algun pedo futuro. Att: Jared del pasado
 router.post('/usuario/compararContra', ContrUsuario.compararContraVSHistorial)
 router.post('/usuario/histPasswrd', ContrUsuario.postHistPassword)
+router.put('/actualizarPerfil', ContrUsuario.putUpdUsuarioPerfil)
 
 
 //token
@@ -148,11 +149,13 @@ router.delete('/empleado/eliminar', ContrEmpleado.delEmpleado)
 router.get('/empleado/sucursal', ContrEmpleado.getSucursales)
 router.get('/empleado/genero', ContrEmpleado.getGeneros)
 router.post('/empleado/RegistroInvalido', ContrEmpleado.getEmpleadoExist) //Para consultar empleado existente
-
+ 
 
 //preguntas
 router.get('/preguntas', ContrPreguntas.getPreguntas)
 router.post('/preguntas/agregar', ContrPreguntas.postPreguntas)
+router.put('/preguntas/editar', ContrPreguntas.putPreguntas)
+router.delete('/preguntas/eliminar', ContrPreguntas.delPreguntas)
 router.get('/preguntas/respuestas', ContrPreguntas.getRespuestas)
 router.post('/preguntas/respuestas/agregar', ContrPreguntas.postRespuestas)
 router.post('/preguntas/compararR', ContrPreguntas.compararRespuesta)
