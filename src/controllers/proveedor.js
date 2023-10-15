@@ -11,7 +11,11 @@ export const ContrProveedor= {
         try {
             const{CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico}= req.body;
             const result = await ModProveedor.postInsertProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico});
-            res.status(201).json({ id: result.id });
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -21,7 +25,7 @@ export const ContrProveedor= {
         try {
             const{CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor}= req.body;
             const result = await ModProveedor.putUpdateProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor});
-            res.status(201).json({ id: result.id });
+            res.status(201).json({ id: result });
         } catch (error) {
             console.log(error);
         }
