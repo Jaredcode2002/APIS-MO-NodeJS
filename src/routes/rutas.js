@@ -246,7 +246,9 @@ router.post('/bitacora/Actualizacioncexpediente', ContrBitacora.postActualizarCl
 router.post('/bitacora/Eliminarexpediente', ContrBitacora.postEliminarClientes)
 //Perfil 
 router.post('/bitacora/perfil', ContrBitacora.postIngresoPerfil)
+router.post('/bitacora/cambioPerfil', ContrBitacora.postPerfilModifi)
 router.post('/bitacora/cambiocontrasena', ContrBitacora.postContrModifi)
+router.post('/bitacora/nuevaPregunta', ContrBitacora.postPreguntasAgg)
 router.post('/bitacora/cambiopreguntas', ContrBitacora.postPreModifi)
 router.post('/bitacora/salirperfil', ContrBitacora.postSalirPerfil)
 //Citas
