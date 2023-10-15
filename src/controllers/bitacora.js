@@ -786,10 +786,30 @@ postIngresoPerfil: async (req,res)=> {
     }
 },
 
+postPerfilModifi: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postPerfilModifi({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
 postContrModifi: async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postContrModifi({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+postPreguntasAgg: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postPreguntasAgg({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);

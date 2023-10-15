@@ -15,6 +15,7 @@ export const ModPreguntas = {
       throw new Error("Error al obtener las preguntas");
     }
   },
+
   postInsertPreguntas: async (preguntas) => {
     let conexion
     try {
@@ -30,36 +31,39 @@ export const ModPreguntas = {
         // Ya existe un registro con los mismos valores
         conexion.end();
         throw new Error("Este registro ya ha sido ingresado anteriormente.");
+      } else {
+        const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,?);",
+          [
+            preguntas.pregunta,
+            preguntas.creadoPor,
+            preguntas.FechaCrea,
+
+          ]
+        );
+        conexion.end()
+        return { id: filas.insertId };
       }
 
-      const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,?);",
-        [
-          preguntas.pregunta,
-          preguntas.creadoPor,
-          preguntas.FechaCrea,
-
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
     } catch (error) {
       console.log(error);
       conexion.end()
       throw new Error("Error ingresar las preguntas");
     }
   },
+
+
   putPreguntas: async (preguntas) => {
     let conexion;
     try {
       conexion = await connectDB();
-  
+
       // Verificar si la pregunta ya existe
       const [existingRows] = await conexion.query(
         "SELECT * FROM tbl_ms_preguntas WHERE Pregunta = ?;",
         [preguntas.pregunta]
       );
-  
-      if (existingRows.length >0) {
+
+      if (existingRows.length > 0) {
         conexion.end();
         throw new Error("Esta pregunta ya ha sido registrada");
       } else {
@@ -72,7 +76,7 @@ export const ModPreguntas = {
             preguntas.Id_Pregunta,
           ]
         );
-  
+
         conexion.end();
         return { estado: "ok" };
       }
@@ -81,7 +85,7 @@ export const ModPreguntas = {
       conexion.end();
       throw new Error("Error al actualizar la pregunta");
     }
-  },  
+  },
 
   DeletePreguntas: async (preguntas) => {
     let conexion
@@ -120,10 +124,10 @@ export const ModPreguntas = {
 
       // Verificar si ya existe un registro con el mismo Id_Pregunta y Respuesta
       const [existingRows] = await conexion.query(
-        "SELECT * FROM tbl_ms_preguntas_usuario WHERE Id_Usuario = ? AND Id_Pregunta = ? AND Respuesta = ?",
-        [respuestas.idUser, respuestas.idPregunta, respuestas.respuesta]
+        "SELECT * FROM tbl_ms_preguntas_usuario WHERE Id_Usuario = ? AND Id_Pregunta = ? ",
+        [respuestas.idUser, respuestas.idPregunta]
       );
-  
+
       if (existingRows.length > 0) {
         // Ya existe un registro con los mismos valores
         conexion.end();
@@ -214,9 +218,10 @@ export const ModPreguntas = {
     let conexion
     try {
       conexion = await connectDB()
-      const [filas] = await conexion.query("DELETE FROM `tbl_ms_preguntas_usuario` WHERE `Id_Pregunta`=? AND `Id_Usuario`=`Id_Usuario`;",
+      const [filas] = await conexion.query("DELETE FROM `tbl_ms_preguntas_usuario` WHERE `Id_Pregunta`=? AND `Id_Usuario`=?;",
         [
           usuario.Id_Pregunta,
+          usuario.Id_Usuario
         ]
       );
       conexion.end()

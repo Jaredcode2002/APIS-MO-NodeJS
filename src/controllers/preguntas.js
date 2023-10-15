@@ -105,8 +105,8 @@ export const ContrPreguntas = {
     },
     delRespuestas:async(req, res)=>{
         try {
-            const {Id_Pregunta} = req.body;
-            const result = await ModPreguntas.DeleteRespuestas({Id_Pregunta});
+            const {Id_Pregunta, Id_Usuario} = req.body;
+            const result = await ModPreguntas.DeleteRespuestas({Id_Pregunta, Id_Usuario});
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
