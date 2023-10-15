@@ -19,7 +19,7 @@ export const ContrProveedor= {
 
     putUpdateProveedor:async(req,res)=>{
         try {
-            const{CiaProveedora,encargado,IdPaisais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor}= req.body;
+            const{CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor}= req.body;
             const result = await ModProveedor.putUpdateProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico,IdProveedor});
             res.status(201).json({ id: result.id });
         } catch (error) {
