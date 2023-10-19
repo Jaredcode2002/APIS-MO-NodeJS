@@ -346,11 +346,13 @@ router.get('/parametros', ContrParametro.getIntentos)
 router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
+router.get('/parametros/bitacora',ContrParametro.getBitacora)
 router.put('/parametros/actualizar', ContrParametro.putParametro)
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
 router.put('/parametros/actualizar', ContrParametro.putImpuesto)
 router.put('/parametros/actualizar', ContrParametro.putTiempoDReuintentoLogin)
+router.put('/parametro/bitacora',ContrParametro.putBitacora)
 
 //Producto
 router.get('/producto', ContrProducto.getProducto)
