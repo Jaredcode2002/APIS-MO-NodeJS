@@ -6,6 +6,10 @@ export const ContrUsuario = {
     const users = await ModUsuarios.getUsuarios();
     res.json(users);
   },
+  getUsuariosABlockInnactivos: async (req, res) => {
+    const users = await ModUsuarios.getUsuariosBlockInactivos();
+    res.json(users);
+  },
   getUsuario:async(req, res)=>{
     try {
         const {Correo_Electronico} = req.body;
@@ -32,15 +36,10 @@ putUpdUsuarioPerfil:async(req, res)=>{
   postUsuario: async (req, res) => {
     try {
       const { id, usuario, nombre, clave, correo, rol } = req.body;
-      const result = await ModUsuarios.postInsertUsuario({
-        id,
-        usuario,
-        nombre,
-        clave,
-        correo,
-        rol,
-      });
-      res.status(201).json({ id: result.id });
+      console.log({id,usuario,nombre,clave,correo,rol});
+      const result = await ModUsuarios.postInsertUsuario({id,usuario,nombre,clave,correo,rol});
+      console.log(result);
+      res.status(201).json(result);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error creating user" });
@@ -53,7 +52,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
         usuario,
         nombreUsuario,
         estadoUsuario,
-        clave,
         idRol,
         correo,
         idEmpleado,
@@ -63,20 +61,11 @@ putUpdUsuarioPerfil:async(req, res)=>{
         usuario,
         nombreUsuario,
         estadoUsuario,
-        clave,
         idRol,
         correo,
         idEmpleado,
         idUsuario,
       });
-
-      const data ={
-        clave:clave,
-        id:idUsuario,
-        autor:nombreUsuario
-      }
-
-      const result2= await ModUsuarios.postHistPasswrd(data)
       console.log("ok");
       res.status(200).json({ response: "Ok" });
     } catch (error) {
@@ -114,6 +103,18 @@ putUpdUsuarioPerfil:async(req, res)=>{
       throw new Error("Error al consumir el api");
     }
   },
+
+  putUpdateEstadoUsuario: async (req, res) => {//Edicion del usuario (solamente el estado)
+    try {
+      const { id,estado } = req.body;
+      const result = await ModUsuarios.PutUsuarioEstado({ id,estado });
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al consumir el api");
+    }
+  },
+
   putUpdateEstadoActivo: async (req, res) => {
     try {
       const { correo } = req.body;

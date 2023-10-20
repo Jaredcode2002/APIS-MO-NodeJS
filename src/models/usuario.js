@@ -9,7 +9,7 @@ export const ModUsuarios = {
     try {
        conexion = await connectDB();
       const [filas] = await conexion.query(
-        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol`;"
+        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`='Activo'"
       );
       conexion.end()
       return filas;
@@ -19,6 +19,22 @@ export const ModUsuarios = {
       throw new Error("Error al obtener usuarios");
     }
   },
+  getUsuariosBlockInactivos:async()=>{
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`!='Activo'"
+      );
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener usuarios");
+    }
+  }
+  ,
   getUsuario: async(usuario)=>{
     let conexion
     try {
@@ -57,10 +73,31 @@ PutUsuarioPerfil: async(usuario)=>{
   }
 },
 
+PutUsuarioEstado: async(usuario)=>{
+  let conexion
+  try {
+     conexion = await connectDB()
+      const [filas] = await conexion.query("UPDATE tbl_ms_usuario set `Estado_Usuario`=? where `Id_Usuario`=?",
+      [
+       usuario.estado,
+        usuario.id,
+      ] 
+      );
+      conexion.end()
+      return { estado: "ok" };
+  } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al traer el usuario")
+  }
+},
+
+
   postInsertUsuario: async (usuario) => {
     let conexion
     const rondasSalto = 10;
     let hash
+    console.log(usuario);
     try {
       const saltos = await bcrypt.genSalt(rondasSalto);
        hash = await bcrypt.hash(usuario.clave, saltos);
@@ -69,29 +106,56 @@ PutUsuarioPerfil: async(usuario)=>{
     }    
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query(
-        'insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia,Id_Rol, Correo_Electronico, idEmpleado, fecha_creacion,fecha_modificacion,Estado_Usuario,Fecha_Vencimiento)values (?, ?, ?, ?, ?, ?, current_timestamp(), current_timestamp(),"Nuevo",date_add(current_date(),interval 90 day));',
-        [
-          usuario.usuario,
-          usuario.nombre,
-          hash,
-          usuario.rol,
-          usuario.correo,
-          usuario.id,
-        ]
-      );
-      let data = {
-        id:filas.insertId,
-        clave:usuario.clave,
-        autor:usuario.nombre
-      }
-      ModUsuarios.postHistPasswrd(data)
-      conexion.end()
-      return { id: filas.insertId };
+       let exist= await ModUsuarios.userExist(usuario)
+
+       if (!exist) {
+        const [filas] = await conexion.query(
+          'insert into TBL_MS_USUARIO (Usuario, Nombre_Usuario, Contrasenia,Id_Rol, Correo_Electronico, idEmpleado, fecha_creacion,fecha_modificacion,Estado_Usuario,Fecha_Vencimiento)values (?, ?, ?, ?, ?, ?, current_timestamp(), current_timestamp(),"Nuevo",date_add(current_date(),interval 90 day));',
+          [
+            usuario.usuario,
+            usuario.nombre,
+            hash,
+            usuario.rol,
+            usuario.correo,
+            usuario.id,
+          ]
+        );
+        let data = {
+          id:filas.insertId,
+          clave:usuario.clave,
+          autor:usuario.nombre
+        }
+        ModUsuarios.postHistPasswrd(data)
+        conexion.end()
+        return { id: filas.insertId };
+       }else{
+        return false
+       }
+      
     } catch (error) {
       console.log(error);
       conexion.end()
       throw new Error("Error al crear usuarios");
+    }
+  },
+  userExist: async (Usuario) => {
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "select u.Nombre_Usuario,u.Estado_Usuario,r.Rol,u.Correo_Electronico,u.Id_Usuario,u.`Id_Rol` as idRol from TBL_MS_USUARIO as u INNER JOIN tbl_ms_roles as r  ON  u.`Id_Rol` = r.`Id_Rol`   where Correo_Electronico  =  ? OR `Nombre_Usuario` = ?",
+        [Usuario.correo,Usuario.nombre]
+      );
+      conexion.end()
+      console.log(filas.length > 0);
+      if (filas.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      conexion.end()
     }
   },
 
@@ -133,24 +197,14 @@ PutUsuarioPerfil: async(usuario)=>{
 
   putUpdateUsuario: async (usuario) => {
     let conexion
-    const rondasSalto = 10;
-    let hash
-    try {
-      const saltos = await bcrypt.genSalt(rondasSalto);
-       hash = await bcrypt.hash(usuario.clave, saltos);
-    } catch (error) {
-      throw new Error(error);
-    }  
-    console.log(hash);
     try {
      conexion = await connectDB();
       const [filas] = await conexion.query(
-        "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Estado_Usuario = ?, Contrasenia = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
+        "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Estado_Usuario = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
         [
           usuario.usuario,
           usuario.nombreUsuario,
           usuario.estadoUsuario,
-          hash,
           usuario.idRol,
           usuario.correo,
           usuario.idUsuario,
