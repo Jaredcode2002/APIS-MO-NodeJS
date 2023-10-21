@@ -97,7 +97,7 @@ export const ModParametro = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor(?) where `Id_Parametro`=1",
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=1",
         parametro.Parametro,
       );
       conexion.end()
@@ -112,7 +112,7 @@ export const ModParametro = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor(?) where `Id_Parametro`=2",
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=2",
         parametro.Parametro,
       );
       conexion.end()
@@ -127,7 +127,7 @@ export const ModParametro = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor(?) where `Id_Parametro`=7",
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=7",
         parametro.Parametro,
       );
       conexion.end()
@@ -142,7 +142,35 @@ export const ModParametro = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor(?) where `Id_Parametro`=9",
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=9",
+        parametro.Parametro,
+      );
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al actualizar el tiempo de Intentos del Login");
+    }
+  },
+  getBitacora: async () => {
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=10");
+      conexion.end()
+      return filas[0];
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener los intentos");
+    }
+  },
+  put_Bitacora: async (parametro) => {
+    let conexion
+    try {
+     conexion = await connectDB();
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=10",
         parametro.Parametro,
       );
       conexion.end()

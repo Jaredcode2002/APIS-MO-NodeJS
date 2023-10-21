@@ -54,6 +54,7 @@ const router = express.Router();
 
 //usuario
 router.get('/usuarios', ContrUsuario.getUsuarios)
+router.get('/usuarios/inactivos',ContrUsuario.getUsuariosABlockInnactivos)
 router.post('/usuario', ContrUsuario.getUsuario)
 router.post('/usuario/insert', ContrUsuario.postUsuario)
 router.put('/usuario/update', ContrUsuario.putUsuario)
@@ -62,6 +63,7 @@ router.delete('/usuario/delete', ContrUsuario.delUsuario)
 router.get('/usuario/fechaExp', ContrUsuario.getFechaExp)
 router.put('/usuario/estado', ContrUsuario.putUpdateEstado)
 router.put('/usuario/estado/activo', ContrUsuario.putUpdateEstadoActivo)
+router.put('/usuario/estado/seleccionado', ContrUsuario.putUpdateEstadoUsuario)
 router.put('/usuario/UpdContra', ContrUsuario.putUpdatePassword)
 router.put('/usuario/ActualizarContra', ContrUsuario.ActualizarContra)//por algun pedo futuro. Att: Jared del pasado
 router.post('/usuario/compararContra', ContrUsuario.compararContraVSHistorial)
@@ -346,11 +348,13 @@ router.get('/parametros', ContrParametro.getIntentos)
 router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
+router.get('/parametros/bitacora',ContrParametro.getBitacora)
 router.put('/parametros/actualizar', ContrParametro.putParametro)
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
 router.put('/parametros/actualizar', ContrParametro.putImpuesto)
 router.put('/parametros/actualizar', ContrParametro.putTiempoDReuintentoLogin)
+router.put('/parametro/bitacora',ContrParametro.putBitacora)
 
 //Producto
 router.get('/producto', ContrProducto.getProducto)
