@@ -159,6 +159,7 @@ router.delete('/preguntas/eliminar', ContrPreguntas.delPreguntas)
 router.get('/preguntas/respuestas', ContrPreguntas.getRespuestas)
 router.post('/preguntas/respuestas/agregar', ContrPreguntas.postRespuestas)
 router.post('/preguntas/compararR', ContrPreguntas.compararRespuesta)
+router.post('/eliminarPregConfig', ContrPreguntas.delRespuestasUsuario)
 
 router.post('/correo/existe', ContrPreguntas.getUser)
 router.post('/pregYresp', ContrPreguntas.getPyR)
@@ -500,6 +501,8 @@ router.get('/backup', (req, res) => {
 router.get('/archivos', (req, res) => {
   try {
     const files = fs.readdirSync('./uploads');
+     // Ordena los nombres de archivo de forma ascendente
+     files.sort();
     res.json(files);
   } catch (error) {
     console.error(error);

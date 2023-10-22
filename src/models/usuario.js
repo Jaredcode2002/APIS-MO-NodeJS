@@ -23,7 +23,7 @@ export const ModUsuarios = {
     let conexion
     try {
        conexion = await connectDB()
-        const [filas] = await conexion.query("SELECT u.`Id_Usuario`, u.`Contrasenia`, u.`Nombre_Usuario`, e.nombre, e.apellido, e.`numeroIdentidad`,r.`Rol`, u.`Correo_Electronico`, u.`idEmpleado` FROM tbl_ms_usuario as u INNER JOIN tbl_empleado as e on  u.`idEmpleado`=e.`idEmpleado`  INNER JOIN tbl_ms_roles as r on  u.`Id_Rol`=r.`Id_Rol` WHERE u.`Correo_Electronico`=? ",
+        const [filas] = await conexion.query("SELECT u.`Id_Usuario`, u.`Contrasenia`, u.`Nombre_Usuario`, e.nombre, e.apellido, e.`numeroIdentidad`,r.`Rol`, u.`Correo_Electronico`, e.`telefonoEmpleado`, u.`idEmpleado` FROM tbl_ms_usuario as u INNER JOIN tbl_empleado as e on  u.`idEmpleado`=e.`idEmpleado`  INNER JOIN tbl_ms_roles as r on  u.`Id_Rol`=r.`Id_Rol` WHERE u.`Correo_Electronico`=? ",
         [usuario.Correo_Electronico] );
         conexion.end()
         return filas[0];
