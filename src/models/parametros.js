@@ -5,7 +5,7 @@ export const ModParametro = {
   getParametros: async () => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("select * from tbl_ms_parametros");
       conexion.end()
       return filas;
@@ -15,21 +15,15 @@ export const ModParametro = {
       throw new Error("Error al obtener los parametros");
     }
   },
+
   putParametro: async (parametro) => {
     let conexion
+    conexion = await connectDB()
     try {
-      conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set  Id_Usuario=?, Parametro=?, Valor=?, creado_por=?, fecha_creacion=?, modificado_por=?, fecha_modificacion=? where Id_Parametro =?;",
+      const [filas] = await conexion.query("UPDATE TBL_MS_PARAMETROS SET Valor = ? WHERE Id_Parametro = ?;",
         [
-          parametro.Id_Usuario,
-          parametro.Parametro,
           parametro.Valor,
-          parametro.creado_por,
-          parametro.fecha_creacion,
-          parametro.modificado_por,
-          parametro.fecha_modificacion,
           parametro.Id_Parametro,
-
         ]
       )
       conexion.end()
@@ -40,11 +34,11 @@ export const ModParametro = {
       throw new Error("Error al actualizar el parametro")
     }
   },
-  getIntentos: async () => {
+  getIntentos: async () => { //#1
     let conexion
     try {
-       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=1'");
+      conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=1;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -54,10 +48,10 @@ export const ModParametro = {
     }
   },
   //Usado en la pantalla del perfil en agregar preguntas según el parámetro
-  getPreguntas: async () => {
+  getPreguntas: async () => { //#2
     let conexion
     try {
-     conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("SELECT valor FROM tbl_ms_parametros where `Id_Parametro`=2");
       conexion.end()
       return filas[0].valor; // Solo devolvemos el valor del parámetro 'ADMIN_PREGUNTAS' JohaLa26
@@ -67,10 +61,25 @@ export const ModParametro = {
       throw new Error("Error al obtener las preguntas");
     }
   },
+
+  getCorreo: async () => { //#3
+    let conexion
+    try {
+      conexion = await connectDB();
+      const { filas } = await conexion.query("SELECT valor FROM tbl_ms_parametros where `Id_Parametro`=3");
+      conexion.end();
+      return filas[0].valor;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al obtener las preguntas");
+    }
+
+  },
+
   getImpuesto: async () => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=7'");
       conexion.end()
       return filas;
@@ -83,7 +92,7 @@ export const ModParametro = {
   get_TiempoDReuintentoLogin: async () => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=9'");
       conexion.end()
       return filas;
@@ -96,7 +105,7 @@ export const ModParametro = {
   put_Intentos: async (parametro) => {
     let conexion
     try {
-     conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=1",
         parametro.Parametro,
       );
@@ -111,7 +120,7 @@ export const ModParametro = {
   put_Preguntas: async (parametro) => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=2",
         parametro.Parametro,
       );
@@ -126,7 +135,7 @@ export const ModParametro = {
   put_Impuesto: async (parametro) => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=7",
         parametro.Parametro,
       );
@@ -141,7 +150,7 @@ export const ModParametro = {
   put_TiempoDReuintentoLogin: async (parametro) => {
     let conexion
     try {
-     conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=9",
         parametro.Parametro,
       );
@@ -156,7 +165,7 @@ export const ModParametro = {
   getBitacora: async () => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=10");
       conexion.end()
       return filas[0];
@@ -169,7 +178,7 @@ export const ModParametro = {
   put_Bitacora: async (parametro) => {
     let conexion
     try {
-     conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=10",
         parametro.Parametro,
       );
