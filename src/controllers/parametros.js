@@ -25,10 +25,12 @@ export const ContrParametro = {
     const Parametro = await ModParametro.getIntentos();
     res.status(200).json(Parametro);
   },
+
   getCorreo: async (req,res) =>{
     const Parametro = await ModParametro.getCorreo();
     res.status(200).json(Parametro)
   },
+
   getBitacora: async (req,res) => {
     const Parametro = await ModParametro.getBitacora();
     res.status(200).json(Parametro);
