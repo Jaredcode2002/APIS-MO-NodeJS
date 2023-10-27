@@ -20,6 +20,34 @@ export const ContrPreguntas = {
             res.status(500).json({ message: "Error al ingresar las preguntas" });
         }
     },
+
+    putPreguntas: async (req, res) => {
+        try {
+          const {pregunta, modificado_por, fecha_modificacion,  Id_Pregunta} = req.body;
+          const result = await ModPreguntas.putPreguntas({
+            pregunta, 
+            modificado_por,
+            fecha_modificacion,
+            Id_Pregunta,
+          });
+          res.status(200).json({response:"Ok"})
+        } catch (error) {
+            console.error(error); // Cambiar a console.error en lugar de console.log
+            res.status(500).json({ error: "Error al consumir el API" }); // Devuelve un error HTTP 500
+        }
+    },
+
+    delPreguntas:async(req, res)=>{
+        try {
+            const {Id_Pregunta} = req.body;
+            const result = await ModPreguntas.DeletePreguntas({Id_Pregunta});
+            res.status(200).json({ response: "Ok" })
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+        }
+    },
+
     getRespuestas: async (req, res) => {
         const preg = await ModPreguntas.getRespuestas();
         res.json(preg);
@@ -77,8 +105,18 @@ export const ContrPreguntas = {
     },
     delRespuestas:async(req, res)=>{
         try {
-            const {Id_Pregunta} = req.body;
-            const result = await ModPreguntas.DeleteRespuestas({Id_Pregunta});
+            const {Id_Pregunta, Id_Usuario} = req.body;
+            const result = await ModPreguntas.DeleteRespuestas({Id_Pregunta, Id_Usuario});
+            res.status(200).json({ response: "Ok" })
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+        }
+    },
+    delRespuestasUsuario:async(req, res)=>{
+        try {
+            const {Id_Usuario} = req.body;
+            const result = await ModPreguntas.DeleteRespuestasUsuario({Id_Usuario});
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);

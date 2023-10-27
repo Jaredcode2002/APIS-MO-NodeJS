@@ -54,6 +54,7 @@ const router = express.Router();
 
 //usuario
 router.get('/usuarios', ContrUsuario.getUsuarios)
+router.get('/usuarios/inactivos',ContrUsuario.getUsuariosABlockInnactivos)
 router.post('/usuario', ContrUsuario.getUsuario)
 router.post('/usuario/insert', ContrUsuario.postUsuario)
 router.put('/usuario/update', ContrUsuario.putUsuario)
@@ -62,10 +63,12 @@ router.delete('/usuario/delete', ContrUsuario.delUsuario)
 router.get('/usuario/fechaExp', ContrUsuario.getFechaExp)
 router.put('/usuario/estado', ContrUsuario.putUpdateEstado)
 router.put('/usuario/estado/activo', ContrUsuario.putUpdateEstadoActivo)
+router.put('/usuario/estado/seleccionado', ContrUsuario.putUpdateEstadoUsuario)
 router.put('/usuario/UpdContra', ContrUsuario.putUpdatePassword)
 router.put('/usuario/ActualizarContra', ContrUsuario.ActualizarContra)//por algun pedo futuro. Att: Jared del pasado
 router.post('/usuario/compararContra', ContrUsuario.compararContraVSHistorial)
 router.post('/usuario/histPasswrd', ContrUsuario.postHistPassword)
+router.put('/actualizarPerfil', ContrUsuario.putUpdUsuarioPerfil)
 
 
 //token
@@ -148,14 +151,17 @@ router.delete('/empleado/eliminar', ContrEmpleado.delEmpleado)
 router.get('/empleado/sucursal', ContrEmpleado.getSucursales)
 router.get('/empleado/genero', ContrEmpleado.getGeneros)
 router.post('/empleado/RegistroInvalido', ContrEmpleado.getEmpleadoExist) //Para consultar empleado existente
-
+ 
 
 //preguntas
 router.get('/preguntas', ContrPreguntas.getPreguntas)
 router.post('/preguntas/agregar', ContrPreguntas.postPreguntas)
+router.put('/preguntas/editar', ContrPreguntas.putPreguntas)
+router.delete('/preguntas/eliminar', ContrPreguntas.delPreguntas)
 router.get('/preguntas/respuestas', ContrPreguntas.getRespuestas)
 router.post('/preguntas/respuestas/agregar', ContrPreguntas.postRespuestas)
 router.post('/preguntas/compararR', ContrPreguntas.compararRespuesta)
+router.post('/eliminarPregConfig', ContrPreguntas.delRespuestasUsuario)
 
 router.post('/correo/existe', ContrPreguntas.getUser)
 router.post('/pregYresp', ContrPreguntas.getPyR)
@@ -243,7 +249,9 @@ router.post('/bitacora/Actualizacioncexpediente', ContrBitacora.postActualizarCl
 router.post('/bitacora/Eliminarexpediente', ContrBitacora.postEliminarClientes)
 //Perfil 
 router.post('/bitacora/perfil', ContrBitacora.postIngresoPerfil)
+router.post('/bitacora/cambioPerfil', ContrBitacora.postPerfilModifi)
 router.post('/bitacora/cambiocontrasena', ContrBitacora.postContrModifi)
+router.post('/bitacora/nuevaPregunta', ContrBitacora.postPreguntasAgg)
 router.post('/bitacora/cambiopreguntas', ContrBitacora.postPreModifi)
 router.post('/bitacora/salirperfil', ContrBitacora.postSalirPerfil)
 //Citas
@@ -341,11 +349,13 @@ router.get('/parametros', ContrParametro.getIntentos)
 router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
+router.get('/parametros/bitacora',ContrParametro.getBitacora)
 router.put('/parametros/actualizar', ContrParametro.putParametro)
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
 router.put('/parametros/actualizar', ContrParametro.putImpuesto)
 router.put('/parametros/actualizar', ContrParametro.putTiempoDReuintentoLogin)
+router.put('/parametro/bitacora',ContrParametro.putBitacora)
 
 //Producto
 router.get('/producto', ContrProducto.getProducto)
@@ -495,6 +505,8 @@ router.get('/backup', (req, res) => {
 router.get('/archivos', (req, res) => {
   try {
     const files = fs.readdirSync('./uploads');
+     // Ordena los nombres de archivo de forma ascendente
+     files.sort();
     res.json(files);
   } catch (error) {
     console.error(error);
