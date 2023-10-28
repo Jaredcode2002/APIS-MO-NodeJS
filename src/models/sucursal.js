@@ -6,7 +6,7 @@ export const ModSucursal = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("select s.IdSucursal, d.departamento, c.ciudad, s.direccion, s.telefono from tbl_sucursal as s inner join tbl_departamento as d on s.IdDepartamento=d.IdDepartamento inner join tbl_ciudad as c on s.IdCiudad=c.IdCiudad;")
+            const [filas] = await conexion.query("select s.IdSucursal, d.departamento, c.ciudad, s.direccion, s.telefono, s.estado from tbl_sucursal as s inner join tbl_departamento as d on s.IdDepartamento=d.IdDepartamento inner join tbl_ciudad as c on s.IdCiudad=c.IdCiudad;")
             conexion.end()
             return filas;
         } catch (error) {
@@ -21,12 +21,13 @@ export const ModSucursal = {
          
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("INSERT INTO tbl_sucursal (IdDepartamento, IdCiudad, direccion, telefono) VALUES (?, ?, ?, ?);",
+            const [filas] = await conexion.query("INSERT INTO tbl_sucursal (IdDepartamento, IdCiudad, direccion, telefono, estado) VALUES (?, ?, ?, ?, ?);",
                 [
                     sucursal.IdDepartamento,
                     sucursal.IdCiudad,
                     sucursal.direccion,
                     sucursal.telefono,
+                    sucursal.estado
                 ]
             );
             conexion.end()
@@ -43,13 +44,15 @@ export const ModSucursal = {
     
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("UPDATE tbl_sucursal SET IdDepartamento = ?, IdCiudad = ?, direccion = ?, telefono = ? WHERE (IdSucursal = ?);",
+            const [filas] = await conexion.query("UPDATE tbl_sucursal SET IdDepartamento = ?, IdCiudad = ?, direccion = ?, telefono = ?, estado= ? WHERE (IdSucursal = ?);",
                 [
                     sucursal.IdDepartamento,
                     sucursal.IdCiudad,
                     sucursal.direccion,
                     sucursal.telefono,
+                    sucursal.estado,
                     sucursal.IdSucursal,
+                    
                 ]
             );
             conexion.end()
