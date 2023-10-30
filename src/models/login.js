@@ -85,7 +85,7 @@ export const ModLogin = {
       const hash = await bcrypt.hash(clave.psswrd, saltos);
       return hash;
     } catch (error) {
-      throw new Error(error);
+      console.log(new Error(error));
     }
   },
 

@@ -231,6 +231,22 @@ export const ModPreguntas = {
       throw new Error("Error al eliminar la respuesta")
     }
   },
+  DeleteRespuestasUsuario: async (usuario) => {
+    let conexion
+    try {
+      conexion = await connectDB()
+      const [filas] = await conexion.query("DELETE FROM `tbl_ms_preguntas_usuario` WHERE `Id_Usuario`=?;",
+        [
+          usuario.Id_Usuario
+        ]
+      );
+      conexion.end()
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al eliminar la respuesta")
+    }
+  },
 
   putRespuestas: async (usuario) => {
     let conexion
