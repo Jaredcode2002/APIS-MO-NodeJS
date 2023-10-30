@@ -178,14 +178,7 @@ export const ModUsuarios = {
 
   putUpdateUsuario: async (usuario) => {
     let conexion;
-    const rondasSalto = 10;
-    let hash;
-    try {
-      const saltos = await bcrypt.genSalt(rondasSalto);
-      hash = await bcrypt.hash(usuario.clave, saltos);
-    } catch (error) {
-      throw new Error(error);
-    }
+    let hash = await ModLogin.passEncript({psswrd:usuario.clave})
     try {
       conexion = await connectDB();
       const [filas] = await conexion.query(

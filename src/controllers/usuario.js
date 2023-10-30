@@ -61,7 +61,7 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json({ response: "Ok" });
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
+      res.status(500).json({ response: "bad..." });
     }
   },
   delUsuario: async (req, res) => {
