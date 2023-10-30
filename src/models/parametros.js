@@ -120,7 +120,9 @@ export const ModParametro = {
   put_Preguntas: async (parametro) => {
     let conexion
     try {
+
       conexion = await connectDB();
+
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=2",
         parametro.Parametro,
       );
@@ -135,7 +137,7 @@ export const ModParametro = {
   put_Impuesto: async (parametro) => {
     let conexion
     try {
-      conexion = await connectDB();
+       conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=7",
         parametro.Parametro,
       );
@@ -150,6 +152,7 @@ export const ModParametro = {
   put_TiempoDReuintentoLogin: async (parametro) => {
     let conexion
     try {
+
       conexion = await connectDB();
       const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=9",
         parametro.Parametro,
@@ -165,6 +168,7 @@ export const ModParametro = {
   getBitacora: async () => {
     let conexion
     try {
+
       conexion = await connectDB();
       const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=10");
       conexion.end()
