@@ -36,9 +36,7 @@ putUpdUsuarioPerfil:async(req, res)=>{
   postUsuario: async (req, res) => {
     try {
       const { id, usuario, nombre, clave, correo, rol } = req.body;
-      console.log({id,usuario,nombre,clave,correo,rol});
-      const result = await ModUsuarios.postInsertUsuario({id,usuario,nombre,clave,correo,rol});
-      console.log(result);
+      const result = await ModUsuarios.postInsertUsuario(req.body);
       res.status(201).json(result);
     } catch (error) {
       console.log(error);
@@ -51,21 +49,14 @@ putUpdUsuarioPerfil:async(req, res)=>{
       const {
         usuario,
         nombreUsuario,
+        clave,
         estadoUsuario,
         idRol,
         correo,
         idEmpleado,
         idUsuario,
       } = req.body;
-      const result = await ModUsuarios.putUpdateUsuario({
-        usuario,
-        nombreUsuario,
-        estadoUsuario,
-        idRol,
-        correo,
-        idEmpleado,
-        idUsuario,
-      });
+      const result = await ModUsuarios.putUpdateUsuario({usuario,nombreUsuario,clave,estadoUsuario,idRol,correo,idEmpleado,idUsuario,});
       console.log("ok");
       res.status(200).json({ response: "Ok" });
     } catch (error) {
