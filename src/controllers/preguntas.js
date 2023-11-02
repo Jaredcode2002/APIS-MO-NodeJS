@@ -113,6 +113,16 @@ export const ContrPreguntas = {
             throw new Error("Error al consumir el api")
         }
     },
+    delRespuestasUsuario:async(req, res)=>{
+        try {
+            const {Id_Usuario} = req.body;
+            const result = await ModPreguntas.DeleteRespuestasUsuario({Id_Usuario});
+            res.status(200).json({ response: "Ok" })
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api")
+        }
+    },
 
     putRespuestas: async (req, res) => {
         try {

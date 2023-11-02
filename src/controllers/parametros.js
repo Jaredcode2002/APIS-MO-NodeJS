@@ -5,30 +5,17 @@ export const ContrParametro = {
     const Parametro = await ModParametro.getParametros();
     res.status(200).json(Parametro);
   },
-  putParametro: async (req, res) => {
+  putParametros: async (req, res) => {
     try {
       const {
-        Id_Usuario,
-        Parametro,
         Valor,
-        creado_por,
-        fecha_creacion,
-        modificado_por,
-        fecha_modificacion,
         Id_Parametro,
-        
       } = req.body;
-      const result = await ModParametro.putParametro()({
-        Id_Usuario,
-        Parametro,
+      const result = await ModParametro.putParametro({
         Valor,
-        creado_por,
-        fecha_creacion,
-        modificado_por,
-        fecha_modificacion,
         Id_Parametro,
       });
-      res.status(200).json({response:"Ok"})
+      res.status(200).json({id: result})
     } catch (error) {
       console.log(error);
       throw new Error("Error al consumir el api")
@@ -38,6 +25,12 @@ export const ContrParametro = {
     const Parametro = await ModParametro.getIntentos();
     res.status(200).json(Parametro);
   },
+
+  getCorreo: async (req,res) =>{
+    const Parametro = await ModParametro.getCorreo();
+    res.status(200).json(Parametro)
+  },
+
   getBitacora: async (req,res) => {
     const Parametro = await ModParametro.getBitacora();
     res.status(200).json(Parametro);
