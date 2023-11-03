@@ -143,7 +143,7 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
 //empleado
-router.get('/empleado', ContrEmpleado.getEmpleados)
+router.get('/empleados', ContrEmpleado.getEmpleados)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
 router.put('/empleado/actualizar', ContrEmpleado.putEmpleado)
@@ -352,7 +352,7 @@ router.get('/parametros/AdminIntentos', ContrParametro.getIntentos)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
 router.get('/parametros/bitacora',ContrParametro.getBitacora)
-router.put('/parametros/actualizar', ContrParametro.putParametro)
+//router.put('/parametros/actualizar', ContrParametro.putParametro)
 
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
