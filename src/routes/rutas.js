@@ -115,13 +115,14 @@ router.delete('/Gestion/EliminarSucursal', ContrGestion.deleteSucursal)
 
 //Rol
 router.get('/Rol', ContrRol.getRol)
+router.get('/RolesInactivos', ContrRol.getRolesInactivos)
 router.post('/Rol/NuevoRol', ContrRol.postRol)
 router.put('/Rol/RolActualizado', ContrRol.putUpdateRol)
 router.delete('/Rol/RolEliminado', ContrRol.deleteRol)
 
 //AutoRegistro
-router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
-router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo)
+/* router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
@@ -143,7 +144,8 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
 //empleado
-router.get('/empleado', ContrEmpleado.getEmpleados)
+router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
 router.put('/empleado/actualizar', ContrEmpleado.putEmpleado)
