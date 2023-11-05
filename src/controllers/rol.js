@@ -6,11 +6,15 @@ export const ContrRol = {
         const rol = await ModRol.getRol()
         res.json(rol)
     },
+    getRolesInactivos: async (req, res) => {
+        const rol = await ModRol.getRolesInactivos()
+        res.json(rol)
+    },
 
     postRol: async (req, res) => {
         try {
-            const { Rol, Descripcion, creado_por, fecha_creacion, modificado_por, fecha_modificacion } = req.body;
-            const result = await ModRol.postRol({ Rol, Descripcion, creado_por, fecha_creacion, modificado_por, fecha_modificacion });
+            const { Rol, Descripcion, estado} = req.body;
+            const result = await ModRol.postRol({ Rol, Descripcion, estado});
             res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);
@@ -19,10 +23,10 @@ export const ContrRol = {
 
     putUpdateRol: async (req, res) => {
         try {
-            const { Rol, Descripcion, creado_por, fecha_creacion, modificado_por, fecha_modificacion, Id_Rol } = req.body;
-            const result = await ModRol.putUpdateRol({ Rol, Descripcion, creado_por, fecha_creacion, modificado_por, fecha_modificacion, Id_Rol });
+            const { Rol, Descripcion,estado, Id_Rol } = req.body;
+            const result = await ModRol.putUpdateRol({ Rol, Descripcion,estado, Id_Rol });
             res.status(201).json({ id: result.id });
-        } catch (error) {
+        } catch (error) {estado,
             console.log(error);
         }
     },
