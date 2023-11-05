@@ -115,13 +115,14 @@ router.delete('/Gestion/EliminarSucursal', ContrGestion.deleteSucursal)
 
 //Rol
 router.get('/Rol', ContrRol.getRol)
+router.get('/RolesInactivos', ContrRol.getRolesInactivos)
 router.post('/Rol/NuevoRol', ContrRol.postRol)
 router.put('/Rol/RolActualizado', ContrRol.putUpdateRol)
 router.delete('/Rol/RolEliminado', ContrRol.deleteRol)
 
 //AutoRegistro
-router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
-router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo)
+/* router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
@@ -144,6 +145,7 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 //empleado
 router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
 router.put('/empleado/actualizar', ContrEmpleado.putEmpleado)
@@ -473,13 +475,20 @@ router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
 
+// import { ContrBackup } from '../controllers/backup.js';
+// router.get('/backup', ContrBackup.getBackup); 
 
 
 
 import { exec } from 'child_process';
 import fs from 'fs';
 const Fecha = new Date();
-const FechaCreacion = `${Fecha.getFullYear()}-${Fecha.getMonth() + 1}-${Fecha.getDate()}`;
+const year = Fecha.getFullYear();
+//esto es para que les agregue cero a los meses y dias que son menosres a 10
+const month = (Fecha.getMonth() + 1).toString().padStart(2, '0');
+const day = Fecha.getDate().toString().padStart(2, '0');
+const FechaCreacion = `${year}-${month}-${day}`;
+
 const config = {
   host: 'localhost',
   user: 'root',
@@ -506,7 +515,7 @@ router.get('/backup', (req, res) => {
 })
 
 
-
+ 
 
 router.get('/archivos', (req, res) => {
   try {

@@ -5,6 +5,10 @@ export const ContrEmpleado = {
         const emple = await ModEmpleados.getEmpleados();
         res.json(emple);
     },
+    getEmpleadosInactivos:async(req, res)=>{
+        const emple = await ModEmpleados.getEmpleadosInactivos();
+        res.json(emple);
+    },
     getEmpleado:async(req, res)=>{
         try {
             const {idEmpleado} = req.body;
