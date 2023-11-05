@@ -477,6 +477,7 @@ import { exec } from 'child_process';
 import fs from 'fs';
 const Fecha = new Date();
 const FechaCreacion = `${Fecha.getFullYear()}-${Fecha.getMonth() + 1}-${Fecha.getDate()}`;
+
 const config = {
   host: 'localhost',
   user: 'root',
