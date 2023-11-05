@@ -6,7 +6,20 @@ export const ModEmpleados = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, d.departamento, g.descripcion, e.numeroIdentidad from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero ORDER BY IdEmpleado ASC;");
+      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero where e.estado = 'Activo' ORDER BY IdEmpleado DESC;");
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener empleados");
+    }
+  },
+  getEmpleadosInactivos: async () => {
+    let conexion
+    try {
+      conexion = await connectDB();
+      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero  where e.estado != 'Activo' ORDER BY IdEmpleado DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -39,8 +52,8 @@ export const ModEmpleados = {
     let conexion
     conexion = await connectDB();
     if(await ModEmpleados.getEmpleado(empleado)== false){
-    try {
-      const [filas] = await conexion.query("INSERT INTO  tbl_empleado (IdEmpleado, nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad) VALUES(?,?,?,?,?,?,?);",
+    try { //Se agrega a la sentencia los campos nuevos al igual que en el arreglo
+      const [filas] = await conexion.query("INSERT INTO  tbl_empleado (IdEmpleado, nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad, fechaIngreso, fechaSalida, fechaCumpleanos, estado) VALUES(?,?,?,?,?,?,?,?,?,?,?);",
         [
 
           empleado.id,
@@ -50,6 +63,10 @@ export const ModEmpleados = {
           empleado.idSucursal,
           empleado.idGenero,
           empleado.numId,
+          empleado.fechaIngreso,
+          empleado.fechaSalida,
+          empleado.fechaCumpleanos,
+          empleado.estado
         ]
       );
       conexion.end()
@@ -65,8 +82,8 @@ export const ModEmpleados = {
   putUpdateEmpleado: async (empleado) => {
     let conexion
     try {
-      conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_empleado SET  nombre=?, apellido=?, telefonoEmpleado=?, IdSucursal=?, IdGenero=?, numeroIdentidad=? WHERE IdEmpleado=?;",
+      conexion = await connectDB() //Se agrega de igual manera en el query de actualizacion.
+      const [filas] = await conexion.query("UPDATE tbl_empleado SET  nombre=?, apellido=?, telefonoEmpleado=?, IdSucursal=?, IdGenero=?, numeroIdentidad=?, fechaIngreso=?, fechaSalida=?, fechaCumpleanos=?, estado=? WHERE IdEmpleado=?;",
         [
           empleado.nombre,
           empleado.apellido,
@@ -74,6 +91,10 @@ export const ModEmpleados = {
           empleado.idSucursal,
           empleado.idGenero,
           empleado.numId,
+          empleado.fechaIngreso,
+          empleado.fechaSalida,
+          empleado.fechaCumpleanos,
+          empleado.estado,
           empleado.IdEmpleado,
         ]
       );
