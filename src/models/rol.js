@@ -6,7 +6,20 @@ export const ModRol = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion from tbl_ms_roles")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado = 'Activo' ORDER BY Id_Rol DESC;")
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener los roles");
+    }
+  },
+  getRolesInactivos: async () => {
+    let conexion
+    try {
+      conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado!= 'Activo' ORDER BY Id_Rol DESC")
       conexion.end()
       return filas;
     } catch (error) {
@@ -20,18 +33,15 @@ export const ModRol = {
     let conexion
     conexion = await connectDB();
     try {
-      const [filas] = await conexion.query("INSERT INTO tbl_ms_roles(Rol,Descripcion,creado_por,fecha_creacion,modificado_por,fecha_modificacion) values (?,?,?,?,?,?)",
+      const [filas] = await conexion.query("INSERT INTO tbl_ms_roles(Rol,Descripcion, estado) values (?,?,?)",
         [
           rol.Rol,
           rol.Descripcion,
-          rol.creado_por,
-          rol.fecha_creacion,
-          rol.modificado_por,
-          rol.fecha_modificacion,
+          rol.estado
         ]
       );
       conexion.end()
-      return { estado: "OK" };
+      return {filas};
     } catch (error) {
       console.log(error);
       conexion.end()
@@ -45,14 +55,11 @@ export const ModRol = {
     let conexion
     conexion = await connectDB();
     try {
-      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, creado_por=?,  fecha_creacion=?, modificado_por=?,fecha_modificacion=? WHERE  Id_Rol=?",
+      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
         [
           rol.Rol,
           rol.Descripcion,
-          rol.creado_por,
-          rol.fecha_creacion,
-          rol.modificado_por,
-          rol.fecha_modificacion,
+          rol.estado,
           rol.Id_Rol,
 
         ]);
