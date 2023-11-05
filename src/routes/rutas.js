@@ -347,15 +347,21 @@ router.delete('/pagos/eliminar', ContrPago.delPago)
 router.get('/parametros', ContrParametro.getParametros)
 router.get('/parametros', ContrParametro.getIntentos)
 router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
+router.get('/parametros/AdminCorreo', ContrParametro.getCorreo)
+router.get('/parametros/AdminIntentos', ContrParametro.getIntentos)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
 router.get('/parametros/bitacora',ContrParametro.getBitacora)
-router.put('/parametros/actualizar', ContrParametro.putParametro)
+//router.put('/parametros/actualizar', ContrParametro.putParametro)
+
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
 router.put('/parametros/actualizar', ContrParametro.putImpuesto)
 router.put('/parametros/actualizar', ContrParametro.putTiempoDReuintentoLogin)
 router.put('/parametro/bitacora',ContrParametro.putBitacora)
+
+router.put('/parametros/actualizacion', ContrParametro.putParametros);
+
 
 //Producto
 router.get('/producto', ContrProducto.getProducto)
@@ -467,13 +473,20 @@ router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
 
+// import { ContrBackup } from '../controllers/backup.js';
+// router.get('/backup', ContrBackup.getBackup); 
 
 
 
 import { exec } from 'child_process';
 import fs from 'fs';
 const Fecha = new Date();
-const FechaCreacion = `${Fecha.getFullYear()}-${Fecha.getMonth() + 1}-${Fecha.getDate()}`;
+const year = Fecha.getFullYear();
+//esto es para que les agregue cero a los meses y dias que son menosres a 10
+const month = (Fecha.getMonth() + 1).toString().padStart(2, '0');
+const day = Fecha.getDate().toString().padStart(2, '0');
+const FechaCreacion = `${year}-${month}-${day}`;
+
 const config = {
   host: 'localhost',
   user: 'root',
@@ -500,7 +513,7 @@ router.get('/backup', (req, res) => {
 })
 
 
-
+ 
 
 router.get('/archivos', (req, res) => {
   try {
