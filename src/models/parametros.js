@@ -40,7 +40,7 @@ export const ModParametro = {
       conexion = await connectDB();
       const [filas] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=1;");
       conexion.end()
-      return filas;
+      return filas[0].valor;
     } catch (error) {
       console.log(error);
       conexion.end()
