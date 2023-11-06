@@ -1,6 +1,6 @@
 import { connectDB } from "../config/Conn.js";
 import { exec } from 'child_process';
-//import fs from 'fs';
+import fs from 'fs';
 
 export const ModBackup = {
 
@@ -42,23 +42,15 @@ export const ModBackup = {
             console.log(filasDatabase[0].valor);
 
 
-            // Cierra la conexión después de obtener los datos
-
-            // return filasHost[0].valor;
-            // return filasUser[0].valor;
-            // return filasPassword[0].valor;
-            // return filasDatabase[0].valor;
-
-
-
-            if (!filasHost[0].valor || !filasUser[0].valorr || !filasPassword[0].valor || !filasDatabase[0].valor) {
-                throw new Error("No se pudieron obtener los datos de conexión.");
-            }
-            console.log(filasHost);
+            // if (!filasHost[0].valor || !filasUser[0].valorr || !filasPassword[0].valor || !filasDatabase[0].valor) {
+            //     throw new Error("No se pudieron obtener los datos de conexión.");
+            // }
+            // console.log(filasHost);
 
             const fileName = `./uploads/${FechaCreacion}_Backup23.sql`;
             const dumpCommand = `mysqldump -h ${filasHost[0].valor} -u ${filasUser[0].valor} --password=${filasPassword[0].valor} ${filasDatabase[0].valor} --routines --databases ${filasDatabase[0].valor} > ${fileName}`;
             console.log(dumpCommand);
+
             exec(dumpCommand, async (error, stdout, stderr) => {
                 if (error) {
                     throw new Error("Ha ocurrido un error al realizar el respaldo de la base de datos.");
@@ -76,6 +68,60 @@ export const ModBackup = {
         }
 
 
+
+    },
+
+    getArchivos: async () => {
+        let conexion;
+        try {
+            conexion = await connectDB();
+            const files = fs.readdirSync('./uploads');
+            // Ordena los nombres de archivo de forma ascendente
+            //files.sort();
+            return files;
+        } catch (error) {
+            console.error(error);
+            console.log("Error al listar archivos");
+            conexion.end();
+        }
+    },
+
+    getRestore: async (req) => {
+
+        let conexion;
+        try {
+            conexion = await connectDB();
+
+            // Obtén los valores de host, usuario, contraseña y base de datos de la tabla 'tbl_ms_parametros'
+            const [filasHost] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=10;");
+            console.log(filasHost[0].valor);
+
+            const [filasUser] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=11;");
+            console.log(filasUser[0].valor);
+
+            const [filasPassword] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=12;");
+            console.log(filasPassword[0].valor);
+
+            const [filasDatabase] = await conexion.query("SELECT valor FROM tbl_ms_parametros where Id_Parametro=13;");
+            console.log(filasDatabase[0].valor);
+
+            const backupFilePath = `./uploads/${req.restore}`;
+
+            exec(`mysql --host=${filasHost[0].valor} --user=${filasUser[0].valor} --password=${filasPassword[0].valor} proyectomultioptica < ${backupFilePath}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(error);
+                    console.log("Error al restaurar la base de datos");
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                    console.log("Error al restaurar la base de datos");
+                }
+                console.log('Restauración de la base de datos generada exitosamente.');
+                console.log("Restauración exitosa");
+            });
+        } catch (error) {
+            conexion.end();
+        }
 
     },
 
