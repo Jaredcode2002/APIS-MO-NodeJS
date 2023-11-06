@@ -6,7 +6,20 @@ export const ModRol = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion from tbl_ms_roles")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado = 'Activo' ORDER BY Id_Rol DESC;")
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener los roles");
+    }
+  },
+  getRolesInactivos: async () => {
+    let conexion
+    try {
+      conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado!= 'Activo' ORDER BY Id_Rol DESC")
       conexion.end()
       return filas;
     } catch (error) {
@@ -20,18 +33,47 @@ export const ModRol = {
     let conexion
     conexion = await connectDB();
     try {
-      const [filas] = await conexion.query("INSERT INTO tbl_ms_roles(Rol,Descripcion,creado_por,fecha_creacion,modificado_por,fecha_modificacion) values (?,?,?,?,?,?)",
+      const [filas] = await conexion.query("INSERT INTO tbl_ms_roles(Rol,Descripcion, estado) values (?,?,?)",
         [
           rol.Rol,
           rol.Descripcion,
-          rol.creado_por,
-          rol.fecha_creacion,
-          rol.modificado_por,
-          rol.fecha_modificacion,
+          rol.estado
         ]
       );
+      const [filas2] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (2, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas3] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (3, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas4] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (4, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas5] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (5, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas6] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (6, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas7] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (7, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas8] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (8, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
+      const [filas9] = await conexion.query("INSERT INTO tbl_permisos (Id_Objeto, Id_Rol, Permiso_Insercion, Permiso_Eliminacion, Permiso_Actualizacion, Permiso_Consultar) VALUES (9, last_insert_id(), 'n','n','n','n')",
+        [
+          rol.Id_Rol,
+        ]);
       conexion.end()
-      return { estado: "OK" };
+      return {id: filas.insertId, id: filas2.insertId, id: filas3.insertId, id: filas4.insertId, id: filas5.insertId, id: filas6.insertId,id: filas7.insertId, id: filas8.insertId,id: filas9.insertId};
     } catch (error) {
       console.log(error);
       conexion.end()
@@ -45,14 +87,11 @@ export const ModRol = {
     let conexion
     conexion = await connectDB();
     try {
-      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, creado_por=?,  fecha_creacion=?, modificado_por=?,fecha_modificacion=? WHERE  Id_Rol=?",
+      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
         [
           rol.Rol,
           rol.Descripcion,
-          rol.creado_por,
-          rol.fecha_creacion,
-          rol.modificado_por,
-          rol.fecha_modificacion,
+          rol.estado,
           rol.Id_Rol,
 
         ]);
