@@ -47,7 +47,7 @@ export const ModBackup = {
             // }
             // console.log(filasHost);
 
-            const fileName = `./uploads/${FechaCreacion}_Backup23.sql`;
+            const fileName = `./uploads/${FechaCreacion}_Backup.sql`;
             const dumpCommand = `mysqldump -h ${filasHost[0].valor} -u ${filasUser[0].valor} --password=${filasPassword[0].valor} ${filasDatabase[0].valor} --routines --databases ${filasDatabase[0].valor} > ${fileName}`;
             console.log(dumpCommand);
 
