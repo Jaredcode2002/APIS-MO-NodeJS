@@ -68,6 +68,7 @@ router.put('/usuario/UpdContra', ContrUsuario.putUpdatePassword)
 router.put('/usuario/ActualizarContra', ContrUsuario.ActualizarContra)//por algun pedo futuro. Att: Jared del pasado
 router.post('/usuario/compararContra', ContrUsuario.compararContraVSHistorial)
 router.post('/usuario/histPasswrd', ContrUsuario.postHistPassword)
+router.put('/actualizarPerfil', ContrUsuario.putUpdUsuarioPerfil)
 
 
 //token
@@ -114,13 +115,14 @@ router.delete('/Gestion/EliminarSucursal', ContrGestion.deleteSucursal)
 
 //Rol
 router.get('/Rol', ContrRol.getRol)
+router.get('/RolesInactivos', ContrRol.getRolesInactivos)
 router.post('/Rol/NuevoRol', ContrRol.postRol)
 router.put('/Rol/RolActualizado', ContrRol.putUpdateRol)
 router.delete('/Rol/RolEliminado', ContrRol.deleteRol)
 
 //AutoRegistro
-router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
-router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo)
+/* router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
@@ -142,7 +144,8 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
 //empleado
-router.get('/empleado', ContrEmpleado.getEmpleados)
+router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
 router.put('/empleado/actualizar', ContrEmpleado.putEmpleado)
@@ -150,14 +153,17 @@ router.delete('/empleado/eliminar', ContrEmpleado.delEmpleado)
 router.get('/empleado/sucursal', ContrEmpleado.getSucursales)
 router.get('/empleado/genero', ContrEmpleado.getGeneros)
 router.post('/empleado/RegistroInvalido', ContrEmpleado.getEmpleadoExist) //Para consultar empleado existente
-
+ 
 
 //preguntas
 router.get('/preguntas', ContrPreguntas.getPreguntas)
 router.post('/preguntas/agregar', ContrPreguntas.postPreguntas)
+router.put('/preguntas/editar', ContrPreguntas.putPreguntas)
+router.delete('/preguntas/eliminar', ContrPreguntas.delPreguntas)
 router.get('/preguntas/respuestas', ContrPreguntas.getRespuestas)
 router.post('/preguntas/respuestas/agregar', ContrPreguntas.postRespuestas)
 router.post('/preguntas/compararR', ContrPreguntas.compararRespuesta)
+router.post('/eliminarPregConfig', ContrPreguntas.delRespuestasUsuario)
 
 router.post('/correo/existe', ContrPreguntas.getUser)
 router.post('/pregYresp', ContrPreguntas.getPyR)
@@ -245,7 +251,9 @@ router.post('/bitacora/Actualizacioncexpediente', ContrBitacora.postActualizarCl
 router.post('/bitacora/Eliminarexpediente', ContrBitacora.postEliminarClientes)
 //Perfil 
 router.post('/bitacora/perfil', ContrBitacora.postIngresoPerfil)
+router.post('/bitacora/cambioPerfil', ContrBitacora.postPerfilModifi)
 router.post('/bitacora/cambiocontrasena', ContrBitacora.postContrModifi)
+router.post('/bitacora/nuevaPregunta', ContrBitacora.postPreguntasAgg)
 router.post('/bitacora/cambiopreguntas', ContrBitacora.postPreModifi)
 router.post('/bitacora/salirperfil', ContrBitacora.postSalirPerfil)
 //Citas
@@ -341,15 +349,21 @@ router.delete('/pagos/eliminar', ContrPago.delPago)
 router.get('/parametros', ContrParametro.getParametros)
 router.get('/parametros', ContrParametro.getIntentos)
 router.get('/parametros/AdminPreguntas', ContrParametro.getPreguntas)
+router.get('/parametros/AdminCorreo', ContrParametro.getCorreo)
+router.get('/parametros/AdminIntentos', ContrParametro.getIntentos)
 router.get('/parametros', ContrParametro.getImpuesto)
 router.get('/parametros', ContrParametro.getTiempoDReuintentoLogin)
 router.get('/parametros/bitacora',ContrParametro.getBitacora)
-router.put('/parametros/actualizar', ContrParametro.putParametro)
+//router.put('/parametros/actualizar', ContrParametro.putParametro)
+
 router.put('/parametros/actualizar', ContrParametro.putIntentos)
 router.put('/parametros/actualizar', ContrParametro.putPreguntas)
 router.put('/parametros/actualizar', ContrParametro.putImpuesto)
 router.put('/parametros/actualizar', ContrParametro.putTiempoDReuintentoLogin)
 router.put('/parametro/bitacora',ContrParametro.putBitacora)
+
+router.put('/parametros/actualizacion', ContrParametro.putParametros);
+
 
 //Producto
 router.get('/producto', ContrProducto.getProducto)
@@ -499,6 +513,8 @@ router.get('/backup', (req, res) => {
 router.get('/archivos', (req, res) => {
   try {
     const files = fs.readdirSync('./uploads');
+     // Ordena los nombres de archivo de forma ascendente
+     files.sort();
     res.json(files);
   } catch (error) {
     console.error(error);
