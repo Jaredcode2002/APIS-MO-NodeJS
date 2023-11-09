@@ -6,7 +6,7 @@ export const ModProducto = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca;");
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca ORDER BY p.IdProducto DESC;");
       conexion.end()
       return filas;
     } catch (error) {
