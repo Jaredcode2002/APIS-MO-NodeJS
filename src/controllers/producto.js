@@ -5,6 +5,10 @@ export const ContrProducto = {
     const producto = await ModProducto.getProductos();
     res.status(200).json(producto);
   },
+  getProductosInactivos: async (req,res) => {
+    const producto = await ModProducto.getProductosInactivos();
+    res.status(200).json(producto);
+  },
   getProducto: async (req,res) => {
     const {IdProducto} = req.body
     const producto = await ModProducto.getProducto(IdProducto);
@@ -12,8 +16,8 @@ export const ContrProducto = {
   },
   postProducto: async (req, res) => {
     try {
-      const {IdModelo, precio, cantidadMin, cantidadMax, descripcion } = req.body;
-      const result = await ModProducto.postInsertProducto ({IdModelo, precio, cantidadMin, cantidadMax, descripcion });
+      const {IdModelo, precio, cantidadMin, cantidadMax, descripcion, estado } = req.body;
+      const result = await ModProducto.postInsertProducto ({IdModelo, precio, cantidadMin, cantidadMax, descripcion, estado });
       res.status(201).json({ id: result.id });
     } catch (error) {
       console.log(error);
@@ -27,6 +31,7 @@ export const ContrProducto = {
         cantidadMin,
         cantidadMax,
         descripcion,
+        estado,
         IdProducto,
 
       } = req.body;
@@ -35,6 +40,7 @@ export const ContrProducto = {
         cantidadMin,
         cantidadMax,
         descripcion,
+        estado,
         IdProducto,
       });
       res.status(200).json({response:"Ok"})
