@@ -6,7 +6,7 @@ export const ModGarantia = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, g.estado, p.descripcion AS producto FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca;");
+      const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, p.descripcion AS producto,CASE WHEN g.estado = 'A' THEN 'Activo' WHEN g.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where g.estado= 'A' ORDER BY g.IdGarantia DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -15,25 +15,64 @@ export const ModGarantia = {
       throw new Error("Error al obtener las garantias");
     }
   },
-  postInsertGarantia: async (garantia) => {
+  getGarantiasInactivas: async () => {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("INSERT INTO tbl_garantia (descripcion, mesesGarantia, IdProducto, estado) VALUES (?,?,?,?);",
-        [
-          garantia.descripcion,
-          garantia.mesesGarantia,
-          garantia.IdProducto,
-          garantia.estado,
-        ]
-      );
+      const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, p.descripcion AS producto,CASE WHEN g.estado = 'A' THEN 'Activo' WHEN g.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where g.estado != 'A' ORDER BY g.IdGarantia DESC;");
       conexion.end()
-      return { id: filas.insertId };
+      return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear garantia");
+      throw new Error("Error al obtener las garantias");
     }
+  },
+  getGarantiaExiste: async (garantia) => {
+    let conexion
+    conexion = await connectDB();
+    try {
+        const [filas] = await conexion.query("select * from tbl_garantia where descripcion =?;",
+            [
+                garantia.descripcion
+            ]
+        );
+        conexion.end()
+        if (filas.legth >= 1) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        console.log(error);
+        conexion.end()
+        throw new Error("Error al crear una nueva garantia");
+    }
+}, 
+  postInsertGarantia: async (garantia) => {
+    let conexion
+    conexion = await connectDB();
+    if (await ModGarantia.getGarantiaExiste(garantia) == false) {
+      try {
+        const [filas] = await conexion.query("INSERT INTO tbl_garantia (descripcion, mesesGarantia, IdProducto, estado) VALUES (?,?,?,?);",
+          [
+            garantia.descripcion,
+            garantia.mesesGarantia,
+            garantia.IdProducto,
+            garantia.estado,
+          ]
+        );
+        conexion.end()
+        return { id: filas.insertId };
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+        throw new Error("Error al crear garantia");
+      }
+    } else {
+      return false
+    }
+    
   },
   putUpdateGarantia: async (garantia) => {
     let conexion

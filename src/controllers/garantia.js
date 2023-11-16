@@ -5,11 +5,19 @@ export const ContrGarantia = {
     const garantia = await ModGarantia.getGarantias();
     res.status(200).json(garantia);
   },
+  getGarantiasInactivas: async (req,res) => {
+    const garantia = await ModGarantia.getGarantiasInactivas();
+    res.status(200).json(garantia);
+  },
   postGarantia: async (req, res) => {
     try {
       const {descripcion, mesesGarantia, IdProducto, estado } = req.body;
       const result = await ModGarantia.postInsertGarantia ({descripcion, mesesGarantia, IdProducto, estado });
-      res.status(201).json({ id: result.id });
+      if (result == false) {
+        res.status(201).json({ id: result.id });
+    }else{
+        res.status(201).json({ id: result.id });
+    }
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error creating garantia" });
