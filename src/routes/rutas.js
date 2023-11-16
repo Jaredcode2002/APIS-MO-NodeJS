@@ -318,6 +318,7 @@ router.post('/bitacora/eliminarGenero', ContrBitacora.postEliminarGenero)
 
 //Garantias
 router.get('/garantias', ContrGarantia.getGarantias)
+router.get('/garantiasInactivas', ContrGarantia.getGarantiasInactivas)
 router.post('/garantias/crear', ContrGarantia.postGarantia)
 router.put('/garantias/actualizar', ContrGarantia.putGarantia)
 router.delete('/garantias/eliminar', ContrGarantia.delGarantia)
@@ -382,6 +383,7 @@ router.delete('/productopromociones/eliminar', ContrProductoProm.delProductoProm
 
 //Promocion
 router.get('/promociones', ContrPromocion.getPromocion)
+router.get('/promocionesInactivas', ContrPromocion.getPromocionesInactivas)
 router.post('/promociones/crear', ContrPromocion.postPromocion)
 router.put('/promociones/actualizar', ContrPromocion.putPromocion)
 router.delete('/promociones/eliminar', ContrPromocion.delPromocion)
@@ -467,6 +469,7 @@ router.post('/recordatorios/fecha', ContrRecordatorio.getFecha)
 
 //Descuentos
 router.get('/Descuento', ContrDescuento.getDescuento)
+router.get('/DescuentosInactivos', ContrDescuento.getDescuentosInactivos)
 router.post('/Descuento/NuevoDescuento', ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento', ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento', ContrDescuento.deleteDescuento)
