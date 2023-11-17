@@ -23,7 +23,7 @@ export const ModUsuarios = {
     try {
       conexion = await connectDB();
       const [filas] = await conexion.query(
-        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`!='Activo'"
+        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`!='Activo' ORDER BY u.`Id_Usuario` DESC"
       );
       conexion.end();
       return filas;
@@ -181,26 +181,41 @@ export const ModUsuarios = {
     let hash = await ModLogin.passEncript({psswrd:usuario.clave})
     try {
       conexion = await connectDB();
+
+     if(usuario.clave===""||usuario.clave===null){
       const [filas] = await conexion.query(
-        "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Contrasenia = ?, Estado_Usuario = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
+        "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Estado_Usuario = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
         [
           usuario.usuario,
           usuario.nombreUsuario,
-          hash,
           usuario.estadoUsuario,
           usuario.idRol,
           usuario.correo,
           usuario.idUsuario,
         ]
       );
+     }else{
+       const [filas] = await conexion.query(
+         "UPDATE tbl_ms_usuario set Usuario = ?, Nombre_Usuario = ?, Contrasenia = ?, Estado_Usuario = ?, Id_Rol = ?, Correo_Electronico = ? , Fecha_Vencimiento = date_add(current_date(),interval 90 day)  WHERE Id_usuario=?;",
+         [
+           usuario.usuario,
+           usuario.nombreUsuario,
+           hash,
+           usuario.estadoUsuario,
+           usuario.idRol,
+           usuario.correo,
+           usuario.idUsuario,
+         ]
+       );
+     }
       conexion.end();
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
       conexion.end();
       throw new Error("Error al actualizar el usuario");
-    }
-  },
+    }
+  },
 
   delUsuario: async (usuario) => {
     let conexion;

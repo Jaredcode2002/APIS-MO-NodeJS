@@ -28,6 +28,28 @@ export const ModEmpleados = {
       throw new Error("Error al obtener empleados");
     }
   },
+  empleadoExist: async (empleado) => {
+    let conexion
+    conexion = await connectDB();
+    try {
+      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero where e.numeroIdentidad= ? or e.telefonoEmpleado= ?;",
+        [
+          empleado.numId,
+          empleado.telEmple,
+        ]
+      );
+      conexion.end()
+      if (filas.legth >= 1) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al crear un nuevo empleado");
+    }
+  },
   getEmpleado: async (empleado) => {
     let conexion
     conexion = await connectDB();
@@ -51,33 +73,34 @@ export const ModEmpleados = {
   postInsertEmpleado: async (empleado) => {
     let conexion
     conexion = await connectDB();
-    if(await ModEmpleados.getEmpleado(empleado)== false){
-    try { //Se agrega a la sentencia los campos nuevos al igual que en el arreglo
-      const [filas] = await conexion.query("INSERT INTO  tbl_empleado (IdEmpleado, nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad, fechaIngreso, fechaSalida, fechaCumpleanos, estado) VALUES(?,?,?,?,?,?,?,?,?,?,?);",
-        [
+    if (await ModEmpleados.empleadoExist(empleado) == false) {
+      try { //Se agrega a la sentencia los campos nuevos al igual que en el arreglo
+        const [filas] = await conexion.query("INSERT INTO  tbl_empleado (IdEmpleado, nombre, apellido, telefonoEmpleado, IdSucursal, IdGenero, numeroIdentidad, fechaIngreso, fechaSalida, fechaCumpleanos, estado) VALUES(?,?,?,?,?,?,?,?,?,?,?);",
+          [
 
-          empleado.id,
-          empleado.nombre,
-          empleado.apellido,
-          empleado.telEmple,
-          empleado.idSucursal,
-          empleado.idGenero,
-          empleado.numId,
-          empleado.fechaIngreso,
-          empleado.fechaSalida,
-          empleado.fechaCumpleanos,
-          empleado.estado
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al crear empleado");
-    }}else{
+            empleado.id,
+            empleado.nombre,
+            empleado.apellido,
+            empleado.telEmple,
+            empleado.idSucursal,
+            empleado.idGenero,
+            empleado.numId,
+            empleado.fechaIngreso,
+            empleado.fechaSalida,
+            empleado.fechaCumpleanos,
+            empleado.estado
+          ]
+        );
+        conexion.end()
+        return { estado: "OK" };
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+        throw new Error("Error al crear empleado");
+      }
+    } else {
       return false
-   }
+    }
   },
   putUpdateEmpleado: async (empleado) => {
     let conexion
@@ -148,26 +171,5 @@ export const ModEmpleados = {
       throw new Error("Error al obtener lista de géneros");
     }
   },
-
-  empleadoExist: async (empleado) => {
-    let conexion
-    try {
-      conexion = await connectDB();
-      const [filas] = await conexion.query(
-        "select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.numeroIdentidad from tbl_empleado as e where numeroIdentidad = ?;",
-        [empleado.numId]
-      );
-      conexion.end()
-      if (filas.length === 1) {
-        return filas;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-    }
-  },
-
 
 }

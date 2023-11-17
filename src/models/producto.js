@@ -6,7 +6,20 @@ export const ModProducto = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca;");
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax, p.estado, mo.IdModelo from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where estado = 'Activo' ORDER BY p.IdProducto DESC;");
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener los productos");
+    }
+  },
+  getProductosInactivos: async () => {
+    let conexion
+    try {
+     conexion = await connectDB();
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,p.precio, p.cantidadMin, p.cantidadMax, p.estado, mo.IdModelo from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where estado != 'Activo' ORDER BY p.IdProducto DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -19,13 +32,14 @@ export const ModProducto = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("INSERT INTO tbl_producto (IdModelo, precio, cantidadMin, cantidadMax, descripcion) VALUES (?,?,?,?,?);",
+      const [filas] = await conexion.query("INSERT INTO tbl_producto (IdModelo, precio, cantidadMin, cantidadMax, descripcion, estado) VALUES (?,?,?,?,?,?);",
         [
           producto.IdModelo,
           producto.precio,
           producto.cantidadMin,
           producto.cantidadMax,
           producto.descripcion,
+          producto.estado,
         ]
       );
       const [filas2] = await conexion.query(" INSERT INTO tbl_inventario (IdProducto, cantidad) VALUES (last_insert_id(),0);",
@@ -44,13 +58,15 @@ export const ModProducto = {
     let conexion
     try {
       conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_producto  SET  precio=?,`cantidadMin`=?,`cantidadMax`=?,descripcion=?  WHERE `IdProducto`=?;",
+      const [filas] = await conexion.query("UPDATE tbl_producto  SET  precio=?,`cantidadMin`=?,`cantidadMax`=?,descripcion=?, estado=?  WHERE `IdProducto`=?;",
         [
           producto.precio,
           producto.cantidadMin,
           producto.cantidadMax,
           producto.descripcion,
+          producto.estado,
           producto.IdProducto,
+         
         ]
       )
       conexion.end()

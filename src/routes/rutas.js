@@ -175,6 +175,7 @@ router.get('/pregunta', ContrPreguntas.getPregunta)
 
 //PROVEEDORES
 router.get('/proveedor', ContrProveedor.getProveedores)
+router.get('/proveedoresInactivos', ContrProveedor.getProveedoresInactivos)
 router.post('/proveedor/NuevoProveedor', ContrProveedor.postInsertProveedor)
 router.put('/proveedor/ActualizarProveedor', ContrProveedor.putUpdateProveedor)
 router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
@@ -368,6 +369,7 @@ router.put('/parametros/actualizacion', ContrParametro.putParametros);
 //Producto
 router.get('/producto', ContrProducto.getProducto)
 router.get('/productos', ContrProducto.getProductos)
+router.get('/productosInactivos', ContrProducto.getProductosInactivos)
 router.post('/productos/crear', ContrProducto.postProducto)
 router.put('/productos/actualizar', ContrProducto.putProducto)
 router.delete('/producto/eliminar', ContrProducto.delProducto)
@@ -471,6 +473,7 @@ router.delete('/Descuento/BorrarDescuento', ContrDescuento.deleteDescuento)
 
 //Lentes
 router.get('/Lentes', ContrLente.getLente)
+router.get('/LentesInactivos', ContrLente.getLentesInactivos)
 router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)

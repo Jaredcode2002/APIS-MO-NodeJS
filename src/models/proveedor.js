@@ -6,7 +6,21 @@ export const ModProveedor = {
         let conexion
         try {
              conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad;")
+            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad where p.estado = 'Activo' ORDER BY p.IdProveedor DESC;")
+            conexion.end()
+            return filas;
+        } catch (error) {
+            console.long(error);
+            conexion.end()
+            throw new error("Error al consumir el API")
+        }
+    },
+
+    getProveedoresInactivos: async () => {
+        let conexion
+        try {
+             conexion = await connectDB();
+            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad  where p.estado != 'Activo' ORDER BY p.IdProveedor DESC;")
             conexion.end()
             return filas;
         } catch (error) {
@@ -20,7 +34,7 @@ export const ModProveedor = {
         let conexion
         conexion = await connectDB();
        try {
-           const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad where p.`CiaProveedora` = ? or p.`correoElectronico` = ?",
+           const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad where p.`CiaProveedora` = ? or p.`correoElectronico` = ?",
                [
                    proveedor.CiaProveedora,
                    proveedor.correoElectronico,
@@ -45,7 +59,7 @@ export const ModProveedor = {
          conexion = await connectDB();
          if (await ModProveedor.getProveedor(proveedor)==false) {
             try {
-                const [filas] = await conexion.query("INSERT INTO tbl_proveedor(CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico)  VALUES(?,?,?,?,?,?,?,?);",
+                const [filas] = await conexion.query("INSERT INTO tbl_proveedor(CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico, estado)  VALUES(?,?,?,?,?,?,?,?,?);",
                     [
                         proveedor.CiaProveedora,
                         proveedor.encargado,
@@ -55,6 +69,7 @@ export const ModProveedor = {
                         proveedor.direccion,
                         proveedor.telefono,
                         proveedor.correoElectronico,
+                        proveedor.estado,
                     ]
                 );
                 conexion.end()
@@ -74,7 +89,7 @@ export const ModProveedor = {
         let conexion
          conexion = await connectDB();
         try {
-            const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?  WHERE IdProveedor=?;",
+            const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?, estado=?  WHERE IdProveedor=?;",
                 [
                     proveedor.CiaProveedora,
                     proveedor.encargado,
@@ -84,6 +99,7 @@ export const ModProveedor = {
                     proveedor.direccion,
                     proveedor.telefono,
                     proveedor.correoElectronico,
+                    proveedor.estado,
                     proveedor.IdProveedor,
                 ]
             );
