@@ -175,6 +175,7 @@ router.get('/pregunta', ContrPreguntas.getPregunta)
 
 //PROVEEDORES
 router.get('/proveedor', ContrProveedor.getProveedores)
+router.get('/proveedoresInactivos', ContrProveedor.getProveedoresInactivos)
 router.post('/proveedor/NuevoProveedor', ContrProveedor.postInsertProveedor)
 router.put('/proveedor/ActualizarProveedor', ContrProveedor.putUpdateProveedor)
 router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
@@ -317,6 +318,7 @@ router.post('/bitacora/eliminarGenero', ContrBitacora.postEliminarGenero)
 
 //Garantias
 router.get('/garantias', ContrGarantia.getGarantias)
+router.get('/garantiasInactivas', ContrGarantia.getGarantiasInactivas)
 router.post('/garantias/crear', ContrGarantia.postGarantia)
 router.put('/garantias/actualizar', ContrGarantia.putGarantia)
 router.delete('/garantias/eliminar', ContrGarantia.delGarantia)
@@ -368,6 +370,7 @@ router.put('/parametros/actualizacion', ContrParametro.putParametros);
 //Producto
 router.get('/producto', ContrProducto.getProducto)
 router.get('/productos', ContrProducto.getProductos)
+router.get('/productosInactivos', ContrProducto.getProductosInactivos)
 router.post('/productos/crear', ContrProducto.postProducto)
 router.put('/productos/actualizar', ContrProducto.putProducto)
 router.delete('/producto/eliminar', ContrProducto.delProducto)
@@ -380,6 +383,7 @@ router.delete('/productopromociones/eliminar', ContrProductoProm.delProductoProm
 
 //Promocion
 router.get('/promociones', ContrPromocion.getPromocion)
+router.get('/promocionesInactivas', ContrPromocion.getPromocionesInactivas)
 router.post('/promociones/crear', ContrPromocion.postPromocion)
 router.put('/promociones/actualizar', ContrPromocion.putPromocion)
 router.delete('/promociones/eliminar', ContrPromocion.delPromocion)
@@ -465,12 +469,14 @@ router.post('/recordatorios/fecha', ContrRecordatorio.getFecha)
 
 //Descuentos
 router.get('/Descuento', ContrDescuento.getDescuento)
+router.get('/DescuentosInactivos', ContrDescuento.getDescuentosInactivos)
 router.post('/Descuento/NuevoDescuento', ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento', ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento', ContrDescuento.deleteDescuento)
 
 //Lentes
 router.get('/Lentes', ContrLente.getLente)
+router.get('/LentesInactivos', ContrLente.getLentesInactivos)
 router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
