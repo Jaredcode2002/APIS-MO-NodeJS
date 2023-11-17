@@ -6,7 +6,7 @@ export const ModLente = {
     getLentes: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio, l.estado FROM tbl_lente as l where estado = 'Activo' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado = 'Activo' ORDER BY l.IdLente DESC;")
             return filas;
 
         } catch (error) {
@@ -17,7 +17,7 @@ export const ModLente = {
     getLentesInactivos: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio, l.estado FROM tbl_lente as l where estado != 'Activo' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado != 'Activo' ORDER BY l.IdLente DESC;")
             return filas;
 
         } catch (error) {
@@ -27,11 +27,11 @@ export const ModLente = {
     },
 
 
-    getLenteExiste: async (lente) => {
+     getLenteExiste: async (lente) => {
         let conexion
         conexion = await connectDB();
         try {
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio, l.estado FROM tbl_lente as l where l.lente = '?';",
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio, l.estado FROM tbl_lente as l where l.lente = ?;",
                 [
                     lente.lente
                 ]
@@ -45,9 +45,9 @@ export const ModLente = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear un nuevo proveedor");
+            throw new Error("Error al crear un nuevo lente");
         }
-    },
+    }, 
     postInsertLente: async (lente) => {
         let conexion
         conexion = await connectDB();
