@@ -481,73 +481,10 @@ router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
 
-
-
-
-import { exec } from 'child_process';
-import fs from 'fs';
-const Fecha = new Date();
-const FechaCreacion = `${Fecha.getFullYear()}-${Fecha.getMonth() + 1}-${Fecha.getDate()}`;
-const config = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'proyectomultioptica',
-};
-
-router.get('/backup', (req, res) => {
-  const fileName = `./uploads/${FechaCreacion}_Backup.sql`; // Ruta donde se guardará el archivo de respaldo
-  const dumpCommand = `mysqldump -h ${config.host} -u ${config.user} --password=${config.password}  ${config.database} --routines --databases ${config.database} > ${fileName}`;
-
-  exec(dumpCommand, async (error, stdout, stderr) => {
-    if (error) {
-      console.log(error)
-      //req.flash('error','Error al generar el respaldo de la base de datos')
-      res.status(500).json("Ha ocurrido un error");
-    } else {
-      //req.flash('success','¡Backup creado exitosamente!')
-      //await pool.query('insert into Tbl_Bitacora (Fecha,Accion,Descripcion,IdObjeto) values (?,?,?,?)',[FechaCreacion,'Backup',`${req.user[0].Usuario} realizó un backup`,13]);
-      res.status(200).json('¡Backup creado exitosamente!')
-    }
-
-  });
-})
-
-
-
-
-router.get('/archivos', (req, res) => {
-  try {
-    const files = fs.readdirSync('./uploads');
-     // Ordena los nombres de archivo de forma ascendente
-     files.sort();
-    res.json(files);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json("Error al listar archivos");
-  }
-});
-
-
-
-
-router.post('/restore', (req, res, next) => {
-  console.log(req.body);
-  const backupFilePath = `./uploads/${req.body.restore}`;
-  exec(`mysql --host=${config.host} --user=${config.user} --password=${config.password} proyectomultioptica < ${backupFilePath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(error);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    console.log('Restauración de la base de datos generada exitosamente.');
-    res.status(200).json("Restauración exitosa");
-  });
-});
-
+import { ContrBackup } from '../controllers/backup.js';
+router.get('/backup', ContrBackup.getBackup);
+router.get('/archivos', ContrBackup.getArchivos);
+router.post('/restore', ContrBackup.getRestore);
 
 
 
