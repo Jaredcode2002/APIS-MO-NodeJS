@@ -12,6 +12,30 @@ export const ContrBackup = {
 
     },
 
+    getArchivos: async (req, res) => {
+        try {
+            const Archivos = await ModBackup.getArchivos();
+            res.status(200).json(Archivos);
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api de archivos")
+        }
+
+    },
+
+    getRestore: async (req, res) => {
+        try {
+
+            const Restore = await ModBackup.getRestore(req.body);
+            res.status(200).json(Restore);
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el api de restore")
+        }
+
+    },
+
+
 
 
 }

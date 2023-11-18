@@ -175,6 +175,7 @@ router.get('/pregunta', ContrPreguntas.getPregunta)
 
 //PROVEEDORES
 router.get('/proveedor', ContrProveedor.getProveedores)
+router.get('/proveedoresInactivos', ContrProveedor.getProveedoresInactivos)
 router.post('/proveedor/NuevoProveedor', ContrProveedor.postInsertProveedor)
 router.put('/proveedor/ActualizarProveedor', ContrProveedor.putUpdateProveedor)
 router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
@@ -317,6 +318,7 @@ router.post('/bitacora/eliminarGenero', ContrBitacora.postEliminarGenero)
 
 //Garantias
 router.get('/garantias', ContrGarantia.getGarantias)
+router.get('/garantiasInactivas', ContrGarantia.getGarantiasInactivas)
 router.post('/garantias/crear', ContrGarantia.postGarantia)
 router.put('/garantias/actualizar', ContrGarantia.putGarantia)
 router.delete('/garantias/eliminar', ContrGarantia.delGarantia)
@@ -368,6 +370,7 @@ router.put('/parametros/actualizacion', ContrParametro.putParametros);
 //Producto
 router.get('/producto', ContrProducto.getProducto)
 router.get('/productos', ContrProducto.getProductos)
+router.get('/productosInactivos', ContrProducto.getProductosInactivos)
 router.post('/productos/crear', ContrProducto.postProducto)
 router.put('/productos/actualizar', ContrProducto.putProducto)
 router.delete('/producto/eliminar', ContrProducto.delProducto)
@@ -380,6 +383,7 @@ router.delete('/productopromociones/eliminar', ContrProductoProm.delProductoProm
 
 //Promocion
 router.get('/promociones', ContrPromocion.getPromocion)
+router.get('/promocionesInactivas', ContrPromocion.getPromocionesInactivas)
 router.post('/promociones/crear', ContrPromocion.postPromocion)
 router.put('/promociones/actualizar', ContrPromocion.putPromocion)
 router.delete('/promociones/eliminar', ContrPromocion.delPromocion)
@@ -465,90 +469,22 @@ router.post('/recordatorios/fecha', ContrRecordatorio.getFecha)
 
 //Descuentos
 router.get('/Descuento', ContrDescuento.getDescuento)
+router.get('/DescuentosInactivos', ContrDescuento.getDescuentosInactivos)
 router.post('/Descuento/NuevoDescuento', ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento', ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento', ContrDescuento.deleteDescuento)
 
 //Lentes
 router.get('/Lentes', ContrLente.getLente)
+router.get('/LentesInactivos', ContrLente.getLentesInactivos)
 router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
 
-// import { ContrBackup } from '../controllers/backup.js';
-// router.get('/backup', ContrBackup.getBackup); 
-
-
-
-import { exec } from 'child_process';
-import fs from 'fs';
-const Fecha = new Date();
-const year = Fecha.getFullYear();
-//esto es para que les agregue cero a los meses y dias que son menosres a 10
-const month = (Fecha.getMonth() + 1).toString().padStart(2, '0');
-const day = Fecha.getDate().toString().padStart(2, '0');
-const FechaCreacion = `${year}-${month}-${day}`;
-
-const config = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'proyectomultioptica',
-};
-
-router.get('/backup', (req, res) => {
-  const fileName = `./uploads/${FechaCreacion}_Backup.sql`; // Ruta donde se guardará el archivo de respaldo
-  const dumpCommand = `mysqldump -h ${config.host} -u ${config.user} --password=${config.password}  ${config.database} --routines --databases ${config.database} > ${fileName}`;
-
-  exec(dumpCommand, async (error, stdout, stderr) => {
-    if (error) {
-      console.log(error)
-      //req.flash('error','Error al generar el respaldo de la base de datos')
-      res.status(500).json("Ha ocurrido un error");
-    } else {
-      //req.flash('success','¡Backup creado exitosamente!')
-      //await pool.query('insert into Tbl_Bitacora (Fecha,Accion,Descripcion,IdObjeto) values (?,?,?,?)',[FechaCreacion,'Backup',`${req.user[0].Usuario} realizó un backup`,13]);
-      res.status(200).json('¡Backup creado exitosamente!')
-    }
-
-  });
-})
-
-
- 
-
-router.get('/archivos', (req, res) => {
-  try {
-    const files = fs.readdirSync('./uploads');
-     // Ordena los nombres de archivo de forma ascendente
-     files.sort();
-    res.json(files);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json("Error al listar archivos");
-  }
-});
-
-
-
-
-router.post('/restore', (req, res, next) => {
-  console.log(req.body);
-  const backupFilePath = `./uploads/${req.body.restore}`;
-  exec(`mysql --host=${config.host} --user=${config.user} --password=${config.password} proyectomultioptica < ${backupFilePath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(error);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    console.log('Restauración de la base de datos generada exitosamente.');
-    res.status(200).json("Restauración exitosa");
-  });
-});
-
+import { ContrBackup } from '../controllers/backup.js';
+router.get('/backup', ContrBackup.getBackup);
+router.get('/archivos', ContrBackup.getArchivos);
+router.post('/restore', ContrBackup.getRestore);
 
 
 
