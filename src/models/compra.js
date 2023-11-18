@@ -50,7 +50,7 @@ export const ModCompras = {
       await Promise.all(promises);
   
       const [sumResult] = await conexion.query(
-        "SELECT SUM(costoCompra) AS totalCosto FROM tbl_compraDetalle WHERE IdCompra = ?",
+        " SELECT  p.descripcion as idProducto, pro.CiaProveedora as idProveedor, SUM(costoCompra) AS totalCosto FROM tbl_compraDetalle as cd INNER JOIN tbl_producto as p on p.IdProducto=cd.idProducto INNER JOIN tbl_proveedor as pro on pro.IdProveedor=cd.idProveedor WHERE IdCompra = ?;",
         [compraId]
       );
   
