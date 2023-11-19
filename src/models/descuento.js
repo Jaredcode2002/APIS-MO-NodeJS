@@ -7,7 +7,7 @@ export const ModDescuento = {
     {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ("SELECT * FROM tbl_descuento")
+            const [filas] = await conexion.query ("SELECT d.IdDescuento, d.descPorcent, CASE WHEN estado = 'A' THEN 'Activo' WHEN estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_descuento as d where d.estado= 'A' ORDER BY d.IdDescuento DESC;")
             return filas;
         
         } catch (error) {
@@ -16,21 +16,62 @@ export const ModDescuento = {
         }
     },
 
+    getDescuentosInactivos:async()=>
+    {
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ("SELECT d.IdDescuento, d.descPorcent, CASE WHEN estado = 'A' THEN 'Activo' WHEN estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_descuento as d where d.estado != 'A' ORDER BY d.IdDescuento DESC;")
+            return filas;
+        
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consultar los descuentos");
+        }
+    },
+    
+    getDescuentoExiste: async (descuento) => {
+        let conexion
+        conexion = await connectDB();
+        try {
+            const [filas] = await conexion.query("SELECT * FROM tbl_descuento WHERE descPorcent= ?;",
+                [
+                    descuento.descPorcent
+                ]
+            );
+            conexion.end()
+            if (filas.legth >= 1) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error al crear un nuevo lente");
+        }
+    },
+
     postInsertDescuento:async(descuento)=>
     {
-        const conexion= await connectDB(); 
-        try {
-            const [filas]=await conexion.query("INSERT INTO tbl_descuento (estado,descPorcent,descPorcentEmpleado) VALUES(?,?,?);",
-            [
-                descuento.estado,
-                descuento.descPorcent,
-                descuento.descPorcentEmpleado,
-            ]
-            );
-            return{estado:"OKAY"}
-        } catch (error) {
-            onsole.log(error);
-            throw new Error("Error al consultar al insertar el descuento");
+        let conexion
+        conexion = await connectDB();
+        if (await ModDescuento.getDescuentoExiste(descuento) == false) {
+            try {
+                const [filas]=await conexion.query("INSERT INTO tbl_descuento (estado,descPorcent) VALUES(?,?);",
+                [
+                    descuento.estado,
+                    descuento.descPorcent,
+                ]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                conexion.end()
+                return false
+                throw new Error("Error al crear un nuevo descuento");
+            }
+        } else {
+            return false
         }
     },
 
@@ -38,11 +79,10 @@ export const ModDescuento = {
     {
         const conexion=await connectDB();
         try {
-            const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=?,descPorcentEmpleado=? WHERE  IdDescuento =?;",
+            const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=? WHERE  IdDescuento =?;",
             [
                 descuento.estado,
                 descuento.descPorcent,
-                descuento.descPorcentEmpleado,
                 descuento.IdDescuento,
             ]
             );

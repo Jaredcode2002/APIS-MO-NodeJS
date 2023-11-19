@@ -9,7 +9,7 @@ export const ModVentas = {
 
         try {
              conexion = await connectDB();
-            const [filas] = await conexion.query("select v.IdVenta, v.fecha, v.IdCliente as Cliente, v.valorVenta as ValorVenta from tbl_venta as v;")
+            const [filas] = await conexion.query("select v.IdVenta, v.fecha, v.IdCliente as Cliente, FORMAT(valorventa, 2) as ValorVenta from tbl_venta as v;")
             conexion.end()
             return filas;
         } catch (error) {

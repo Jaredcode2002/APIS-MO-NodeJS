@@ -35,7 +35,12 @@ export const ContrEmpleado = {
                 fechaCumpleanos,
                 estado
             });
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
+            if (result ==false) {
+                res.status(201).json({ id: result.id });
+            }else{
+                res.status(201).json({ id: result.id });
+            }
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: "Error al crear empleado" });

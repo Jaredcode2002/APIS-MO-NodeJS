@@ -6,7 +6,7 @@ export const ModPromocion = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT * FROM tbl_promocion");
+      const [filas] = await conexion.query("SELECT IdPromocion, descripcion, descPorcent, fechaInicial, DATE_FORMAT(fechaInicial, '%d/%m/%Y') as fechaInicialF, fechaFinal, DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinalF, CASE WHEN estado = 'A' THEN 'Activo' WHEN estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_promocion where estado = 'A' ORDER BY IdPromocion DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -15,26 +15,63 @@ export const ModPromocion = {
       throw new Error("Error al obtener las promociones");
     }
   },
-  postInsertPromocion: async (promocion) => {
+  getPromocionesInactivas: async () => {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("INSERT INTO tbl_promocion (fechaInicial, fechaFinal, estado, descPorcent, descripcion) VALUES (?,?,?,?,?);",
-        [
-          promocion.fechaInicial,
-          promocion.fechaFinal,
-          promocion.estado,
-          promocion.descPorcent,
-          promocion.descripcion
-        ]
-      );
+      const [filas] = await conexion.query("SELECT IdPromocion,descripcion, descPorcent, fechaInicial, DATE_FORMAT(fechaInicial, '%d/%m/%Y') as fechaInicialF, fechaFinal, DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinalF, CASE WHEN estado = 'A' THEN 'Activo' WHEN estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_promocion where estado != 'A' ORDER BY IdPromocion DESC;");
       conexion.end()
-
-      return { id: filas.insertId };
+      return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear promocion");
+      throw new Error("Error al obtener las promociones");
+    }
+  },
+  getPromocionExiste: async (promocion) => {
+    let conexion
+    conexion = await connectDB();
+    try {
+        const [filas] = await conexion.query("SELECT * FROM tbl_promocion where descripcion= ?;",
+            [
+                promocion.descripcion
+            ]
+        );
+        conexion.end()
+        if (filas.legth >= 1) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        console.log(error);
+        conexion.end()
+        throw new Error("Error al crear una promo");
+    }
+},
+  postInsertPromocion: async (promocion) => {
+    let conexion
+    conexion = await connectDB();
+    if (await ModPromocion.getPromocionExiste(promocion) == false) {
+        try {
+            const [filas]=await conexion.query("INSERT INTO tbl_promocion (fechaInicial, fechaFinal, estado, descPorcent, descripcion) VALUES (?,?,?,?,?);",
+            [
+              promocion.fechaInicial,
+              promocion.fechaFinal,
+              promocion.estado,
+              promocion.descPorcent,
+              promocion.descripcion
+            ]
+          );
+          conexion.end()
+            return { estado: "OK" };
+        } catch (error) {
+            conexion.end()
+            return false
+            throw new Error("Error al crear un nuevo proveedor");
+        }
+    } else {
+        return false
     }
   },
   putUpdatePromocion: async (promocion) => {
