@@ -7,6 +7,11 @@ export const ContrSucursal= {
         res.json(sucursal)
     },
 
+    getSucursalInactivas:async(req,res)=>{
+        const sucursal =await ModSucursal.getSucursalInactivas()
+        res.json(sucursal)
+    },
+
     postInsertSucursal:async(req,res)=>{
         try {
             const{IdDepartamento, IdCiudad, direccion, telefono, sucursal, estado}= req.body;

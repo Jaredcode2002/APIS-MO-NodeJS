@@ -126,20 +126,23 @@ router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
-router.post('/pais/crear', ContrPais.postPais)
-router.put('/pais/actualizar', ContrPais.putPais)
+router.get('/pais/paisInactivo', ContrPais.getPaisInactivos)
+router.post('/pais/crear', ContrPais.postInsertPais)
+router.put('/pais/actualizar', ContrPais.putUpdatePais)
 router.delete('/pais/eliminar', ContrPais.delPais)
 
 //Departamento
 router.get('/departamentos', ContrDepto.getDepartamentos)
-router.post('/departamento/crear', ContrDepto.postDepto)
-router.put('/departamento/actualizar', ContrDepto.putDepto)
+router.get('/departamentos/departamentoInactivo', ContrDepto.getDepartamentosInactivos)
+router.post('/departamento/crear', ContrDepto.postInsertDepto)
+router.put('/departamento/actualizar', ContrDepto.putUpdateDepto)
 router.delete('/departamento/eliminar', ContrDepto.delDepto)
 
 //Ciudad
 router.get('/ciudades', ContrCiudad.getCiudades)
-router.post('/ciudad/crear', ContrCiudad.postCiudad)
-router.put('/ciudad/actualizar', ContrCiudad.putCiudad)
+router.get('/ciudades/ciudadInactiva', ContrCiudad.getCiudadesInactivas)
+router.post('/ciudad/crear', ContrCiudad.postInsertCiudad)
+router.put('/ciudad/actualizar', ContrCiudad.putUpdateCiudad)
 router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
@@ -331,14 +334,16 @@ router.delete('/inventario/eliminar', ContrInventario.delInventario)
 
 //Marca
 router.get('/marcas', ContrMarca.getMarcas)
-router.post('/marcas/crear', ContrMarca.postMarca)
-router.put('/marcas/actualizar', ContrMarca.putMarca)
+router.get('/marcas/marcasInactivas', ContrMarca.getMarcasInactivas)
+router.post('/marcas/crear', ContrMarca.postInsertMarca)
+router.put('/marcas/actualizar', ContrMarca.putUpdateMarca)
 router.delete('/marcas/eliminar', ContrMarca.delMarca)
 
 //Modelo
 router.get('/modelos', ContrModelo.getModelos)
-router.post('/modelos/crear', ContrModelo.postModelo)
-router.put('/modelo/actualizar', ContrModelo.putModelo)
+router.get('/modelosInactivos', ContrModelo.getModeloslInactivos )
+router.post('/modelos/crear', ContrModelo.postInsertModelo)
+router.put('/modelo/actualizar', ContrModelo.putUpdateModelo)
 router.delete('/modelo/eliminar', ContrModelo.delModelo)
 
 //Pago
@@ -396,6 +401,7 @@ router.delete('/promocionmarca/eliminar', ContrPromocionMarca.delPromoMarca)
 
 //Sucursal
 router.get('/sucursales', ContrSucursal.getSucursales)
+router.get('/sucursalInactivas', ContrSucursal.getSucursalInactivas)
 router.post('/sucursal/crear', ContrSucursal.postInsertSucursal)
 router.put('/sucursal/actualizar', ContrSucursal.putUpdateSucursal)
 router.delete('/sucursal/eliminar', ContrSucursal.deleteSucursal)
@@ -403,8 +409,9 @@ router.delete('/sucursal/eliminar', ContrSucursal.deleteSucursal)
 
 //TipoPago
 router.get('/tipopago', ContrTipoPago.getTipoPagos)
-router.post('/tipopago/crear', ContrTipoPago.postTipoPago)
-router.put('/tipopago/actualizar', ContrTipoPago.putTipoPago)
+router.get('/tipopago/PagoInactivo', ContrTipoPago.getTipoPagosInactivos)
+router.post('/tipopago/crear', ContrTipoPago.postInsertTipoPago)
+router.put('/tipopago/actualizar', ContrTipoPago.putUpdateTipoPago)
 router.delete('/tipopago/eliminar', ContrTipoPago.delTipoPago)
 
 
@@ -440,8 +447,9 @@ router.put('/Estado/Inactivo', ContrEstado.updInactivo)
 
 //Genero
 router.get('/Genero', ContrGenero.getGenero)
+router.get('/Genero/GeneroInactivo', ContrGenero.getGeneroInactivos)
 router.post('/Genero/insertar', ContrGenero.postInsertGenero)
-router.put('/Genero/actualizar', ContrGenero.putInsertGenero)
+router.put('/Genero/actualizar', ContrGenero.putUpdateGenero)
 router.delete('/Genero/borrar', ContrGenero.deleteGenero)
 
 //Permisos
