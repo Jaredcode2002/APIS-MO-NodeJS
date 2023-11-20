@@ -6,7 +6,7 @@ export const ModDepartamento = {
     let conexion
     try {
     conexion = await connectDB();
-      const [filas] = await conexion.query("select * from tbl_departamento");
+      const [filas] = await conexion.query("SELECT de.IdDepartamento, de.departamento, CASE WHEN de.estado = 'A' THEN 'Activo' WHEN de.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_departamento AS de WHERE de.estado = 'A' ORDER BY de.IdDepartamento DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -16,30 +16,76 @@ export const ModDepartamento = {
     } 
   },
 
+  getDepartamentosInactivos:async()=>
+  {
+      try {
+          const conexion = await connectDB();
+          const [filas] = await conexion.query("SELECT de.IdDepartamento, de.departamento, CASE WHEN de.estado = 'A' THEN 'Activo' WHEN de.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_departamento AS de WHERE de.estado != 'A'ORDER BY de.IdDepartamento DESC;");
+          return filas;
+      
+      } catch (error) {
+          console.log(error);
+          throw new Error("Error al obtener los departamentos");
+      }
+  },
+
+  getDepartamnetoExiste: async (departamento) =>
+    {
+      let conexion
+      conexion = await connectDB();
+      try {
+        const [filas]=await conexion.query ("Select * from tbl_departamento where departamento=?;", 
+        [
+          departamento.departamento
+        ]);
+        conexion.end()
+        if (filas.length>=1)
+        {
+          return true 
+        } else {
+              return false
+        }
+      } catch (error) {
+        console.long (error);
+        conexion.end()
+        throw new Error ("Error al crear una nuevo departamento")
+        
+      }
+    },
+
   postInsertDepto: async (departamento) => {
     let conexion
-    try {
-    conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_departamento (departamento) values (?);",
-        [
-          departamento.departamento,
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al crear depto");
+    conexion=await connectDB();
+    if (await ModDepartamento.getDepartamnetoExiste(departamento)==false)
+    {
+      try {
+        conexion = await connectDB();
+          const [filas] = await conexion.query("insert into tbl_departamento (departamento,estado) values (?,?);",
+            [
+              departamento.departamento,
+              departamento.estado,
+            ]
+          );
+          conexion.end()
+          return { estado: "OK"};
+        } catch (error) {
+          console.log(error);
+          conexion.end()
+          return false
+          throw new Error("Error al crear depto");
+        }
+    } else{
+      return false
     }
   },
   putUpdateDepto: async (departamento)=>{
     let conexion
       try {
          conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ? WHERE IdDepartamento= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ?, estado=? WHERE IdDepartamento= ?;",
         [
           departamento.departamento,
+          departamento.estado,
           departamento.IdDepartamento,
         ]
         )
@@ -51,6 +97,7 @@ export const ModDepartamento = {
         throw new Error("Error al actualizar la depto")
       }
   },
+  
   delDepto: async (departamento) => {
     let conexion
     try {
