@@ -170,7 +170,7 @@ export const ModParametro = {
     try {
 
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=10");
+      const [filas] = await conexion.query("SELECT parametro,valor FROM tbl_ms_parametros where `Id_Parametro`=14");
       conexion.end()
       return filas[0];
     } catch (error) {
@@ -183,7 +183,7 @@ export const ModParametro = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=10",
+      const [filas] = await conexion.query("UPDATE tbl_ms_parametros set valor=? where `Id_Parametro`=14",
         parametro.Parametro,
       );
       conexion.end()

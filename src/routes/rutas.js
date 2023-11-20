@@ -115,35 +115,40 @@ router.delete('/Gestion/EliminarSucursal', ContrGestion.deleteSucursal)
 
 //Rol
 router.get('/Rol', ContrRol.getRol)
+router.get('/RolesInactivos', ContrRol.getRolesInactivos)
 router.post('/Rol/NuevoRol', ContrRol.postRol)
 router.put('/Rol/RolActualizado', ContrRol.putUpdateRol)
 router.delete('/Rol/RolEliminado', ContrRol.deleteRol)
 
 //AutoRegistro
-router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
-router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo)
+/* router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
-router.post('/pais/crear', ContrPais.postPais)
-router.put('/pais/actualizar', ContrPais.putPais)
+router.get('/pais/paisInactivo', ContrPais.getPaisInactivos)
+router.post('/pais/crear', ContrPais.postInsertPais)
+router.put('/pais/actualizar', ContrPais.putUpdatePais)
 router.delete('/pais/eliminar', ContrPais.delPais)
 
 //Departamento
 router.get('/departamentos', ContrDepto.getDepartamentos)
-router.post('/departamento/crear', ContrDepto.postDepto)
-router.put('/departamento/actualizar', ContrDepto.putDepto)
+router.get('/departamentos/departamentoInactivo', ContrDepto.getDepartamentosInactivos)
+router.post('/departamento/crear', ContrDepto.postInsertDepto)
+router.put('/departamento/actualizar', ContrDepto.putUpdateDepto)
 router.delete('/departamento/eliminar', ContrDepto.delDepto)
 
 //Ciudad
 router.get('/ciudades', ContrCiudad.getCiudades)
-router.post('/ciudad/crear', ContrCiudad.postCiudad)
-router.put('/ciudad/actualizar', ContrCiudad.putCiudad)
+router.get('/ciudades/ciudadInactiva', ContrCiudad.getCiudadesInactivas)
+router.post('/ciudad/crear', ContrCiudad.postInsertCiudad)
+router.put('/ciudad/actualizar', ContrCiudad.putUpdateCiudad)
 router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 
 //empleado
 router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
 router.put('/empleado/actualizar', ContrEmpleado.putEmpleado)
@@ -173,6 +178,7 @@ router.get('/pregunta', ContrPreguntas.getPregunta)
 
 //PROVEEDORES
 router.get('/proveedor', ContrProveedor.getProveedores)
+router.get('/proveedoresInactivos', ContrProveedor.getProveedoresInactivos)
 router.post('/proveedor/NuevoProveedor', ContrProveedor.postInsertProveedor)
 router.put('/proveedor/ActualizarProveedor', ContrProveedor.putUpdateProveedor)
 router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
@@ -315,6 +321,7 @@ router.post('/bitacora/eliminarGenero', ContrBitacora.postEliminarGenero)
 
 //Garantias
 router.get('/garantias', ContrGarantia.getGarantias)
+router.get('/garantiasInactivas', ContrGarantia.getGarantiasInactivas)
 router.post('/garantias/crear', ContrGarantia.postGarantia)
 router.put('/garantias/actualizar', ContrGarantia.putGarantia)
 router.delete('/garantias/eliminar', ContrGarantia.delGarantia)
@@ -327,14 +334,16 @@ router.delete('/inventario/eliminar', ContrInventario.delInventario)
 
 //Marca
 router.get('/marcas', ContrMarca.getMarcas)
-router.post('/marcas/crear', ContrMarca.postMarca)
-router.put('/marcas/actualizar', ContrMarca.putMarca)
+router.get('/marcas/marcasInactivas', ContrMarca.getMarcasInactivas)
+router.post('/marcas/crear', ContrMarca.postInsertMarca)
+router.put('/marcas/actualizar', ContrMarca.putUpdateMarca)
 router.delete('/marcas/eliminar', ContrMarca.delMarca)
 
 //Modelo
 router.get('/modelos', ContrModelo.getModelos)
-router.post('/modelos/crear', ContrModelo.postModelo)
-router.put('/modelo/actualizar', ContrModelo.putModelo)
+router.get('/modelosInactivos', ContrModelo.getModeloslInactivos )
+router.post('/modelos/crear', ContrModelo.postInsertModelo)
+router.put('/modelo/actualizar', ContrModelo.putUpdateModelo)
 router.delete('/modelo/eliminar', ContrModelo.delModelo)
 
 //Pago
@@ -366,6 +375,7 @@ router.put('/parametros/actualizacion', ContrParametro.putParametros);
 //Producto
 router.get('/producto', ContrProducto.getProducto)
 router.get('/productos', ContrProducto.getProductos)
+router.get('/productosInactivos', ContrProducto.getProductosInactivos)
 router.post('/productos/crear', ContrProducto.postProducto)
 router.put('/productos/actualizar', ContrProducto.putProducto)
 router.delete('/producto/eliminar', ContrProducto.delProducto)
@@ -378,6 +388,7 @@ router.delete('/productopromociones/eliminar', ContrProductoProm.delProductoProm
 
 //Promocion
 router.get('/promociones', ContrPromocion.getPromocion)
+router.get('/promocionesInactivas', ContrPromocion.getPromocionesInactivas)
 router.post('/promociones/crear', ContrPromocion.postPromocion)
 router.put('/promociones/actualizar', ContrPromocion.putPromocion)
 router.delete('/promociones/eliminar', ContrPromocion.delPromocion)
@@ -390,6 +401,7 @@ router.delete('/promocionmarca/eliminar', ContrPromocionMarca.delPromoMarca)
 
 //Sucursal
 router.get('/sucursales', ContrSucursal.getSucursales)
+router.get('/sucursalInactivas', ContrSucursal.getSucursalInactivas)
 router.post('/sucursal/crear', ContrSucursal.postInsertSucursal)
 router.put('/sucursal/actualizar', ContrSucursal.putUpdateSucursal)
 router.delete('/sucursal/eliminar', ContrSucursal.deleteSucursal)
@@ -397,8 +409,9 @@ router.delete('/sucursal/eliminar', ContrSucursal.deleteSucursal)
 
 //TipoPago
 router.get('/tipopago', ContrTipoPago.getTipoPagos)
-router.post('/tipopago/crear', ContrTipoPago.postTipoPago)
-router.put('/tipopago/actualizar', ContrTipoPago.putTipoPago)
+router.get('/tipopago/PagoInactivo', ContrTipoPago.getTipoPagosInactivos)
+router.post('/tipopago/crear', ContrTipoPago.postInsertTipoPago)
+router.put('/tipopago/actualizar', ContrTipoPago.putUpdateTipoPago)
 router.delete('/tipopago/eliminar', ContrTipoPago.delTipoPago)
 
 
@@ -432,10 +445,11 @@ router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle', ContrExpedineteDetall
 router.put('/Estado/Activo', ContrEstado.updActivo)
 router.put('/Estado/Inactivo', ContrEstado.updInactivo)
 
-//Genero
+//GENERO
 router.get('/Genero', ContrGenero.getGenero)
+router.get('/Genero/GeneroInactivo', ContrGenero.getGeneroInactivos)
 router.post('/Genero/insertar', ContrGenero.postInsertGenero)
-router.put('/Genero/actualizar', ContrGenero.putInsertGenero)
+router.put('/Genero/actualizar', ContrGenero.putUpdateGenero)
 router.delete('/Genero/borrar', ContrGenero.deleteGenero)
 
 //Permisos
@@ -463,83 +477,22 @@ router.post('/recordatorios/fecha', ContrRecordatorio.getFecha)
 
 //Descuentos
 router.get('/Descuento', ContrDescuento.getDescuento)
+router.get('/DescuentosInactivos', ContrDescuento.getDescuentosInactivos)
 router.post('/Descuento/NuevoDescuento', ContrDescuento.postInsertDescuento)
 router.put('/Descuento/ActualizarDescuento', ContrDescuento.putDescuento)
 router.delete('/Descuento/BorrarDescuento', ContrDescuento.deleteDescuento)
 
 //Lentes
 router.get('/Lentes', ContrLente.getLente)
+router.get('/LentesInactivos', ContrLente.getLentesInactivos)
 router.post('/Lentes/NuevoLente', ContrLente.postInsertLente)
 router.put('/Lentes/ActualizarLente', ContrLente.putUpdLente)
 router.delete('/Lentes/BorrarLente', ContrLente.deleteLente)
 
-
-
-
-import { exec } from 'child_process';
-import fs from 'fs';
-const Fecha = new Date();
-const FechaCreacion = `${Fecha.getFullYear()}-${Fecha.getMonth() + 1}-${Fecha.getDate()}`;
-const config = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'proyectomultioptica',
-};
-
-router.get('/backup', (req, res) => {
-  const fileName = `./uploads/${FechaCreacion}_Backup.sql`; // Ruta donde se guardará el archivo de respaldo
-  const dumpCommand = `mysqldump -h ${config.host} -u ${config.user} --password=${config.password}  ${config.database} --routines --databases ${config.database} > ${fileName}`;
-
-  exec(dumpCommand, async (error, stdout, stderr) => {
-    if (error) {
-      console.log(error)
-      //req.flash('error','Error al generar el respaldo de la base de datos')
-      res.status(500).json("Ha ocurrido un error");
-    } else {
-      //req.flash('success','¡Backup creado exitosamente!')
-      //await pool.query('insert into Tbl_Bitacora (Fecha,Accion,Descripcion,IdObjeto) values (?,?,?,?)',[FechaCreacion,'Backup',`${req.user[0].Usuario} realizó un backup`,13]);
-      res.status(200).json('¡Backup creado exitosamente!')
-    }
-
-  });
-})
-
-
-
-
-router.get('/archivos', (req, res) => {
-  try {
-    const files = fs.readdirSync('./uploads');
-     // Ordena los nombres de archivo de forma ascendente
-     files.sort();
-    res.json(files);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json("Error al listar archivos");
-  }
-});
-
-
-
-
-router.post('/restore', (req, res, next) => {
-  console.log(req.body);
-  const backupFilePath = `./uploads/${req.body.restore}`;
-  exec(`mysql --host=${config.host} --user=${config.user} --password=${config.password} proyectomultioptica < ${backupFilePath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(error);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return res.status(500).json("Error al restaurar la base de datos");
-    }
-    console.log('Restauración de la base de datos generada exitosamente.');
-    res.status(200).json("Restauración exitosa");
-  });
-});
-
+import { ContrBackup } from '../controllers/backup.js';
+router.get('/backup', ContrBackup.getBackup);
+router.get('/archivos', ContrBackup.getArchivos);
+router.post('/restore', ContrBackup.getRestore);
 
 
 

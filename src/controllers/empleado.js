@@ -5,6 +5,10 @@ export const ContrEmpleado = {
         const emple = await ModEmpleados.getEmpleados();
         res.json(emple);
     },
+    getEmpleadosInactivos:async(req, res)=>{
+        const emple = await ModEmpleados.getEmpleadosInactivos();
+        res.json(emple);
+    },
     getEmpleado:async(req, res)=>{
         try {
             const {idEmpleado} = req.body;
@@ -31,7 +35,12 @@ export const ContrEmpleado = {
                 fechaCumpleanos,
                 estado
             });
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
+            if (result ==false) {
+                res.status(201).json({ id: result.id });
+            }else{
+                res.status(201).json({ id: result.id });
+            }
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: "Error al crear empleado" });
