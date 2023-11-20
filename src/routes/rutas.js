@@ -445,7 +445,7 @@ router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle', ContrExpedineteDetall
 router.put('/Estado/Activo', ContrEstado.updActivo)
 router.put('/Estado/Inactivo', ContrEstado.updInactivo)
 
-//Genero
+//GENERO
 router.get('/Genero', ContrGenero.getGenero)
 router.get('/Genero/GeneroInactivo', ContrGenero.getGeneroInactivos)
 router.post('/Genero/insertar', ContrGenero.postInsertGenero)
