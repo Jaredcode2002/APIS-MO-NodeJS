@@ -100,6 +100,7 @@ router.delete('/clientes/eliminar', ContrClientes.delCliente)
 //Compra
 router.get('/compra', ContrCompra.getCompras)
 router.post('/compra/NuevaCompra', ContrCompra.postInsertCompra)
+router.put('/compra/anular',ContrCompra.putAnularCompra)
 
 //Ventas
 router.get('/Ventas', ContrVentas.getVentas)
