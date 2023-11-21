@@ -5,7 +5,7 @@ export const ModClientes = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT c.idCliente, c.nombre,c.apellido, g.descripcion as genero, c.fechaNacimiento, c.direccion, c.telefonoCliente as Telefono, c.correoElectronico as Email from tbl_cliente as c inner join tbl_genero as g on c.IdGenero=g.IdGenero;")
+            const [filas] = await conexion.query("SELECT c.idCliente, c.nombre,c.apellido, g.descripcion as genero, c.fechaNacimiento, c.direccion, c.telefonoCliente as Telefono, c.correoElectronico as Email from tbl_cliente as c inner join tbl_genero as g on c.IdGenero=g.IdGenero ORDER BY c.idCliente DESC;")
             conexion.end()
             return filas
         } catch (error) {
