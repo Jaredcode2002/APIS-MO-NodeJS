@@ -5,13 +5,13 @@ const enviarMail = async (mail) => {
     host: "smtp.gmail.com",
     port: 587,
     auth: {
-      user: "jaredmoisesalgadortiz@gmail.com",
-      pass: "jqwvepwixhbupffm",
+      user: "multiopticashn504@gmail.com",
+      pass: "hlnc bxyg ahpg ngfs",
     },
   };
 
   const mensaje = {
-    from: "jaredmoisesalgadortiz@gmail.com",
+    from: "multiopticashn504@gmail.com",
     to: mail.para,
     subject: mail.titulo,
     text: mail.texto,
