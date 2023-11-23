@@ -9,7 +9,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT * FROM tbl_ms_bitacora")
+            const [filas] = await conexion.query("SELECT b.IdBitacora, u.Usuario, o.Objeto, b.accion, b.descripcion, DATE_FORMAT(b.fecha, '%Y-%m-%d %H:%i:%s') as fecha FROM tbl_ms_bitacora as b inner join tbl_ms_usuario as u on u.Id_Usuario=b.Id_Usuario inner join tbl_objetos as o on o.Id_Objeto=b.Id_Objeto ORDER BY IdBitacora DESC;")
             conexion.end()
             return filas;
         } catch (error) {

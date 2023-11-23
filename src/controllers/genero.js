@@ -17,7 +17,6 @@ export const ContrGenero= {
         try {
             const  {descripcion, estado}=req.body;
             const result = await ModGenero.postInsertGenero({descripcion,estado});
-            res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
               } else {
