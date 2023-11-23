@@ -37,7 +37,7 @@ export const ModCompras = {
     let conexion
     try {
        conexion = await connectDB();
-      const [compras] = await conexion.query("SELECT cd.cantidad,cd.IdProducto,c.fechaCompra FROM tbl_compradetalle as cd INNER JOIN tbl_compra as c on c.IdCompra=cd.IdCompra where cd.IdCompra = ? and c.Estado='A';",[compraId])
+      const [compras] = await conexion.query("SELECT cd.cantidad,cd.IdProducto,c.fechaCompra FROM tbl_compradetalle as cd INNER JOIN tbl_compra as c on c.IdCompra=cd.IdCompra where cd.IdCompra = ? and c.estado='A';",[compraId])
 
       const promises = compras.map(async (compra) => {
         console.log(compra);
@@ -48,7 +48,7 @@ export const ModCompras = {
         );
       });
 
-      await conexion.query("Update tbl_compra set Estado='I' where IdCompra=?",compraId)
+      await conexion.query("Update tbl_compra set estado='I' where IdCompra=?",compraId)
       await Promise.all(promises);
       conexion.end()
       return {result:"ok"}

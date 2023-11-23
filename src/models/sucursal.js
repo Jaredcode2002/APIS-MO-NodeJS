@@ -6,13 +6,26 @@ export const ModSucursal = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("select s.IdSucursal, d.departamento, c.ciudad, s.direccion, s.telefono, s.estado from tbl_sucursal as s inner join tbl_departamento as d on s.IdDepartamento=d.IdDepartamento inner join tbl_ciudad as c on s.IdCiudad=c.IdCiudad;")
+            const [filas] = await conexion.query("SELECT s.IdSucursal,d.departamento,c.ciudad,s.direccion,s.telefono, CASE  WHEN s.estado = 'A' THEN 'Activo'  WHEN s.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido'  END AS estado FROM tbl_sucursal AS s INNER JOIN tbl_departamento AS d ON s.IdDepartamento = d.IdDepartamento INNER JOIN tbl_ciudad AS c ON s.IdCiudad = c.IdCiudad WHERE s.estado = 'A' ORDER BY s.IdSucursal DESC;")
             conexion.end()
             return filas;
         } catch (error) {
             console.long(error);
             conexion.end()
             throw new error("Error al consumir el API")
+        }
+    },
+    
+    getSucursalInactivas:async()=>
+    {
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ("SELECT s.IdSucursal,d.departamento,c.ciudad,s.direccion,s.telefono, CASE  WHEN s.estado = 'A' THEN 'Activo'  WHEN s.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido'  END AS estado FROM tbl_sucursal AS s INNER JOIN tbl_departamento AS d ON s.IdDepartamento = d.IdDepartamento INNER JOIN tbl_ciudad AS c ON s.IdCiudad = c.IdCiudad WHERE s.estado != 'A' ORDER BY s.IdSucursal DESC;")
+            return filas;
+        
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al consumir el API");
         }
     },
 
