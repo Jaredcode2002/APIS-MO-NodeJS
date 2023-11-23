@@ -38,7 +38,7 @@ export const ModLogin = {
     try {
        conexion = await connectDB();
       const [filas] = await conexion.query(
-        "select u.Nombre_Usuario,u.Estado_Usuario,r.Rol,u.Correo_Electronico,u.Id_Usuario,u.`Id_Rol` as idRol from TBL_MS_USUARIO as u INNER JOIN tbl_ms_roles as r  ON  u.`Id_Rol` = r.`Id_Rol`   where Correo_Electronico  =  ?",
+        "select u.Nombre_Usuario,u.Estado_Usuario,r.Rol,u.Correo_Electronico,u.Id_Usuario,e.`IdEmpleado`,u.`Id_Rol` as idRol from TBL_MS_USUARIO as u INNER JOIN tbl_ms_roles as r  ON  u.`Id_Rol` = r.`Id_Rol` INNER JOIN tbl_empleado as e on e.`IdEmpleado`=u.`idEmpleado`   where Correo_Electronico  =  ?",
         [Usuario.correo]
       );
       conexion.end()
