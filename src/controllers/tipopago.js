@@ -1,37 +1,42 @@
 import { ModTipoPago } from "../models/tipopago.js";
 
 export const ContrTipoPago = {
+
   getTipoPagos: async (req,res) => {
     const TipoPagos = await ModTipoPago.getTipoPagos();
-    res.status(200).json(TipoPagos);
+    res.json(TipoPagos);
   },
-  postTipoPago: async (req, res) => {
+
+  getTipoPagosInactivos: async (req,res) => {
+    const TipoPagos = await ModTipoPago.getTipoPagosInactivos();
+    res.json(TipoPagos);
+  },
+
+  postInsertTipoPago: async (req, res) => {
     try {
-      const { descripcion } = req.body;
-      const result = await ModTipoPago.postInsertTipoPago({descripcion,});
+      const { descripcion, estado} = req.body;
+      const result = await ModTipoPago.postInsertTipoPago({descripcion,estado});
       res.status(201).json({ id: result.id });
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Error creating payment type" });
     }
   },
-  putTipoPago: async (req, res) => {
+
+  putUpdateTipoPago: async (req, res) => {
     try {
-      const {
-        descripcion,
-        IdTipoPago,
-        
-      } = req.body;
-      const result = await ModTipoPago.putUpdateTipoPago({
-        descripcion,
-        IdTipoPago,
-      });
-      res.status(200).json({response:"Ok"})
+      const {descripcion,estado, IdTipoPago} = req.body;
+      const result = await ModTipoPago.putUpdateTipoPago({descripcion, estado, IdTipoPago});
+      res.status(200).json({id: result.id})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
+
   delTipoPago: async (req,res)=>{
     try {
       const {IdTipoPago} = req.body

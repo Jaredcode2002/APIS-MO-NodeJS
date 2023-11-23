@@ -7,7 +7,7 @@ export const ModExpediente = {
         let conexion
  try {
     conexion = await connectDB ();
-    const [filas]= await conexion.query ("SELECT e.IdExpediente,c.IdCliente AS Cliente,em.nombre AS CreadoPor,e.`fechaCreacion`,COUNT(ed.`IdExpediente`) AS TotalRegistros FROM  tbl_expediente AS e INNER JOIN  tbl_empleado AS em ON e.IdEmpleado = em.IdEmpleado INNER JOIN  tbl_cliente AS c ON e.IdCliente = c.idCliente LEFT JOIN  tbl_expedientedetalle AS ed ON ed.IdExpediente = e.IdExpediente GROUP BY  e.IdExpediente, c.IdCliente, em.nombre, e.`fechaCreacion`;")
+    const [filas]= await conexion.query ("SELECT e.IdExpediente,c.IdCliente AS Cliente,CONCAT(c.nombre, ' ', c.apellido) AS Nombre,  em.nombre AS CreadoPor,e.`fechaCreacion`,COUNT(ed.`IdExpediente`) AS TotalRegistros FROM  tbl_expediente AS e INNER JOIN  tbl_empleado AS em ON e.IdEmpleado = em.IdEmpleado INNER JOIN  tbl_cliente AS c ON e.IdCliente = c.idCliente LEFT JOIN  tbl_expedientedetalle AS ed ON ed.IdExpediente = e.IdExpediente GROUP BY  e.IdExpediente, c.IdCliente, em.nombre, e.`fechaCreacion`")
     conexion.end()
     return filas;
 } catch (error) {
@@ -34,7 +34,7 @@ try {
 } catch (error) {
     console.log(error);
     conexion.end()
-    throw new error ("Error al consultar el API");
+    return "xd"
 }
 },
 

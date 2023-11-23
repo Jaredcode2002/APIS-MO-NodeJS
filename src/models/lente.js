@@ -9,6 +9,7 @@ export const ModLente = {
             const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado = 'Activo' ORDER BY l.IdLente DESC;")
             return filas;
 
+            
         } catch (error) {
             console.log(error);
             throw new Error("Error al consultar los lentes");
