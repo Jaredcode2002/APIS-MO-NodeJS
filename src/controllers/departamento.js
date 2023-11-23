@@ -17,7 +17,7 @@ export const ContrDepto = {
       try {
           const  {departamento, estado}=req.body;
           const result = await ModDepartamento.postInsertDepto({departamento,estado});
-          res.status(201).json({ id: result.id });
+          
           if (result == false) {
               res.status(201).json(result);
             } else {

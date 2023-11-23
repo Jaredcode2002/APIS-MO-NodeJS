@@ -29,36 +29,37 @@ export const ContrVentas ={
     },
 
     postInsertVentasDeberitasDeberitas: async (req, res) => {
-        
-        try {
+        const { arrVentas, total } = req.body;
+         let conexion = null; // Inicializamos la variable conexion con null
+         try {
+            conexion = await connectDB(); // Asumiendo que tienes una función connectDB que conecta a la base de datos
+            await conexion.beginTransaction();
+      
+            const idVenta = await ModVentas.postVenta({ total });
+            await ModVentas.postInsertDeberitasDeberitas(arrVentas,idVenta);
+      
+            await conexion.commit();
+            res.status(201).json({ id: idVenta });
+          } catch (error) {
+            console.log(error);
+            if (conexion) {
+              await conexion.rollback(); // Verificamos si la conexión está definida antes de llamar a rollback
+            }
+            res
+              .status(500)
+              .json({ error: "Error al insertar la compra y/o detalle de compra" });
+          } finally {
+            if (conexion) {
+              conexion.end(); // Cerramos la conexión directamente al finalizar la operación
+            }
+          }
+        /* try {
             const { fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,cantidad,IdProducto,IdLente,precioLente,subtotal,total,nuevoPrecio,rebaja,idUsuario} = req.body
             const result = await ModVentas.postInsertDeberitasDeberitas({ fechaEntrega, fechaLimiteEntrega, IdCliente, idEmpleado, RTN,IdGarantia,IdPromocion,IdDescuento,IdLente,cantidad,IdProducto,rebaja,precioLente,subtotal,total,nuevoPrecio,idUsuario})
             res.status(201).json(result);
         } catch (error) {
             console.log(error);
-        }
-    },
-
-    putUpdateVenta: async (req,res)=> {
-        try {
-            const {fecha,fechaLimiteEntrega,fechaEntrega,estado,observacion,IdCliente,idEmpleado,NumeroCAI,RTN,isv,subtotal,totalAPagar,IdVenta}=req.body
-            const result = await ModVentas.putUpdateVenta({fecha,fechaLimiteEntrega,fechaEntrega,estado,observacion,IdCliente,idEmpleado,NumeroCAI,RTN,isv,subtotal,totalAPagar,IdVenta})
-            res.status(201).json({ id: result.id});
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
-    deleteVenta: async (req,res)=>{
-        try {
-            const {IdVenta}=req.body
-            const result = await ModVentas.putUpdateVenta({IdVenta})
-            res.status(201).json({ id: result.id});
-            
-        } catch (error) {
-            console.log(error);
-        }
-
+        } */
     },
 
 }

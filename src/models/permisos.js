@@ -6,7 +6,7 @@ export const ModPermisos = {
         let conexion
         try {
          conexion = await connectDB();
-            const [filas] = await conexion.query("select p.Id_Rol, r.Rol, p.Permiso_Insercion, p.Permiso_Eliminacion, p.Permiso_Actualizacion, p.Permiso_Consultar, p.creado_por, p.fecha_creacion, p.modificado_por, p.fecha_modificacion from tbl_permisos as p inner join tbl_ms_roles as r on p.Id_Rol=r.Id_Rol;")
+            const [filas] = await conexion.query("select p.Id_Rol, o.Objeto, r.Rol, p.Permiso_Insercion, p.Permiso_Eliminacion, p.Permiso_Actualizacion, p.Permiso_Consultar, p.creado_por, p.fecha_creacion, p.modificado_por, p.fecha_modificacion from tbl_permisos as p inner join tbl_ms_roles as r on p.Id_Rol=r.Id_Rol inner join tbl_objetos as o on o.Id_Objeto=p.Id_Objeto;")
             conexion.end()
             return filas;
         } catch (error) {

@@ -17,7 +17,7 @@ export const ContrModelo = {
         try {
             const  {IdMarca, detalle, anio, estado}=req.body;
             const result = await ModModelo.postInsertModelo({IdMarca, detalle, anio, estado});
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
               } else {
