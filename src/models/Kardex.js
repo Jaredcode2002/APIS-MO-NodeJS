@@ -54,7 +54,7 @@ export const ModKardex = {
     try {
       const conexion = await connectDB();
       const [filas] = await conexion.query(
-        "INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(3,?,?,?,?);",
+        "INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(5,?,?,?,?);",
         [kardex.IdProducto, idUsuario, kardex.fechaCompra, kardex.cantidad]
       );
       return { estado: "ok" };

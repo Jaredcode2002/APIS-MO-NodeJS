@@ -59,7 +59,7 @@ export const ModVentas = {
                     venta.fechaEntrega,
                     venta.fechaLimiteEntrega,
                     venta.IdCliente,
-                    venta.idEmpleado,
+                    venta.idEmpleado || venta.IdEmpleado,
                     venta.RTN,
                 ]
             );
@@ -159,6 +159,7 @@ export const ModVentas = {
         let total=0
         try {
             conexion = await connectDB();
+            console.log(detalles);
             const idVenta = await ModVentas.InsertVenta(detalles[0])
             const promises = detalles.map(async (detalle) => {
                 await ModInventario.putUpdateInventarioVentas(detalle)
