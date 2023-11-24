@@ -425,8 +425,11 @@ router.delete('/ComprasDetalle', ContrCompraDetalle.DeleteCompraDetalle)
 
 //Kardex
 router.get('/kardex', ContrKardex.GetKardex)
+router.get('/Tmovimientos',ContrKardex.getMovimientos)
 router.post('/ProductoKardex', ContrKardex.postProductoKardexFiltro)
 router.post('/kardex', ContrKardex.PostKardex)
+router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
+
 
 
 //Expediente

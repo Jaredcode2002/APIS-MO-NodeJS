@@ -59,7 +59,7 @@ export const ModInventario = {
         const [filas] = await conexion.query("UPDATE tbl_inventario set cantidad = cantidad - ? WHERE IdProducto=?;",
         [
           inventario.cantidad,
-          inventario.IdProducto
+          inventario.IdProducto || inventario.idProducto
         ]
       )
       conexion.end()
