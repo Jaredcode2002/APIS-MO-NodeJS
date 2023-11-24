@@ -9,7 +9,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT * FROM tbl_ms_bitacora")
+            const [filas] = await conexion.query("SELECT b.IdBitacora, u.Usuario, o.Objeto, b.accion, b.descripcion, DATE_FORMAT(b.fecha, '%Y-%m-%d %H:%i:%s') as fecha FROM tbl_ms_bitacora as b inner join tbl_ms_usuario as u on u.Id_Usuario=b.Id_Usuario inner join tbl_objetos as o on o.Id_Objeto=b.Id_Objeto ORDER BY IdBitacora DESC;")
             conexion.end()
             return filas;
         } catch (error) {
@@ -1003,7 +1003,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir","Se salio de la pantalla Lista de Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir ","El ususario salio de la pantalla Lista de Clientes")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1097,6 +1097,23 @@ export const ModBitacora = {
             console.log(error);
             conexion.end()
             throw new Error("Error al crear el API");
+        }
+    },
+
+    //-----------------------Salir de la lista de Clientes---------------------------
+    postSalirListaExpediente: async (idusuario) => {
+        let conexion
+        try {
+            conexion = await connectDB();
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir","El usuario salio de la pantalla de Lista de Expediente")',
+                [idusuario.Id]
+            );
+            conexion.end()
+            return { estado: "OK" };
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error en consumir el API");
         }
     },
 
@@ -1486,13 +1503,13 @@ postInsertBSucursal: async (idusuario)=>{
     },
 
 
-    /////////////////////NODELO///////////////////////
-    //---------------Nuevo Nodelo--------------------
+    /////////////////////TIPO PAGO///////////////////////
+    //---------------Metodo de Pago--------------------
     postInsertBMetodopago: async (idusuario) => {
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro unm nuevo Metodo pago")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Tipo Pago","El usuario registro un nuevo Metodo pago")',
                 idusuario.Id,
             );
             conexion.end()

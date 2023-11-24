@@ -100,6 +100,7 @@ router.delete('/clientes/eliminar', ContrClientes.delCliente)
 //Compra
 router.get('/compra', ContrCompra.getCompras)
 router.post('/compra/NuevaCompra', ContrCompra.postInsertCompra)
+router.put('/compra/anular',ContrCompra.putAnularCompra)
 
 //Ventas
 router.get('/Ventas', ContrVentas.getVentas)
@@ -249,6 +250,7 @@ router.post('/bitacora/Actualizacioncliente', ContrBitacora.postActualizarClient
 router.post('/bitacora/Eliminarcliente', ContrBitacora.postEliminarClientes)
 //--Datos de expediente 
 router.post('/bitacora/expediente', ContrBitacora.postInsertBExpediente)
+router.post('/bitacora/SalirListaExpediente', ContrBitacora.postSalirListaExpediente)
 router.post('/bitacora/Nuevaexpediente', ContrBitacora.postInsertBCliente)
 router.post('/bitacora/Diagnostico', ContrBitacora.postInsertBDiagnostico)
 router.post('/bitacora/Actualizacioncexpediente', ContrBitacora.postActualizarClientes)

@@ -11,33 +11,37 @@ export const ContrClientes = {
     }
   },
   postCliente: async (req, res) => {
-    const {idCliente,nombre,apellido,idGenero,fechaNacimiento,direccion,telefono,correo} = req.body
+    const { idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE } = req.body
     try {
-        const result = await ModClientes.postCliente({idCliente,nombre,apellido,idGenero,fechaNacimiento,direccion,telefono,correo})
-        res.status(200).json(result);
+      const result = await ModClientes.postCliente({ idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE })
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
       res.status(500).json("Error al consumir el api");
     }
   },
-  putCliente: async (req,res)=>{
+  putCliente: async (req, res) => {
     try {
-      const {idCliente,nombre,apellido,idGenero,fechaNacimiento,direccion,telefono,correo} = req.body
-      const result = await ModClientes.putCliente({idCliente,nombre,apellido,idGenero,fechaNacimiento,direccion,telefono,correo})
+      const { idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE } = req.body
+      const result = await ModClientes.putCliente({ idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE })
       res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json("Error al consumir el api");
-  }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json("Error al consumir el api");
+    }
   },
-  delCliente: async (req,res)=>{
+  delCliente: async (req, res) => {
     try {
-      const {idCliente} = req.body
-      const result = await ModClientes.delCliente({idCliente})
+      const { idCliente } = req.body
+      const result = await ModClientes.delCliente({ idCliente })
       res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json("Error al consumir el api");
-  }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json("Error al consumir el api");
+    }
   }
 };
