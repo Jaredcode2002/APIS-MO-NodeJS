@@ -10,7 +10,7 @@ export const ModGenero = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
             throw new error("Error al consumir el API")
         }

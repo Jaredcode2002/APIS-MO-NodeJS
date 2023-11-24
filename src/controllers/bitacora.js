@@ -728,7 +728,16 @@ postSalirListaClientes: async (req,res)=> {
         console.log(error);
     }
 },
-
+//--------------------------Salir de lista expediente------------------------
+postSalirListaExpediente: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaExpediente({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
 //------------------------Actualizar Cliente-----------------
 postActualizarClientes: async (req,res)=> {
     try {
