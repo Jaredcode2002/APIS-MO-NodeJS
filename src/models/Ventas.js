@@ -24,7 +24,7 @@ export const ModVentas = {
         try {
             conexion = await connectDB();
             const [filas] = await conexion.query(
-                "INSERT INTO tbl_venta (totalVenta) VALUES (null)"
+                "INSERT INTO tbl_venta (totalVenta,estado) VALUES (null,'A')"
             );
             conexion.end()
             return filas.insertId;
@@ -54,7 +54,7 @@ export const ModVentas = {
         let conexion;
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("INSERT INTO tbl_venta(`fechaEntrega`, `fechaLimiteEntrega`, `IdCliente`, `idEmpleado`, `RTN`) VALUES (?, ?, ?, ?, ?);",
+            const [filas] = await conexion.query("INSERT INTO tbl_venta(`fechaEntrega`, `fechaLimiteEntrega`, `IdCliente`, `idEmpleado`, `RTN`,estado) VALUES (?, ?, ?, ?, ?,'A');",
                 [
                     venta.fechaEntrega,
                     venta.fechaLimiteEntrega,
@@ -75,7 +75,7 @@ export const ModVentas = {
      * @param {*} venta 
      * @returns El data de la venta para confirmar si se insertará en la tabla
      */
-    postInsertVentas: async (venta) => {
+    calculosVenta: async (venta) => {
         let conexion
         try {
             conexion = await connectDB();
@@ -97,7 +97,7 @@ export const ModVentas = {
 
             const aroRebajado = precioAro[0].precioAro - (precioAro[0].precioAro * descuentoAro[0].DescuentoAro)
             const descuento = precioAro[0].precioAro * descuentoAro[0].DescuentoAro
-            let subtotal = venta.cantidad * (aroRebajado + precioLente[0].precio)
+            let subtotal = venta.cantidad * (precioLente[0].precio+aroRebajado)
             let rebaja = subtotal * PorcentajePromocion[0].Promocion
             const total = subtotal - rebaja
 
@@ -113,7 +113,6 @@ export const ModVentas = {
                 rebaja: rebaja,
                 total: total
             }
-
             return datosDeVenta
         } catch (error) {
             conexion.end()
@@ -124,65 +123,78 @@ export const ModVentas = {
     /**
      * Verdadera funcion que inserta ALV
      */
-    postInsertDeberitasDeberitas: async (venta, detalles) => {
+    postMostrarTotal: async (detalles) => {
         let conexion
+        let totalAPagar=0
+        let subtotal=0;
+        let rebajas=0
+        let aux={}
         try {
             conexion = await connectDB();
 
             const promises = detalles.map(async (detalle) => {
-                await ModInventario.putUpdateInventarioVentas(detalle)
-                await ModKardex.postKardexVenta(detalle)
-                await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
-                    [
-                        idVenta.id,
-                        venta.IdGarantia,
-                        venta.IdPromocion,
-                        venta.IdDescuento,
-                        venta.IdProducto,
-                        venta.nuevoPrecio,
-                        venta.cantidad,
-                        venta.subtotal,
-                        venta.rebaja,
-                        venta.total,
-                        venta.IdLente
-                    ])
+                // await ModInventario.putUpdateInventarioVentas(detalle)
+                // await ModKardex.postKardexVenta(detalle)
+                aux=await ModVentas.calculosVenta(detalle)
+                subtotal = subtotal+ aux.subtotal
+                rebajas = rebajas+ aux.rebaja
+               totalAPagar = totalAPagar+ aux.total
             });
             await Promise.all(promises);
+            const venta={
+                subtotal:subtotal,
+                rebajas:rebajas,
+                total:totalAPagar
+            }
 
-            const [sumResult] = await conexion.query(
-                "SELECT p.descripcion as Aro, l.lente as Lente, vd.cantidad, p.precio as PrecioAro, l.precio as PrecioLente, vd.subtotal FROM tbl_ventadetalle as vd INNER JOIN tbl_producto as p on p.IdProducto=vd.IdProducto inner join tbl_lente as l on l.IdLente=vd.IdLente inner join tbl_descuento as d on d.IdDescuento=vd.IdDescuento inner join tbl_promocion as pro on pro.IdPromocion=vd.IdPromocion where IdVenta=?;",
-                [idVenta.id]
-            ); //REVISAR CALCULOS DE ESTA MRD
-
-            const idVenta = await ModVentas.InsertVenta(venta)
-            const [filas] = await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
-                [
-                    idVenta.id,
-                    venta.IdGarantia,
-                    venta.IdPromocion,
-                    venta.IdDescuento,
-                    venta.IdProducto,
-                    venta.nuevoPrecio,
-                    venta.cantidad,
-                    venta.subtotal,
-                    venta.rebaja,
-                    venta.total,
-                    venta.IdLente
-                ])
-
-            await ModInventario.putUpdateInventarioVentas(venta)
-            await ModKardex.postKardexVenta(venta)
-
-            const totalCosto = sumResult[0].totalCosto || 0; //
-            await conexion.query("UPDATE tbl_venta  SET valorVenta = ? WHERE IdVenta = ?;", 
-            [
-                idVenta.id,
-                totalCosto
-            ])
-            return { id: idVenta }
+        
+            return venta
         } catch (error) {
             conexion.end()
-            throw new Error("Error al insertar el detalle de compra");
+            console.log(error);
+        }
+    },postRegistroVenta: async (detalles) => {
+        let conexion
+        let auxAVenta
+        let total=0
+        try {
+            conexion = await connectDB();
+            const idVenta = await ModVentas.InsertVenta(detalles[0])
+            const promises = detalles.map(async (detalle) => {
+                await ModInventario.putUpdateInventarioVentas(detalle)
+                await ModKardex.postKardexVenta(detalle)
+                auxAVenta = await ModVentas.calculosVenta(detalle)
+                total = total + auxAVenta.total
+                await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
+                [
+                    idVenta.id,
+                    detalle.IdGarantia,
+                    detalle.IdPromocion,
+                    detalle.IdDescuento,
+                    detalle.IdProducto,
+                    auxAVenta.nuevoPrecio,
+                    detalle.cantidad,
+                    auxAVenta.subtotal,
+                    auxAVenta.rebaja,
+                    auxAVenta.total,
+                    detalle.IdLente
+                ])
+             
+            });
+            await Promise.all(promises);          
+            
+
+            const totalCosto = total || 0; //
+            await conexion.query("UPDATE tbl_venta  SET valorVenta = ? WHERE IdVenta = ?;", 
+            [
+                totalCosto,
+                idVenta.id
+            ])
+            conexion.end()
+            return {state:"ok"}
+        } catch (error) {
+            conexion.end()
+            console.log(error);
         }
     },
 

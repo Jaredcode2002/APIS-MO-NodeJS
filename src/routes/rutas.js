@@ -105,8 +105,8 @@ router.put('/compra/anular',ContrCompra.putAnularCompra)
 //Ventas
 router.get('/Ventas', ContrVentas.getVentas)
 router.post('/VentaDetalle', ContrVentas.getVentaDetalle)
-router.post('/Ventas/NuevaVenta', ContrVentas.postInsertVentas)
-router.post('/Ventas/NuevaVentaDbdb', ContrVentas.postInsertVentasDeberitasDeberitas)
+router.post('/Ventas/NuevaVenta', ContrVentas.postRegistroVentas)
+router.post('/Ventas/totalAPagar', ContrVentas.postMostrarTotal)
 
 //Gestion 
 router.get('/Gestion', ContrGestion.getSucursal)
@@ -426,8 +426,11 @@ router.delete('/ComprasDetalle', ContrCompraDetalle.DeleteCompraDetalle)
 
 //Kardex
 router.get('/kardex', ContrKardex.GetKardex)
+router.get('/Tmovimientos',ContrKardex.getMovimientos)
 router.post('/ProductoKardex', ContrKardex.postProductoKardexFiltro)
 router.post('/kardex', ContrKardex.PostKardex)
+router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
+
 
 
 //Expediente
