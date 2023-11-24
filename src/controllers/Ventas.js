@@ -17,6 +17,11 @@ export const ContrVentas ={
  
     
 },
+putAnularVentas:async(req,res)=>{
+  const {ventaId,idUsuario}=req.body
+  const result = await ModVentas.anularVenta(ventaId,idUsuario)
+  res.json(result)
+},
     
     postInsertVentas: async (req, res) => {
         
