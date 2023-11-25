@@ -420,7 +420,6 @@ router.post('/kardex', ContrKardex.PostKardex)
 router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
 
 
-
 //Expediente
 
 router.get('/Expediente', ContrExpediente.getExpediente)
@@ -429,7 +428,7 @@ router.post('/Expediente/NuevoExpediente', ContrExpediente.postInsertExpediente)
 router.delete('/Expediente/DeleteExpediente', ContrExpediente.deleteExpediente)
 
 //ExpedienteDetalle
-router.get('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
+router.post('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
 router.post('/ExpedienteDetalle/NuevoExpedinteDetalle', ContrExpedineteDetalle.postExpedienteDetalle)
 router.put('/ExpedienteDetalle/UpdateExpedinteDetalle', ContrExpedineteDetalle.putExpedienteDetalle)
 router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle', ContrExpedineteDetalle.deleteExpedienteDetalle)
