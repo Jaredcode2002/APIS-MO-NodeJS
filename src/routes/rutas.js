@@ -302,7 +302,7 @@ router.post('/bitacora/actualizarMetodopago', ContrBitacora.postActualizarMetodo
 router.post('/bitacora/eliminarMetodopago', ContrBitacora.postEliminarMetodopago)
 //Departamento 
 router.post('/bitacora/insertDepartamento', ContrBitacora.postInsertBDepartamento)
-router.post('/bitacora/sali', ContrBitacora.postSalirListaDepartamento)
+router.post('/bitacora/saliListaDepartamento', ContrBitacora.postSalirListaDepartamento)
 router.post('/bitacora/actualizarDepartamento', ContrBitacora.postActualizarDepartamento)
 router.post('/bitacora/eliminarDepartamento', ContrBitacora.postEliminarDepartamento)
 //Ciudad
