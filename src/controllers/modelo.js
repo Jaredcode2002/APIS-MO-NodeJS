@@ -1,34 +1,40 @@
 import { ModModelo } from "../models/modelo.js";
 
 export const ContrModelo = {
+
   getModelos: async (req,res) => {
     const modelos = await ModModelo.getModelo();
-    res.status(200).json(modelos);
+    res.json(modelos);
   },
-  postModelo: async (req, res) => {
-    try {
-      const { IdMarca, detalle, anio} = req.body;
-      const result = await ModModelo.postInsertModelo({IdMarca, detalle,anio});
-      res.status(201).json({ id: result.id });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error creating model" });
-    }
+
+  getModeloslInactivos: async (req,res) => {
+    const modelos = await ModModelo.getModeloslInactivos();
+    res.json(modelos);
   },
-  putModelo: async (req, res) => {
+
+  postInsertModelo:async(req,res)=>
+    {
+        try {
+            const  {IdMarca, detalle, anio, estado}=req.body;
+            const result = await ModModelo.postInsertModelo({IdMarca, detalle, anio, estado});
+            //res.status(201).json({ id: result.id });
+            if (result == false) {
+                res.status(201).json(result);
+              } else {
+                res.status(201).json(result);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+    },
+  
+  
+    putUpdateModelo: async (req, res) => {
     try {
       const {
-        IdMarca,
-        detalle,
-        anio,
-        IdModelo,
-        
+        IdMarca,detalle,anio,estado,IdModelo
       } = req.body;
-      const result = await ModModelo.putUpdateModelo({
-        IdMarca,
-        detalle,
-        anio,
-        IdModelo,
+      const result = await ModModelo.putUpdateModelo({IdMarca,detalle,anio, estado, IdModelo,
       });
       res.status(200).json({response:"Ok"})
     } catch (error) {

@@ -7,29 +7,35 @@ export const ContrGenero= {
         res.json(genero)
     },
 
-    postInsertGenero: async (req,res)=> {
+    getGeneroInactivos:async(req,res)=>{
+        const genero =await ModGenero.getGeneroInactivos()
+        res.json(genero)
+    },
+
+    postInsertGenero:async(req,res)=>
+    {
         try {
-            const{descripcion}=req.body;
-            const result = await ModGenero.postInsertGenero({descripcion});
-            res.status(201).json({ id: result.id });
-            // res.status(200).json(sucursal);
+            const  {descripcion, estado}=req.body;
+            const result = await ModGenero.postInsertGenero({descripcion,estado});
+            if (result == false) {
+                res.status(201).json(result);
+              } else {
+                res.status(201).json(result);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+    },
+        
+    putUpdateGenero : async (req,res)=>{
+        try {
+            const{descripcion, estado, IdGenero} = req.body;
+            const result  = await ModGenero.putUpdateGenero({descripcion, estado, IdGenero});
+            res.status(201).json({ id: result.id});
         } catch (error) {
             console.log(error);
         }
     },
-        
-    
-        
-    putInsertGenero : async (req,res)=>{
-        try {
-            const{descripcion,IdGenero} = req.body;
-                    const result  = await ModGenero.putInsertGenero({descripcion,IdGenero});
-                   res.status(201).json({ id: result.id});
-        } catch (error) {
-            console.log(error);
-            
-        }
-            },
         
             deleteGenero : async (req,res)=>{
         try {

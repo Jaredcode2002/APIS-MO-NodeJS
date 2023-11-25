@@ -7,11 +7,20 @@ export const ContrSucursal= {
         res.json(sucursal)
     },
 
+    getSucursalInactivas:async(req,res)=>{
+        const sucursal =await ModSucursal.getSucursalInactivas()
+        res.json(sucursal)
+    },
+
     postInsertSucursal:async(req,res)=>{
         try {
             const{IdDepartamento, IdCiudad, direccion, telefono, sucursal, estado}= req.body;
             const result = await ModSucursal.postInsertSucursal({IdDepartamento, IdCiudad, direccion, telefono, sucursal, estado});
-            res.status(201).json({ id: result.id });
+            if (result == false) {
+                res.status(201).json(result);
+              } else {
+                res.status(201).json(result);
+              }
         } catch (error) {
             console.log(error);
         }

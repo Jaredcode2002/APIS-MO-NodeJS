@@ -6,7 +6,7 @@ export const ModPais = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("select * from tbl_pais");
+      const [filas] = await conexion.query("SELECT pa.IdPais, pa.Pais, CASE  WHEN pa.estado = 'A' THEN 'Activo'  WHEN pa.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_pais AS pa WHERE pa.estado = 'A' ORDER BY pa.IdPais DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -16,30 +16,76 @@ export const ModPais = {
     } 
   },
 
-  postInsertPais: async (pais) => {
+  getPaisInactivos:async()=>
+  {
+      try {
+          const conexion = await connectDB();
+          const [filas] = await conexion.query("SELECT pa.IdPais, pa.Pais, CASE  WHEN pa.estado = 'A' THEN 'Activo'  WHEN pa.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_pais AS pa WHERE pa.estado != 'A' ORDER BY pa.IdPais DESC;");
+          return filas;
+      
+      } catch (error) {
+          console.log(error);
+          throw new Error("Error al consultar los descuentos");
+      }
+  },
+
+  getPaisExiste: async (pais) =>
+  {
     let conexion
-    try {
     conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_pais (pais) values (?);",
-        [
-          pais.pais,
-        ]
-      );
+    try {
+      const [filas]=await conexion.query ("Select * from tbl_pais where pais=?;",       
+      [
+        pais.pais
+      ]);
       conexion.end()
-      return { id: filas.insertId };
+      if (filas.length>=1)
+      {
+        return true 
+      } else {
+            return false
+      }
     } catch (error) {
-      console.log(error);
+      console.long (error);
       conexion.end()
-      throw new Error("Error al crear pais");
+      throw new Error ("Error al crear una nueva marca")
+      
     }
   },
+
+  postInsertPais: async (pais) => {
+    let conexion
+    conexion=await connectDB();
+    if (await ModPais.getPaisExiste(pais)==false)
+    {
+      try {
+          const [filas] = await conexion.query("insert into tbl_pais (pais,estado) values (?,?);",
+            [
+              pais.pais,
+              pais.estado, 
+            ]
+          );
+          conexion.end()
+          return { estado:"OK" };
+        } catch (error) {
+          console.log(error);
+          conexion.end()
+          return false
+          throw new Error("Error al crear pais");
+        }
+    } else{
+      return false
+    }
+  },
+
   putUpdatePais: async (pais)=>{
     let conexion
       try {
          conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ? WHERE IdPais= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
         [
           pais.pais,
+          pais.estado,
           pais.IdPais,
         ]
         )

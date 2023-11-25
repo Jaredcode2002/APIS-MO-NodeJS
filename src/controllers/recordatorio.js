@@ -13,11 +13,26 @@ export const ContrRecordatorio = {
             res.status(500).json({ message: "Error al obtener la lista de citas" });
         }
     },
+
     getCita: async (req, res) => {
+      try {
         const result = await ModRecordatorio.getCita();
         res.json(result);
-      
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error al obtener la lista de citas" });
+      }
     },
+
+    getClienteEx: async (req, res) => {
+      try {
+        const result = await ModRecordatorio.getClienteEx();
+        res.json(result);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error al obtener la lista de clientes" });
+      }
+  },
     
 
     postCitas: async (req, res) => {
