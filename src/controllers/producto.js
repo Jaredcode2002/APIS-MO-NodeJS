@@ -46,7 +46,6 @@ export const ContrProducto = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   delProducto: async (req,res)=>{
@@ -56,7 +55,6 @@ export const ContrProducto = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   getProductosInv: async (req,res) => {

@@ -12,7 +12,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las garantias");
     }
   },
   getGarantiasInactivas: async () => {
@@ -25,7 +24,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las garantias");
     }
   },
   getGarantiaExiste: async (garantia) => {
@@ -46,7 +44,6 @@ export const ModGarantia = {
     } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear una nueva garantia");
     }
 }, 
   postInsertGarantia: async (garantia) => {
@@ -67,7 +64,6 @@ export const ModGarantia = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear garantia");
       }
     } else {
       return false
@@ -92,7 +88,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la garantia")
     }
   },
   delGarantia: async (garantia) => {
@@ -107,7 +102,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la garantia");
     }
   },
   

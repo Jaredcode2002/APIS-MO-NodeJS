@@ -15,7 +15,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener la bitacora");
         }
     },
 
@@ -34,7 +33,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -52,7 +50,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -71,7 +68,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -88,7 +84,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -105,7 +100,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -124,7 +118,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -143,7 +136,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -163,7 +155,6 @@ export const ModBitacora = {
         } catch (error) {
             conexion.end()
             console.log(error);
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -180,7 +171,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
     //---------------------Pantalla de Usuarios------------------
@@ -198,7 +188,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
     //---------Registro de Empleado-------------
@@ -215,7 +204,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -232,7 +220,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -249,7 +236,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -266,7 +252,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -283,7 +268,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -299,7 +283,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -316,7 +299,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -333,7 +315,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -352,7 +333,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -369,7 +349,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error)
             conexion.end();
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -386,7 +365,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -403,7 +381,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -420,7 +397,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -437,7 +413,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -456,7 +431,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -473,7 +447,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -490,7 +463,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -507,7 +479,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -524,7 +495,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -541,7 +511,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -558,7 +527,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -575,7 +543,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -592,7 +559,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -608,7 +574,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -625,7 +590,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -642,7 +606,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------------DESCUENTO------------------------
@@ -659,7 +622,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------Agregar un nuevo descuento--------------------
@@ -675,7 +637,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //--------------------Lista de Descuento-----------------
@@ -691,7 +652,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -708,7 +668,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -725,7 +684,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -742,7 +700,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -760,7 +717,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------Nueva Promocion--------------------
@@ -776,7 +732,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //--------------------Lista de Promocion-----------------
@@ -792,7 +747,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -809,7 +763,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -826,7 +780,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -843,7 +797,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -861,7 +815,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //---------------Nueva Promocion del Producto--------------------
@@ -877,7 +831,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //--------------------Lista de Promocion del Producto-----------------
@@ -893,7 +847,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -910,7 +864,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -927,7 +881,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -944,7 +898,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -962,7 +916,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //---------------------Ingresar un nuevo Cliente----------------
@@ -978,7 +932,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //---------------------VER LISTA DE CLIENTES-------------------------------------------
@@ -994,7 +948,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1011,7 +965,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1028,7 +982,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1045,7 +998,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1062,7 +1014,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1079,7 +1030,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1096,7 +1047,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1113,7 +1064,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1130,7 +1081,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     postPerfilModifi: async (idusuario) => {
@@ -1145,7 +1096,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1161,7 +1112,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1177,7 +1128,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1193,7 +1144,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1209,7 +1160,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1227,7 +1178,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     
@@ -1243,7 +1194,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     
@@ -1259,7 +1210,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
            }
        },
     
@@ -1275,7 +1226,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
            }
        },
     
@@ -1291,7 +1242,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     //----------------MANTENIMIENTO------------------------------------
@@ -1301,7 +1252,7 @@ postInsertBSucursal: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Sucursal","El usuario registro unm nuevo Sucursal")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Sucursal","El usuario registro una nueva Sucursal")',
             idusuario.Id,
             );
             conexion.end()
@@ -1309,7 +1260,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1328,7 +1279,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1345,7 +1296,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1354,13 +1305,13 @@ postInsertBSucursal: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Sucursal","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Sucursal","El usuario elimino datos en Sucursal")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1370,7 +1321,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Modelo","El usuario registro unm nuevo Modelo")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Modelo","El usuario registro un nuevo Modelo")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1378,7 +1329,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1397,7 +1348,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1414,7 +1365,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1429,7 +1380,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1439,7 +1390,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Marca","El usuario registro unm nuevo Marca")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Marca","El usuario registro una nueva Marca")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1447,7 +1398,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1466,7 +1417,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1483,7 +1434,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1498,7 +1449,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1517,7 +1468,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1536,7 +1487,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1553,7 +1504,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1568,7 +1519,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1578,7 +1529,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro unm nuevo Departamento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro un nuevo Departamento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1586,7 +1537,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1605,7 +1556,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1622,7 +1573,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1637,7 +1588,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1655,7 +1606,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1673,7 +1624,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1692,7 +1643,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1709,7 +1660,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1724,7 +1675,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1742,7 +1693,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1759,7 +1710,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1776,7 +1727,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1786,7 +1737,7 @@ postInsertBPais: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Pais","El usuario registro unm nuevo Pais")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Pais","El usuario registro un nuevo Pais")',
             idusuario.Id,
             );
             conexion.end()
@@ -1794,7 +1745,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1813,7 +1764,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1830,7 +1781,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1845,7 +1796,7 @@ postInsertBPais: async (idusuario)=>{
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1855,7 +1806,7 @@ postInsertBCiudad: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Ciudad","El usuario registro unm nuevo Ciudad")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Ciudad","El usuario registro una nueva Ciudad")',
             idusuario.Id,
             );
             conexion.end()
@@ -1863,7 +1814,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1882,7 +1833,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1899,7 +1850,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1908,13 +1859,13 @@ postInsertBCiudad: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Ciudad","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Ciudad","El usuario elimino datos en Ciudad")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1924,7 +1875,7 @@ postInsertBGenero: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Genero","El usuario registro unm nuevo Genero")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Genero","El usuario registro un nuevo Genero")',
             idusuario.Id,
             );
             conexion.end()
@@ -1932,7 +1883,7 @@ postInsertBGenero: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1951,7 +1902,7 @@ postInsertBGenero: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1968,7 +1919,7 @@ postInsertBGenero: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1977,13 +1928,13 @@ postInsertBGenero: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Genero","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Genero","El usuario elimino datos en Genero")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     

@@ -12,7 +12,6 @@ export const ModPromocion = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las promociones");
     }
   },
   getPromocionesInactivas: async () => {
@@ -25,7 +24,6 @@ export const ModPromocion = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las promociones");
     }
   },
   getPromocionExiste: async (promocion) => {
@@ -46,7 +44,6 @@ export const ModPromocion = {
     } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear una promo");
     }
 },
   postInsertPromocion: async (promocion) => {
@@ -68,7 +65,6 @@ export const ModPromocion = {
         } catch (error) {
             conexion.end()
             return false
-            throw new Error("Error al crear un nuevo proveedor");
         }
     } else {
         return false
@@ -93,7 +89,6 @@ export const ModPromocion = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la promocion")
     }
   },
   delPromocion: async (promocion) => {
@@ -108,7 +103,6 @@ export const ModPromocion = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la promocion");
     }
   },
  

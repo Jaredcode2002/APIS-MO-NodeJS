@@ -12,7 +12,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los roles");
     }
   },
   getRolesInactivos: async () => {
@@ -25,7 +24,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los roles");
     }
   },
   getRolExiste: async (rol) => {
@@ -47,7 +45,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear un nuevo rol");
     }
   },
   postRol: async (rol) => {
@@ -100,7 +97,6 @@ export const ModRol = {
         console.log(error);
         conexion.end()
         return false
-        throw new Error("Error al crear un nuevo rol");
       }
     } else {
       return false;
@@ -127,7 +123,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el rol");
     }
 
   },
@@ -145,7 +140,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el rol");
     }
   },
 

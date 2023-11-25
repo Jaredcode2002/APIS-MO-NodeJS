@@ -12,7 +12,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     getPermisosXRol: async (permisos) => {
@@ -26,7 +25,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ1: async (permisos) => {
@@ -45,7 +43,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ2: async (permisos) => {
@@ -65,7 +62,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ3: async (permisos) => {
@@ -84,7 +80,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ4: async (permisos) => {
@@ -103,7 +98,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ5: async (permisos) => {
@@ -122,7 +116,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ6: async (permisos) => {
@@ -141,7 +134,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ7: async (permisos) => {
@@ -160,7 +152,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ8: async (permisos) => {
@@ -179,7 +170,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ9: async (permisos) => {
@@ -198,7 +188,6 @@ export const ModPermisos = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     postPermisosObj:async (permisos)=>{

@@ -34,7 +34,6 @@ export const ContrPago = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   delPago: async (req,res)=>{
@@ -44,7 +43,6 @@ export const ContrPago = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

@@ -12,7 +12,6 @@ export const ModDescuento = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los descuentos");
         }
     },
 
@@ -25,7 +24,6 @@ export const ModDescuento = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los descuentos");
         }
     },
     
@@ -47,7 +45,6 @@ export const ModDescuento = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear un nuevo lente");
         }
     },
 
@@ -68,7 +65,6 @@ export const ModDescuento = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo descuento");
             }
         } else {
             return false
@@ -88,8 +84,7 @@ export const ModDescuento = {
             );
             return{estado:"OKAY"}
         } catch (error) {
-            onsole.log(error);
-            throw new Error("Error al consultar al actualizar el descuento");
+            console.log(error);
         }
     },
 

@@ -6,6 +6,11 @@ export const ContrCompra = {
     const compras = await ModCompras.getCompras();
     res.json(compras);
   },
+  getFacturaCompras: async (req, res) => {
+    const {id} = req.body
+    const Facturacompras = await ModCompras.getFacturaCompras({id});
+    res.json(Facturacompras);
+  },
   putAnularCompra:async(req,res)=>{
     const {compraId,idUsuario}=req.body
     const result = await ModCompras.anularCompra(compraId,idUsuario)

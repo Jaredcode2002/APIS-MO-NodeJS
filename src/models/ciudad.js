@@ -12,7 +12,6 @@ export const ModCiudad = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los cities");
     } 
   },
 
@@ -25,7 +24,6 @@ export const ModCiudad = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los descuentos");
         }
     },
 
@@ -47,9 +45,7 @@ export const ModCiudad = {
         }
       } catch (error) {
         console.long (error);
-        conexion.end()
-        throw new Error ("Error al crear una nueva ciudad")
-        
+        conexion.end()        
       }
     },
 
@@ -72,7 +68,6 @@ export const ModCiudad = {
          console.log(error);
          conexion.end()
          return false
-         throw new Error("Error al crear ciudad");
        }
     } else 
     {
@@ -96,7 +91,6 @@ export const ModCiudad = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar la ciudad")
       }
   },
 
@@ -112,7 +106,6 @@ export const ModCiudad = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la ciudad");
     }
   },
 };

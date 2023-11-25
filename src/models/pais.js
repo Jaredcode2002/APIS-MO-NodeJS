@@ -12,7 +12,6 @@ export const ModPais = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los paises");
     } 
   },
 
@@ -25,7 +24,6 @@ export const ModPais = {
       
       } catch (error) {
           console.log(error);
-          throw new Error("Error al consultar los descuentos");
       }
   },
 
@@ -48,7 +46,6 @@ export const ModPais = {
     } catch (error) {
       console.long (error);
       conexion.end()
-      throw new Error ("Error al crear una nueva marca")
       
     }
   },
@@ -71,7 +68,6 @@ export const ModPais = {
           console.log(error);
           conexion.end()
           return false
-          throw new Error("Error al crear pais");
         }
     } else{
       return false
@@ -94,7 +90,6 @@ export const ModPais = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar la pais")
       }
   },
   delPais: async (pais) => {
@@ -109,7 +104,6 @@ export const ModPais = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la pais");
     }
   },
 };
