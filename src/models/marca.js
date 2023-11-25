@@ -12,7 +12,6 @@ export const ModMarca = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las marcas");
     }
   },
 
@@ -24,7 +23,6 @@ export const ModMarca = {
 
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consultar los descuentos");
     }
   },
 
@@ -45,7 +43,6 @@ export const ModMarca = {
     } catch (error) {
       console.long(error);
       conexion.end()
-      throw new Error("Error al crear una nueva marca")
 
     }
   },
@@ -67,7 +64,6 @@ export const ModMarca = {
         console.log(error);
         conexion.end()
         return false
-        throw new Error("Error al crear marca");
       }
     } else {
       return false
@@ -90,7 +86,6 @@ export const ModMarca = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la marca")
     }
   },
 
@@ -106,7 +101,6 @@ export const ModMarca = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la marca");
     }
   },
 };

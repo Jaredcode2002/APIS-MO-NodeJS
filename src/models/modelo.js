@@ -12,7 +12,6 @@ export const ModModelo = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener modelos");
     } 
   },
 
@@ -26,7 +25,6 @@ export const ModModelo = {
         } catch (error) {
             console.log(error);
              conexion.end()
-            throw new Error("Error al consumir el API");
         }
     },
 
@@ -50,7 +48,6 @@ export const ModModelo = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear un modelo");
         
       }
     },
@@ -75,7 +72,6 @@ export const ModModelo = {
           console.log(error);
       conexion.end()
       return false
-      throw new Error("Error al crear el modelo");
         }
       } else 
       {
@@ -101,7 +97,6 @@ export const ModModelo = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar el modelo")
       }
   },
 
@@ -117,7 +112,6 @@ export const ModModelo = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el modelo");
     }
   },
 };

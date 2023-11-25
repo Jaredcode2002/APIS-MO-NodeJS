@@ -14,7 +14,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las citas");
     }
   },
   getCita: async () => {
@@ -27,7 +26,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener la cita");
     }
   },
 
@@ -41,7 +39,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el cliente");
     }
   },
 
@@ -76,7 +73,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al ingresar la cita");
     }
   },
 
@@ -92,7 +88,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la cita");
     }
   },
 
@@ -112,7 +107,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la cita")
     }
 },
 
@@ -131,7 +125,6 @@ let conexion
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el registro");
     }
 },
 

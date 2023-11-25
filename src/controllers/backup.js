@@ -7,7 +7,6 @@ export const ContrBackup = {
             res.status(200).json(Backup);
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api de backup")
         }
 
     },
@@ -18,7 +17,6 @@ export const ContrBackup = {
             res.status(200).json(Archivos);
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api de archivos")
         }
 
     },
@@ -30,7 +28,6 @@ export const ContrBackup = {
             res.status(200).json(Restore);
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api de restore")
         }
 
     },

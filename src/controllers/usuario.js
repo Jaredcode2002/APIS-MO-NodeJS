@@ -18,7 +18,6 @@ export const ContrUsuario = {
         res.json(result);
     } catch (error) {
         console.log(error);
-        throw new Error("Error al consumir el api")
     }
 },
 
@@ -30,7 +29,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
   } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
   }
 },
   postUsuario: async (req, res) => {
@@ -71,7 +69,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   getFechaExp: async (req, res) => {
@@ -81,7 +78,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   putUpdateEstado: async (req, res) => {
@@ -91,7 +87,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
 
@@ -102,7 +97,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
 
@@ -113,7 +107,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   compararContraVSHistorial: async (req, res) => {
@@ -127,7 +120,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
 
@@ -139,7 +131,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result) 
      } catch (error) {
        console.log(error);
-       throw new Error("Error al consumir el api");
      }
   },
 
@@ -158,7 +149,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       }
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   postHistPassword: async (req, res) => {
@@ -168,7 +158,6 @@ putUpdUsuarioPerfil:async(req, res)=>{
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
 };
