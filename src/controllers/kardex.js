@@ -10,6 +10,24 @@ export const ContrKardex = {
             res.status(500).json("Error al consumir la API");
         }
     },
+    getMovimientos: async (req,res)=>{
+        try {
+            const kardex = await ModKardex.getTipoMovimientos();
+            res.status(200).json(kardex);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json("Error al consumir la API");
+        }
+    },
+    postMovimientoExtra: async(req,res)=>{
+        try {
+            const {idProducto,idUsuario,fechaYHora,cantidad,IdTipoMovimiento,descripcion}=req.body
+            const result = await ModKardex.postExtraordinarioMv({idProducto,idUsuario,fechaYHora,cantidad,IdTipoMovimiento,descripcion})
+            res.status(200).json(result)
+        } catch (error) {
+            
+        }
+    },
     postProductoKardexFiltro:async (req,res)=>{
         try {
             const {IdProducto}=req.body
