@@ -19,6 +19,23 @@ export const ModCompras = {
     }
   },
 
+  getFacturaCompras: async (compra) => {
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "SELECT c.IdCompra, pr.CiaProveedora, m.detalle as Aros, cd.cantidad, p.precio, cd.costoCompra,  c.fechaCompra, c.totalCompra FROM tbl_compradetalle as cd inner join tbl_compra as c on c.IdCompra=cd.IdCompra inner join tbl_proveedor as pr on pr.IdProveedor=cd.IdProveedor inner join tbl_producto as p on p.IdProducto= cd.idProducto inner join tbl_modelo as m on m.IdModelo=p.IdModelo where c.IdCompra=?;"
+        ,[compra.id]
+      );
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener compras");
+    }
+  },
+
   postCompras: async () => {
     let conexion
     try {

@@ -99,6 +99,7 @@ router.delete('/clientes/eliminar', ContrClientes.delCliente)
 
 //Compra
 router.get('/compra', ContrCompra.getCompras)
+router.post('/facturaCompra', ContrCompra.getFacturaCompras)
 router.post('/compra/NuevaCompra', ContrCompra.postInsertCompra)
 router.put('/compra/anular',ContrCompra.putAnularCompra)
 
@@ -122,8 +123,8 @@ router.put('/Rol/RolActualizado', ContrRol.putUpdateRol)
 router.delete('/Rol/RolEliminado', ContrRol.deleteRol)
 
 //AutoRegistro
-/* router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
-router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) */
+// router.post('/usuario/AutoRegistro', ContrAutoReg.postUsuarioAutoRegistro)
+router.put('/usuario/EstadoActivo', ContrAutoReg.putUpdateEstadoActivo) 
 
 //Pais
 router.get('/paises', ContrPais.getPaises)
@@ -441,7 +442,7 @@ router.post('/Expediente/NuevoExpediente', ContrExpediente.postInsertExpediente)
 router.delete('/Expediente/DeleteExpediente', ContrExpediente.deleteExpediente)
 
 //ExpedienteDetalle
-router.post('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
+router.get('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
 router.post('/ExpedienteDetalle/NuevoExpedinteDetalle', ContrExpedineteDetalle.postExpedienteDetalle)
 router.put('/ExpedienteDetalle/UpdateExpedinteDetalle', ContrExpedineteDetalle.putExpedienteDetalle)
 router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle', ContrExpedineteDetalle.deleteExpedienteDetalle)
