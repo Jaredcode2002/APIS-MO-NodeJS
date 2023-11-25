@@ -17,7 +17,6 @@ export const ContrPais = {
         try {
             const  {pais, estado}=req.body;
             const result = await ModPais.postInsertPais({pais,estado});
-            res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
               } else {

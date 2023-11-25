@@ -17,7 +17,7 @@ export const ContrMarca = {
         try {
             const  {descripcion, estado}=req.body;
             const result = await ModMarca.postInsertMarca({descripcion,estado});
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
               } else {

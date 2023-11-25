@@ -105,9 +105,9 @@ router.put('/compra/anular',ContrCompra.putAnularCompra)
 //Ventas
 router.get('/Ventas', ContrVentas.getVentas)
 router.post('/VentaDetalle', ContrVentas.getVentaDetalle)
-router.post('/Ventas/NuevaVenta', ContrVentas.postInsertVentas)
-router.post('/Ventas/NuevaVentaDbdb', ContrVentas.postInsertVentasDeberitasDeberitas)
-
+router.post('/Ventas/NuevaVenta', ContrVentas.postRegistroVentas)
+router.post('/Ventas/totalAPagar', ContrVentas.postMostrarTotal)
+router.put('/Ventas/anular',ContrVentas.putAnularVentas)
 //Gestion 
 router.get('/Gestion', ContrGestion.getSucursal)
 router.post('/Gestion/NuevaSucursal', ContrGestion.postInsertSucursal)
@@ -250,6 +250,7 @@ router.post('/bitacora/Actualizacioncliente', ContrBitacora.postActualizarClient
 router.post('/bitacora/Eliminarcliente', ContrBitacora.postEliminarClientes)
 //--Datos de expediente 
 router.post('/bitacora/expediente', ContrBitacora.postInsertBExpediente)
+router.post('/bitacora/SalirListaExpediente', ContrBitacora.postSalirListaExpediente)
 router.post('/bitacora/Nuevaexpediente', ContrBitacora.postInsertBCliente)
 router.post('/bitacora/Diagnostico', ContrBitacora.postInsertBDiagnostico)
 router.post('/bitacora/Actualizacioncexpediente', ContrBitacora.postActualizarClientes)
@@ -425,8 +426,11 @@ router.delete('/ComprasDetalle', ContrCompraDetalle.DeleteCompraDetalle)
 
 //Kardex
 router.get('/kardex', ContrKardex.GetKardex)
+router.get('/Tmovimientos',ContrKardex.getMovimientos)
 router.post('/ProductoKardex', ContrKardex.postProductoKardexFiltro)
 router.post('/kardex', ContrKardex.PostKardex)
+router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
+
 
 
 //Expediente
