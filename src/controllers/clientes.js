@@ -26,8 +26,8 @@ export const ContrClientes = {
   },
   putCliente: async (req, res) => {
     try {
-      const { idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE } = req.body
-      const result = await ModClientes.putCliente({ idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo, COD_CLIENTE })
+      const { idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo } = req.body
+      const result = await ModClientes.putCliente({ idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo })
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
