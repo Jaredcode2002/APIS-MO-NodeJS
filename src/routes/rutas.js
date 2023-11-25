@@ -479,6 +479,7 @@ router.post('/recordatorioCitas/agregar', ContrRecordatorio.postCitas)
 router.delete('/eliminarCita', ContrRecordatorio.deleteCita)
 router.put('/actualizarCita', ContrRecordatorio.putCitas)
 router.post('/recordatorios/fecha', ContrRecordatorio.getFecha)
+router.get('/clientesEx', ContrRecordatorio.getClienteEx)
 
 
 //Descuentos
