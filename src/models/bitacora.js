@@ -1301,7 +1301,7 @@ postInsertBSucursal: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Sucursal","El usuario registro unm nuevo Sucursal")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Sucursal","El usuario registro una nueva Sucursal")',
             idusuario.Id,
             );
             conexion.end()
@@ -1354,7 +1354,7 @@ postInsertBSucursal: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Sucursal","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Sucursal","El usuario elimino datos en Sucursal")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
@@ -1370,7 +1370,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Modelo","El usuario registro unm nuevo Modelo")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Modelo","El usuario registro un nuevo Modelo")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1439,7 +1439,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Marca","El usuario registro unm nuevo Marca")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Marca","El usuario registro una nueva Marca")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1578,7 +1578,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro unm nuevo Departamento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro un nuevo Departamento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1786,7 +1786,7 @@ postInsertBPais: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Pais","El usuario registro unm nuevo Pais")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Pais","El usuario registro un nuevo Pais")',
             idusuario.Id,
             );
             conexion.end()
@@ -1855,7 +1855,7 @@ postInsertBCiudad: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Ciudad","El usuario registro unm nuevo Ciudad")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Ciudad","El usuario registro una nueva Ciudad")',
             idusuario.Id,
             );
             conexion.end()
@@ -1908,7 +1908,7 @@ postInsertBCiudad: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Ciudad","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Ciudad","El usuario elimino datos en Ciudad")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
@@ -1924,7 +1924,7 @@ postInsertBGenero: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Genero","El usuario registro unm nuevo Genero")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Genero","El usuario registro un nuevo Genero")',
             idusuario.Id,
             );
             conexion.end()
@@ -1977,7 +1977,7 @@ postInsertBGenero: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Genero","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Genero","El usuario elimino datos en Genero")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
