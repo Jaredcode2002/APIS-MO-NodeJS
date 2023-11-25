@@ -15,7 +15,6 @@ export const ModCompras = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener compras");
     }
   },
 
@@ -32,7 +31,6 @@ export const ModCompras = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener compras");
     }
   },
 
@@ -47,7 +45,6 @@ export const ModCompras = {
       return filas.insertId;
     } catch (error) {
       conexion.end()
-      throw new Error("Error al insertar compra");
     }
   },
   anularCompra:async(compraId,idUsuario)=>{
@@ -71,7 +68,6 @@ export const ModCompras = {
       return {result:"ok"}
     } catch (error) {
       conexion.end()
-      throw new Error("Error al insertar el detalle de compra");
     }
   },
 
@@ -103,7 +99,6 @@ export const ModCompras = {
       conexion.end()
     } catch (error) {
       conexion.end()
-      throw new Error("Error al insertar el detalle de compra");
     }
   },
 };

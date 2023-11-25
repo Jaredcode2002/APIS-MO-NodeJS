@@ -15,7 +15,6 @@ export const ModVentas = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener las ventas");
         }
     },
 
@@ -30,7 +29,6 @@ export const ModVentas = {
             return filas.insertId;
         } catch (error) {
             conexion.end()
-            throw new Error("Error al insertar venta");
         }
     },
 
@@ -46,7 +44,6 @@ export const ModVentas = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener las ventas");
         }
     },
 
@@ -66,7 +63,6 @@ export const ModVentas = {
             return { id: filas.insertId };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear una nueva venta");
         }
     },
 
@@ -116,7 +112,6 @@ export const ModVentas = {
             return datosDeVenta
         } catch (error) {
             conexion.end()
-            throw error
         }
     },
 
@@ -219,7 +214,6 @@ export const ModVentas = {
           return {result:"ok"}
         } catch (error) {
           conexion.end()
-          throw new Error("Error al insertar el detalle de compra");
         }
       },
 

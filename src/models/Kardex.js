@@ -11,7 +11,6 @@ export const ModKardex = {
       return filas;
     } catch (error) {
       console.log(error);
-      throw new Error("Error al obtener el registro");
     }
   },
   postProductoKardexFiltro: async (kardex) => {
@@ -27,7 +26,6 @@ export const ModKardex = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al obtener los productos");
     }
   },
 
@@ -46,7 +44,6 @@ export const ModKardex = {
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
-      throw new Error("Error al agregar registro");
     }
   },
 
@@ -60,7 +57,6 @@ export const ModKardex = {
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
-      throw new Error("Error al agregar registro");
     }
   },
   postKardexAnularVenta: async (kardex, idUsuario) => {
@@ -73,7 +69,6 @@ export const ModKardex = {
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
-      throw new Error("Error al agregar registro");
     }
   },
   postKardexVenta: async (kardex) => {
@@ -91,7 +86,6 @@ export const ModKardex = {
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
-      throw new Error("Error al agregar registro");
     }
   },
   getTipoMovimientos: async () => {
@@ -129,7 +123,6 @@ export const ModKardex = {
       return { estado: "ok" };
     } catch (error) {
       console.log(error);
-      throw new Error("Error al agregar registro");
     }
   },
 };

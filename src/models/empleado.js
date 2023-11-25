@@ -12,7 +12,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener empleados");
     }
   },
   getEmpleadosInactivos: async () => {
@@ -25,7 +24,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener empleados");
     }
   },
   empleadoExist: async (empleado) => {
@@ -47,7 +45,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear un nuevo empleado");
     }
   },
   getEmpleado: async (empleado) => {
@@ -67,7 +64,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el empleado")
     }
   },
   postInsertEmpleado: async (empleado) => {
@@ -96,7 +92,6 @@ export const ModEmpleados = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear empleado");
       }
     } else {
       return false
@@ -126,7 +121,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el empleado")
     }
   },
   delDeleteEmpleado: async (empleado) => {
@@ -142,7 +136,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el empleado")
     }
   },
   getSucursal: async () => {
@@ -155,7 +148,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener sucursales");
     }
   },
   getGenero: async () => {
@@ -168,7 +160,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener lista de géneros");
     }
   },
 

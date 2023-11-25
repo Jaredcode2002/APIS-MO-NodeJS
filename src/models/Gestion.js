@@ -13,7 +13,6 @@ getSucursal : async ()=> {
     } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al obtener sucursales");    
     }
 },
 
@@ -34,7 +33,6 @@ postInsertSucursal: async (sucursal)=> {
     } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear una nueva sucursal");
     }
 },
 
@@ -56,7 +54,6 @@ putInsertSucursal : async (sucursal)=>{
     } catch (error) {
         console.log(error);
         conexion.end()
-      throw new Error("Error al actualizar la sucursal");
         
     }
 },
@@ -77,7 +74,6 @@ try {
 } catch (error) {
     console.log(error);
     conexion.end()
-      throw new Error("Error al eliminar la suscursal");
     
 }
 },
