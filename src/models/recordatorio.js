@@ -31,6 +31,21 @@ export const ModRecordatorio = {
     }
   },
 
+  getClienteEx: async () => {
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT c.`idCliente`,  c.nombre,  c.apellido FROM tbl_expediente AS ex JOIN tbl_cliente AS c On c.`idCliente`=ex.`IdCliente` ORDER BY ex.`IdExpediente` DESC");
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+      throw new Error("Error al obtener el cliente");
+    }
+  },
+
+
 
   postInsertCita: async (citas) => {
     let conexion
