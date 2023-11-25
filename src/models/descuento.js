@@ -64,9 +64,10 @@ export const ModDescuento = {
                 return { estado: "OK" };
             } catch (error) {
                 conexion.end()
-                return false
             }
         } else {
+            console.log(error);
+            conexion.end()
             return false
         }
     },
@@ -74,18 +75,25 @@ export const ModDescuento = {
     putDescuento:async (descuento)=>
     {
         const conexion=await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=? WHERE  IdDescuento =?;",
-            [
-                descuento.estado,
-                descuento.descPorcent,
-                descuento.IdDescuento,
-            ]
-            );
-            return{estado:"OKAY"}
-        } catch (error) {
+        if (await ModDescuento.getDescuentoExiste(descuento) == false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=? WHERE  IdDescuento =?;",
+                [
+                    descuento.estado,
+                    descuento.descPorcent,
+                    descuento.IdDescuento,
+                ]
+                );
+                return{estado:"OKAY"}
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
             console.log(error);
+            conexion.end()
+            return false;
         }
+       
     },
 
     deleteDescuento : async (descuento)=>

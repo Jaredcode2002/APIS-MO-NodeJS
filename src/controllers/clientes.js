@@ -28,7 +28,11 @@ export const ContrClientes = {
     try {
       const { idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo } = req.body
       const result = await ModClientes.putCliente({ idCliente, nombre, apellido, idGenero, fechaNacimiento, direccion, telefono, correo })
-      res.status(200).json(result);
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
       res.status(500).json("Error al consumir el api");

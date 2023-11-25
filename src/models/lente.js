@@ -71,19 +71,24 @@ export const ModLente = {
 
     putLente: async (lente) => {
         const conexion = await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=?, estado=? WHERE  IdLente =?;",
-                [
-                    lente.lente,
-                    lente.precio,
-                    lente.estado,
-                    lente.IdLente
-                ]
-            );
-            return { estado: "OKAY" }
-        } catch (error) {
-            console.log(error);
+        if (await ModLente.getLenteExiste(lente) == false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=?, estado=? WHERE  IdLente =?;",
+                    [
+                        lente.lente,
+                        lente.precio,
+                        lente.estado,
+                        lente.IdLente
+                    ]
+                );
+                return { estado: "OKAY" }
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            return false;
         }
+       
     },
 
     deleteLente: async (lente) => {
