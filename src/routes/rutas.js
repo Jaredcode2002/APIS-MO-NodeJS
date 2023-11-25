@@ -272,6 +272,22 @@ router.post('/bitacora/insertoproducto', ContrBitacora.postInsertProductoB)
 router.post('/bitacora/saliolistaproductos', ContrBitacora.postSalirListaProductoB)
 router.post('/bitacora/actualizoproducto', ContrBitacora.postActualizarProductoB)
 router.post('/bitacora/eliminoproducto', ContrBitacora.postEliminarProductoB)
+//Proveedores
+router.post('/bitacora/insertoproveedores', ContrBitacora.postInsertProveedor)
+router.post('/bitacora/saliolistaproveedores', ContrBitacora.postSalirListaProveedor)
+router.post('/bitacora/actualizoproveedores', ContrBitacora.postActualizarProveedor)
+router.post('/bitacora/eliminarproveedores', ContrBitacora.postEliminarProveedor)
+//Lentes
+router.post('/bitacora/insertolentes', ContrBitacora.postInsertLentes)
+router.post('/bitacora/saliolistalentes', ContrBitacora.postSalirListaLentes)
+router.post('/bitacora/actualizolentes', ContrBitacora.postActualizarLentes)
+router.post('/bitacora/eliminarlentes', ContrBitacora.postEliminarLentes)
+//Kardex
+router.post('/bitacora/movimientoKardex', ContrBitacora.postMovimientoKardex)
+router.post('/bitacora/salirListaKardex', ContrBitacora.postSalirListaKardex)
+//Inventario
+router.post('/bitacora/PantallaInventarioB', ContrBitacora.postIngresoInventario
+)
 //Compra
 router.post('/bitacora/insertcompra', ContrBitacora.postInsertCompraB)
 //Venta
@@ -328,6 +344,7 @@ router.put('/garantias/actualizar', ContrGarantia.putGarantia)
 router.delete('/garantias/eliminar', ContrGarantia.delGarantia)
 
 //Inventario
+
 router.get('/inventarios', ContrInventario.getInventarios)
 router.post('/inventarios/crear', ContrInventario.postInventario)
 router.put('/inventario/actualizar', ContrInventario.putInventario)
@@ -418,7 +435,6 @@ router.get('/Tmovimientos',ContrKardex.getMovimientos)
 router.post('/ProductoKardex', ContrKardex.postProductoKardexFiltro)
 router.post('/kardex', ContrKardex.PostKardex)
 router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
-
 
 
 //Expediente
