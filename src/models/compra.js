@@ -8,7 +8,7 @@ export const ModCompras = {
     try {
        conexion = await connectDB();
       const [filas] = await conexion.query(
-        "SELECT * FROM tbl_compra "
+        "SELECT * FROM tbl_compra ORDER BY  idCompra DESC "
       );
       conexion.end()
       return filas;
@@ -24,7 +24,7 @@ export const ModCompras = {
     try {
       conexion = await connectDB();
       const [filas] = await conexion.query(
-        "INSERT INTO tbl_compra (totalCompra) VALUES (null)"
+        "INSERT INTO tbl_compra (totalCompra,estado) VALUES (null,'A')"
       );
       conexion.end()
       return filas.insertId;
