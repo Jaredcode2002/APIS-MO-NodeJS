@@ -108,7 +108,7 @@ router.get('/Ventas', ContrVentas.getVentas)
 router.post('/VentaDetalle', ContrVentas.getVentaDetalle)
 router.post('/Ventas/NuevaVenta', ContrVentas.postRegistroVentas)
 router.post('/Ventas/totalAPagar', ContrVentas.postMostrarTotal)
-
+router.put('/Ventas/anular',ContrVentas.putAnularVentas)
 //Gestion 
 router.get('/Gestion', ContrGestion.getSucursal)
 router.post('/Gestion/NuevaSucursal', ContrGestion.postInsertSucursal)

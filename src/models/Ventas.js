@@ -9,7 +9,7 @@ export const ModVentas = {
 
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("select v.IdVenta, v.fecha, concat(c.nombre, ' ', c.apellido) Cliente, valorventa as ValorVenta from tbl_venta as v INNER JOIN tbl_cliente as c on c.idCliente=v.idCliente ORDER BY v.IdVenta DESC;")
+            const [filas] = await conexion.query("select v.IdVenta, v.fecha, concat(c.nombre, ' ', c.apellido) Cliente, valorventa as ValorVenta, estado from tbl_venta as v INNER JOIN tbl_cliente as c on c.idCliente=v.idCliente ORDER BY v.IdVenta DESC;")
             conexion.end()
             return filas;
         } catch (error) {
@@ -59,7 +59,7 @@ export const ModVentas = {
                     venta.fechaEntrega,
                     venta.fechaLimiteEntrega,
                     venta.IdCliente,
-                    venta.idEmpleado,
+                    venta.idEmpleado || venta.IdEmpleado,
                     venta.RTN,
                 ]
             );
@@ -159,6 +159,7 @@ export const ModVentas = {
         let total=0
         try {
             conexion = await connectDB();
+            console.log(detalles);
             const idVenta = await ModVentas.InsertVenta(detalles[0])
             const promises = detalles.map(async (detalle) => {
                 await ModInventario.putUpdateInventarioVentas(detalle)
@@ -197,5 +198,29 @@ export const ModVentas = {
             console.log(error);
         }
     },
+    anularVenta:async(ventaId,idUsuario)=>{
+        let conexion
+        try {
+           conexion = await connectDB();
+          const [ventas] = await conexion.query("SELECT vd.cantidad,vd.IdProducto,v.fecha FROM tbl_ventadetalle as vd INNER JOIN tbl_venta as v on v.`IdVenta`=vd.`IdVenta` where vd.`IdVenta` = ? and v.estado='A';",[ventaId])
+    
+          const promises = ventas.map(async (ventas) => {
+            console.log(ventas);
+            //await ModInventario.putUpdateInventarioCompras(detalle)
+           await ModKardex.postKardexAnularVenta(ventas,idUsuario)
+            await conexion.query("UPDATE tbl_inventario set cantidad = cantidad + ? where IdProducto=?",
+              [ventas.cantidad,ventas.IdProducto]
+            );
+          });
+    
+          await conexion.query("Update tbl_venta set estado='I' where IdVenta=?",ventaId)
+          await Promise.all(promises);
+          conexion.end()
+          return {result:"ok"}
+        } catch (error) {
+          conexion.end()
+          throw new Error("Error al insertar el detalle de compra");
+        }
+      },
 
 }

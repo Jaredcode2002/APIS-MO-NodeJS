@@ -6,7 +6,7 @@ export const ModKardex = {
     try {
       const conexion = await connectDB();
       const [filas] = await conexion.query(
-        "select k.IdKardex, tm.descripcion as TipoMovimiento, p.descripcion as Producto, u.Usuario, k.fechaYHora, k.cantidad from tbl_kardex as k inner join tbl_tipomovimiento as tm on k.IdTipoMovimiento=tm.IdTipoMovimiento inner join tbl_producto as p on k.IdProducto=p.IdProducto inner join tbl_modelo as m on m.IdModelo=p.IdModelo inner join tbl_ms_usuario as u on u.Id_Usuario=k.Id_Usuario ORDER BY k.IdKardex DESC;"
+        "select k.IdKardex, tm.descripcion as TipoMovimiento, p.descripcion as Producto, u.Usuario, k.fechaYHora, k.cantidad, k.descripcion from tbl_kardex as k inner join tbl_tipomovimiento as tm on k.IdTipoMovimiento=tm.IdTipoMovimiento inner join tbl_producto as p on k.IdProducto=p.IdProducto inner join tbl_modelo as m on m.IdModelo=p.IdModelo inner join tbl_ms_usuario as u on u.Id_Usuario=k.Id_Usuario ORDER BY k.IdKardex DESC;"
       );
       return filas;
     } catch (error) {
@@ -54,7 +54,20 @@ export const ModKardex = {
     try {
       const conexion = await connectDB();
       const [filas] = await conexion.query(
-        "INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(3,?,?,?,?);",
+        "INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(5,?,?,?,?);",
+        [kardex.IdProducto, idUsuario, kardex.fechaCompra, kardex.cantidad]
+      );
+      return { estado: "ok" };
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al agregar registro");
+    }
+  },
+  postKardexAnularVenta: async (kardex, idUsuario) => {
+    try {
+      const conexion = await connectDB();
+      const [filas] = await conexion.query(
+        "INSERT INTO  tbl_kardex (IdTipoMovimiento,IdProducto,Id_Usuario,fechaYHora,cantidad) VALUES(5,?,?,?,?);",
         [kardex.IdProducto, idUsuario, kardex.fechaCompra, kardex.cantidad]
       );
       return { estado: "ok" };
