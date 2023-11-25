@@ -76,19 +76,24 @@ export const ModGenero = {
     
     putUpdateGenero: async (genero)=>{
         const conexion = await connectDB();
-        try {
-            const[filas]=await conexion.query ("UPDATE tbl_genero  SET descripcion=?,estado=? where  IdGenero =?;",
-            [
-                genero.descripcion,
-                genero.estado,
-                genero.IdGenero,
-            ]
-            );
-            return {estado:"OK"}; 
-        } catch (error) {
-            console.log(error);
-            
+        if (await ModGenero.getGeneroExiste(genero)==false) {
+            try {
+                const[filas]=await conexion.query ("UPDATE tbl_genero  SET descripcion=?,estado=? where  IdGenero =?;",
+                [
+                    genero.descripcion,
+                    genero.estado,
+                    genero.IdGenero,
+                ]
+                );
+                return {estado:"OK"}; 
+            } catch (error) {
+                console.log(error);
+                
+            }    
+        } else {
+            return false;
         }
+        
     },
     
     
