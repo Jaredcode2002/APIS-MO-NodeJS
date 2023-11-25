@@ -12,7 +12,6 @@ export const ModGenero = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
 
@@ -25,7 +24,6 @@ export const ModGenero = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los generos");
         }
     },
 
@@ -48,7 +46,6 @@ export const ModGenero = {
       } catch (error) {
         console.long (error);
         conexion.end()
-        throw new Error ("Error al crear una nueva marca")
         
       }
     },
@@ -71,7 +68,6 @@ export const ModGenero = {
                 console.log(error);
                 conexion.end()
                 return false
-                throw new Error("Error al consultar el API");
             }
         }else{
             return false
@@ -91,7 +87,6 @@ export const ModGenero = {
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-          throw new Error("Error al consultar el API");
             
         }
     },
@@ -109,7 +104,6 @@ export const ModGenero = {
     
     } catch (error) {
         console.log(error);
-          throw new Error("Error al consultar el API");
         
     }
     },

@@ -12,7 +12,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los Pagos");
     } 
   },
 
@@ -59,7 +58,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear pago");
     }
   },
   putUpdatePago: async (Pago)=>{
@@ -78,7 +76,6 @@ export const ModPago = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar el pago")
       }
   },
   delPago: async (Pago) => {
@@ -93,7 +90,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el tipo de pago");
     }
   },
 };

@@ -7,7 +7,6 @@ export const ContrCompraDetalle = {
             res.status(200).json(compra);
         } catch (error) {
             console.log(error);
-            res.status(500).json("Error al consumir la API");
         }
     },
     PostCompraDetalle: async (req, res) => {
@@ -22,7 +21,6 @@ export const ContrCompraDetalle = {
             res.status(200).json(result);
         } catch (error) {
             console.log(error);
-            res.status(500).json({ message: "Error al consumir la API" });
         }
     },
     PutCompraDetalle: async (req, res) => {
@@ -38,7 +36,6 @@ export const ContrCompraDetalle = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     DeleteCompraDetalle:async(req, res)=>{
@@ -48,7 +45,6 @@ export const ContrCompraDetalle = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
 

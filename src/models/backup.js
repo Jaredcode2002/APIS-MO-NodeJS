@@ -191,7 +191,6 @@ export const ModBackup = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener los datos de la base");
 
         }
 

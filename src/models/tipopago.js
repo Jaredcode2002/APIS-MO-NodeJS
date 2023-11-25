@@ -12,7 +12,6 @@ export const ModTipoPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los Tipos de Pago");
     }
   },
 
@@ -24,7 +23,6 @@ export const ModTipoPago = {
 
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consultar los tipos de pago");
     }
   },
 
@@ -45,7 +43,6 @@ export const ModTipoPago = {
     } catch (error) {
       console.long(error);
       conexion.end()
-      throw new Error("Error al creun nuevo metodo de pago")
 
     }
   },
@@ -67,7 +64,6 @@ export const ModTipoPago = {
         console.log(error);
         conexion.end()
         return false
-        throw new Error("Error al crear tipo de pago");
       }
     } else {
       return false
@@ -90,7 +86,6 @@ export const ModTipoPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el tipo de pago")
     }
   },
   delTipoPago: async (TipoPago) => {
@@ -106,7 +101,6 @@ export const ModTipoPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el tipo de pago");
     }
   },
 };

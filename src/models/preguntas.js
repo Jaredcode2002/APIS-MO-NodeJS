@@ -12,7 +12,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las preguntas");
     }
   },
 
@@ -30,7 +29,6 @@ export const ModPreguntas = {
       if (existingRows.length > 0) {
         // Ya existe un registro con los mismos valores
         conexion.end();
-        throw new Error("Este registro ya ha sido ingresado anteriormente.");
       } else {
         const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,?);",
           [
@@ -47,7 +45,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error ingresar las preguntas");
     }
   },
 
@@ -65,7 +62,6 @@ export const ModPreguntas = {
 
       if (existingRows.length > 0) {
         conexion.end();
-        throw new Error("Esta pregunta ya ha sido registrada");
       } else {
         const [filas] = await conexion.query(
           "UPDATE tbl_ms_preguntas SET Pregunta = ?, modificado_por = ?, fecha_modificacion = ? WHERE Id_Pregunta = ?;",
@@ -83,7 +79,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.error(error); // Cambiar a console.error en lugar de console.log
       conexion.end();
-      throw new Error("Error al actualizar la pregunta");
     }
   },
 
@@ -100,7 +95,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la pregunta")
     }
   },
 
@@ -114,7 +108,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las respuestas");
     }
   },
   postInsertRespuestas: async (respuestas) => {
@@ -131,7 +124,6 @@ export const ModPreguntas = {
       if (existingRows.length > 0) {
         // Ya existe un registro con los mismos valores
         conexion.end();
-        throw new Error("Este registro ya ha sido ingresado anteriormente.");
       }
 
       const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas_usuario (Id_Usuario,Respuesta,Id_Pregunta,creado_por,fecha_creacion) values(?,?,?,?,?);",
@@ -148,7 +140,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error ingresar las respuestas");
     }
   },
 
@@ -211,7 +202,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener la lista de pre");
     }
   },
   DeleteRespuestas: async (usuario) => {
@@ -228,7 +218,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la respuesta")
     }
   },
   DeleteRespuestasUsuario: async (usuario) => {
@@ -244,7 +233,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la respuesta")
     }
   },
 
@@ -265,7 +253,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la respuesta")
     }
   },
 
@@ -280,7 +267,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener la respuesta");
     }
   },
   getPregunta: async (usuario) => {
@@ -294,7 +280,6 @@ export const ModPreguntas = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener la respuesta");
     }
   },
 

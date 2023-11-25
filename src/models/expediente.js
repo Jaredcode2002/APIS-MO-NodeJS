@@ -13,7 +13,6 @@ export const ModExpediente = {
 } catch (error) {
     console.log (error);
      conexion.end()
-    throw new error ("Error al consultar el API");
  }
 
 },
@@ -69,7 +68,6 @@ try {
 } catch (error) {
     console.log(error);
     conexion.end()
-    throw new error ("Error al consultar el API");
 }
 },
 }

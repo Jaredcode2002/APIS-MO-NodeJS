@@ -12,7 +12,6 @@ export const ModLente = {
             
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los lentes");
         }
     },
     getLentesInactivos: async () => {
@@ -23,7 +22,6 @@ export const ModLente = {
 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los lentes");
         }
     },
 
@@ -46,7 +44,6 @@ export const ModLente = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear un nuevo lente");
         }
     }, 
     postInsertLente: async (lente) => {
@@ -66,7 +63,6 @@ export const ModLente = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo proveedor");
             }
         } else {
             return false
@@ -87,7 +83,6 @@ export const ModLente = {
             return { estado: "OKAY" }
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar al actualizar el lente");
         }
     },
 
@@ -102,7 +97,6 @@ export const ModLente = {
             return { estado: "OKAY" }
         } catch (error) {
             console.log(error);
-            throw new Error("Error al eliminar el lente");
         }
     },
 }

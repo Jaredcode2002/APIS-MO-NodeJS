@@ -12,9 +12,7 @@ import { ContrModelo } from "../controllers/modelo.js";
 import { ContrInventario } from "../controllers/inventario.js";
 import { ContrPago } from "../controllers/pago.js";
 import { ContrProducto } from "../controllers/producto.js";
-import { ContrProductoProm } from "../controllers/productopromocion.js";
 import { ContrPromocion } from "../controllers/promocion.js";
-import { ContrPromocionMarca } from "../controllers/promocionmarca.js";
 import { ContrTipoPago } from "../controllers/tipopago.js";
 import { ContrParametro } from "../controllers/parametros.js";
 
@@ -383,12 +381,6 @@ router.post('/productos/crear', ContrProducto.postProducto)
 router.put('/productos/actualizar', ContrProducto.putProducto)
 router.delete('/producto/eliminar', ContrProducto.delProducto)
 
-//ProductoPromocion
-router.get('/productopromociones', ContrProductoProm.getProductosProm)
-router.post('/productopromociones/crear', ContrProductoProm.postProductoProm)
-router.put('/productopromociones/actualizar', ContrProductoProm.putProductoProm)
-router.delete('/productopromociones/eliminar', ContrProductoProm.delProductoProm)
-
 //Promocion
 router.get('/promociones', ContrPromocion.getPromocion)
 router.get('/promocionesInactivas', ContrPromocion.getPromocionesInactivas)
@@ -396,11 +388,6 @@ router.post('/promociones/crear', ContrPromocion.postPromocion)
 router.put('/promociones/actualizar', ContrPromocion.putPromocion)
 router.delete('/promociones/eliminar', ContrPromocion.delPromocion)
 
-//PromocionMarca
-router.get('/promocionmarca', ContrPromocionMarca.getPromoMarca)
-router.post('/promocionmarca/crear', ContrPromocionMarca.postPromoMarca)
-router.put('/promocionmarca/actualizar', ContrPromocionMarca.putPromoMarca)
-router.delete('/promocionmarca/eliminar', ContrPromocionMarca.delPromoMarca)
 
 //Sucursal
 router.get('/sucursales', ContrSucursal.getSucursales)
@@ -433,7 +420,6 @@ router.post('/kardex', ContrKardex.PostKardex)
 router.post('/Extraordinario',ContrKardex.postMovimientoExtra)
 
 
-
 //Expediente
 
 router.get('/Expediente', ContrExpediente.getExpediente)
@@ -442,7 +428,7 @@ router.post('/Expediente/NuevoExpediente', ContrExpediente.postInsertExpediente)
 router.delete('/Expediente/DeleteExpediente', ContrExpediente.deleteExpediente)
 
 //ExpedienteDetalle
-router.get('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
+router.post('/ExpedienteDetalle', ContrExpedineteDetalle.getExpedienteDetalle)
 router.post('/ExpedienteDetalle/NuevoExpedinteDetalle', ContrExpedineteDetalle.postExpedienteDetalle)
 router.put('/ExpedienteDetalle/UpdateExpedinteDetalle', ContrExpedineteDetalle.putExpedienteDetalle)
 router.delete('/ExpedienteDetalle/DeleteExpedinteDetalle', ContrExpedineteDetalle.deleteExpedienteDetalle)

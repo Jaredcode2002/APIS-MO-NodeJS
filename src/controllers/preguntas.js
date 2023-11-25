@@ -44,7 +44,6 @@ export const ContrPreguntas = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
 
@@ -110,7 +109,6 @@ export const ContrPreguntas = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     delRespuestasUsuario:async(req, res)=>{
@@ -120,7 +118,6 @@ export const ContrPreguntas = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
 
@@ -136,7 +133,6 @@ export const ContrPreguntas = {
           res.status(200).json({response:"Ok"})
         } catch (error) {
           console.log(error);
-          throw new Error("Error al consumir el api")
         }
     },
 
@@ -150,7 +146,6 @@ export const ContrPreguntas = {
             res.json(result);
           } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
           }
     },
     getPregunta: async (req, res) => {
@@ -163,7 +158,6 @@ export const ContrPreguntas = {
             res.json(result);
           } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
           }
 
        

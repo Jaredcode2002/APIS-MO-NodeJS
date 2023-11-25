@@ -12,7 +12,6 @@ export const ModProveedor = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
 
@@ -26,7 +25,6 @@ export const ModProveedor = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
 
@@ -49,7 +47,6 @@ export const ModProveedor = {
        } catch (error) {
            console.log(error);
            conexion.end()
-           throw new Error("Error al crear un nuevo proveedor");
        }
     },
     
@@ -77,7 +74,6 @@ export const ModProveedor = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo proveedor");
             }
          }else{
             return false
@@ -108,7 +104,6 @@ export const ModProveedor = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al actualizar el proveedor");
         }
     },
 
@@ -126,7 +121,6 @@ export const ModProveedor = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al eliminar el proveedor");
         }
     },
 
