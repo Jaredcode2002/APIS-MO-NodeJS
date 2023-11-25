@@ -33,7 +33,6 @@ export const ModClientes = {
        } catch (error) {
            console.log(error);
            conexion.end()
-           throw new Error("Error al crear un nuevo proveedor");
        }
     },
     postCliente: async (Cliente)=>{
@@ -48,7 +47,6 @@ export const ModClientes = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo cliente");
             }
          }else{
             return false
@@ -57,16 +55,21 @@ export const ModClientes = {
     },
     putCliente: async (Cliente)=>{
         let conexion
-        try {
-             conexion = await connectDB()
-            const [filas] = await conexion.query("UPDATE tbl_cliente SET nombre=?, apellido=?, IdGenero=?, fechaNacimiento=?, direccion=?, telefonoCliente=?, correoElectronico= ? where idCliente =?;",
-            [Cliente.nombre,Cliente.apellido,Cliente.idGenero,Cliente.fechaNacimiento,Cliente.direccion,Cliente.telefono,Cliente.correo,Cliente.idCliente])
-            conexion.end()
-            return {estado:"ok"}
-        } catch (error) {
-            console.log(error);
-            conexion.end()
+        conexion = await connectDB()
+        if (await ModClientes.getClienteExiste(Cliente)==false) {
+            try {
+               const [filas] = await conexion.query("UPDATE tbl_cliente SET nombre=?, apellido=?, IdGenero=?, fechaNacimiento=?, direccion=?, telefonoCliente=?, correoElectronico= ? where idCliente =?;",
+               [Cliente.nombre,Cliente.apellido,Cliente.idGenero,Cliente.fechaNacimiento,Cliente.direccion,Cliente.telefono,Cliente.correo,Cliente.idCliente])
+               conexion.end()
+               return {estado:"ok"}
+           } catch (error) {
+               console.log(error);
+               conexion.end()
+           }    
+        } else {
+            return false
         }
+        
     },
     delCliente: async (Cliente)=>{
         let conexion

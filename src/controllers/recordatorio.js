@@ -63,7 +63,6 @@ export const ContrRecordatorio = {
           res.status(200).json(result)
         } catch (error) {
           console.log(error);
-          throw new Error("Error al consumir el api");
         }
       },
       putCitas: async (req, res) => {
@@ -77,7 +76,6 @@ export const ContrRecordatorio = {
           res.status(200).json({response:"Ok"})
         } catch (error) {
           console.log(error);
-          throw new Error("Error al consumir el api")
         }
       },
 

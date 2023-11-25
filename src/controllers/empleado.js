@@ -36,9 +36,9 @@ export const ContrEmpleado = {
             });
             //res.status(201).json({ id: result.id });
             if (result ==false) {
-                res.status(201).json({ id: result.id });
+                res.status(201).json(result);
             }else{
-                res.status(201).json({ id: result.id });
+                res.status(201).json(result);
             }
         } catch (error) {
             console.log(error);
@@ -61,7 +61,11 @@ export const ContrEmpleado = {
                 estado,
                 IdEmpleado, 
             });
-            res.status(200).json({ response: "Ok" })
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
         }

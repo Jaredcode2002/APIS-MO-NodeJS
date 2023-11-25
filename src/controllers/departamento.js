@@ -32,7 +32,11 @@ export const ContrDepto = {
     try {
       const {departamento, estado, IdDepartamento} = req.body;
       const result = await ModDepartamento.putUpdateDepto({departamento, estado, IdDepartamento});
-      res.status(200).json({response:"Ok"})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
     }
