@@ -16,7 +16,11 @@ export const ContrSucursal= {
         try {
             const{IdDepartamento, IdCiudad, direccion, telefono, sucursal, estado}= req.body;
             const result = await ModSucursal.postInsertSucursal({IdDepartamento, IdCiudad, direccion, telefono, sucursal, estado});
-            res.status(201).json({ id: result.id });
+            if (result == false) {
+                res.status(201).json(result);
+              } else {
+                res.status(201).json(result);
+              }
         } catch (error) {
             console.log(error);
         }
@@ -26,7 +30,11 @@ export const ContrSucursal= {
         try {
             const{IdDepartamento, IdCiudad, direccion, telefono, estado, IdSucursal}= req.body;
             const result = await ModSucursal.putUpdateSucursal({IdDepartamento, IdCiudad, direccion, telefono, estado, IdSucursal});
-            res.status(201).json({ id: result.id });
+            if (result == false) {
+                res.status(201).json(result);
+              } else {
+                res.status(201).json(result);
+              }
         } catch (error) {
             console.log(error);
         }

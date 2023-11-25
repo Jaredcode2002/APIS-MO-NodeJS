@@ -12,7 +12,6 @@ export const ModProveedor = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
 
@@ -26,7 +25,6 @@ export const ModProveedor = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
 
@@ -49,7 +47,6 @@ export const ModProveedor = {
        } catch (error) {
            console.log(error);
            conexion.end()
-           throw new Error("Error al crear un nuevo proveedor");
        }
     },
     
@@ -77,7 +74,6 @@ export const ModProveedor = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo proveedor");
             }
          }else{
             return false
@@ -88,28 +84,32 @@ export const ModProveedor = {
     putUpdateProveedor: async (proveedor) => {
         let conexion
          conexion = await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?, estado=?  WHERE IdProveedor=?;",
-                [
-                    proveedor.CiaProveedora,
-                    proveedor.encargado,
-                    proveedor.IdPais,
-                    proveedor.IdCiudad,
-                    proveedor.Productos,
-                    proveedor.direccion,
-                    proveedor.telefono,
-                    proveedor.correoElectronico,
-                    proveedor.estado,
-                    proveedor.IdProveedor,
-                ]
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-            throw new Error("Error al actualizar el proveedor");
-        }
+         if (await ModProveedor.getProveedor(proveedor)==false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?, estado=?  WHERE IdProveedor=?;",
+                    [
+                        proveedor.CiaProveedora,
+                        proveedor.encargado,
+                        proveedor.IdPais,
+                        proveedor.IdCiudad,
+                        proveedor.Productos,
+                        proveedor.direccion,
+                        proveedor.telefono,
+                        proveedor.correoElectronico,
+                        proveedor.estado,
+                        proveedor.IdProveedor,
+                    ]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                console.log(error);
+                conexion.end()
+            }
+         } else {
+            return false
+         }
+        
     },
 
     deleteProveedor: async (proveedor) => {
@@ -126,7 +126,6 @@ export const ModProveedor = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al eliminar el proveedor");
         }
     },
 

@@ -12,7 +12,6 @@ export const ModInventario = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el inventario");
     }
   },
   postInsertInventario: async (inventario) => {
@@ -29,7 +28,6 @@ export const ModInventario = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al registrar inventario");
     }
   },
   putUpdateInventarioCompras: async (inventario) => {
@@ -48,7 +46,6 @@ export const ModInventario = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el producto dentro de Inventario")
     }
   },
   putUpdateInventarioVentas: async (inventario) => {
@@ -67,7 +64,6 @@ export const ModInventario = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el producto dentro de Inventario")
     }
   },
   delInventario: async (inventario) => {
@@ -82,7 +78,6 @@ export const ModInventario = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar producto del inventario");
     }
   },
   

@@ -2,6 +2,7 @@ import { connectDB } from "../config/Conn.js";
 import { exec } from 'child_process';
 import fs from 'fs';
 
+
 export const ModBackup = {
 
     getBackup: async () => {
@@ -76,15 +77,35 @@ export const ModBackup = {
         try {
             conexion = await connectDB();
             const files = fs.readdirSync('./uploads');
-            // Ordena los nombres de archivo de forma ascendente
-            //files.sort();
-            return files;
+
+            // Obtener la información de la fecha de último acceso para cada archivo
+            const fileStats = files.map(file => {
+                const filePath = `./uploads/${file}`;
+                const stat = fs.statSync(filePath);
+                return { file, lastAccessed: stat.atimeMs };
+            });
+
+
+            // Ordenar la lista de archivos por la fecha de último acceso de forma descendente
+            const sortedFiles = fileStats.sort((a, b) => b.lastAccessed - a.lastAccessed);
+
+            // Obtener solo los nombres de archivo ordenados
+            const sortedFileNames = sortedFiles.map(file => file.file);
+
+            return sortedFileNames;
+
         } catch (error) {
             console.error(error);
             console.log("Error al listar archivos");
-            conexion.end();
+            //conexion.end();
+        } finally {
+            if (conexion) {
+                conexion.end();
+            }
         }
+
     },
+
 
     getRestore: async (req) => {
 
@@ -170,7 +191,6 @@ export const ModBackup = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener los datos de la base");
 
         }
 

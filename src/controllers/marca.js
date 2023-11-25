@@ -17,7 +17,7 @@ export const ContrMarca = {
         try {
             const  {descripcion, estado}=req.body;
             const result = await ModMarca.postInsertMarca({descripcion,estado});
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
               } else {
@@ -32,7 +32,11 @@ export const ContrMarca = {
     try {
       const {descripcion, estado, IdMarca} = req.body;
       const result = await ModMarca.putUpdateMarca({descripcion, estado, IdMarca});
-      res.status(200).json({id: result.id})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +49,6 @@ export const ContrMarca = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

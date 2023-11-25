@@ -17,7 +17,7 @@ export const ContrDepto = {
       try {
           const  {departamento, estado}=req.body;
           const result = await ModDepartamento.postInsertDepto({departamento,estado});
-          res.status(201).json({ id: result.id });
+          
           if (result == false) {
               res.status(201).json(result);
             } else {
@@ -32,10 +32,13 @@ export const ContrDepto = {
     try {
       const {departamento, estado, IdDepartamento} = req.body;
       const result = await ModDepartamento.putUpdateDepto({departamento, estado, IdDepartamento});
-      res.status(200).json({response:"Ok"})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
 

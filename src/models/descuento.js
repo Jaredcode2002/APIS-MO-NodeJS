@@ -12,7 +12,6 @@ export const ModDescuento = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los descuentos");
         }
     },
 
@@ -25,7 +24,6 @@ export const ModDescuento = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los descuentos");
         }
     },
     
@@ -47,7 +45,6 @@ export const ModDescuento = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear un nuevo lente");
         }
     },
 
@@ -67,10 +64,10 @@ export const ModDescuento = {
                 return { estado: "OK" };
             } catch (error) {
                 conexion.end()
-                return false
-                throw new Error("Error al crear un nuevo descuento");
             }
         } else {
+            console.log(error);
+            conexion.end()
             return false
         }
     },
@@ -78,19 +75,25 @@ export const ModDescuento = {
     putDescuento:async (descuento)=>
     {
         const conexion=await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=? WHERE  IdDescuento =?;",
-            [
-                descuento.estado,
-                descuento.descPorcent,
-                descuento.IdDescuento,
-            ]
-            );
-            return{estado:"OKAY"}
-        } catch (error) {
-            onsole.log(error);
-            throw new Error("Error al consultar al actualizar el descuento");
+        if (await ModDescuento.getDescuentoExiste(descuento) == false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_descuento SET estado=?,descPorcent=? WHERE  IdDescuento =?;",
+                [
+                    descuento.estado,
+                    descuento.descPorcent,
+                    descuento.IdDescuento,
+                ]
+                );
+                return{estado:"OKAY"}
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log(error);
+            conexion.end()
+            return false;
         }
+       
     },
 
     deleteDescuento : async (descuento)=>

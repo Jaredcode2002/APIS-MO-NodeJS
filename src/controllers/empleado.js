@@ -16,7 +16,6 @@ export const ContrEmpleado = {
             res.json(result);
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     postEmpleado: async (req, res) => {
@@ -37,9 +36,9 @@ export const ContrEmpleado = {
             });
             //res.status(201).json({ id: result.id });
             if (result ==false) {
-                res.status(201).json({ id: result.id });
+                res.status(201).json(result);
             }else{
-                res.status(201).json({ id: result.id });
+                res.status(201).json(result);
             }
         } catch (error) {
             console.log(error);
@@ -62,10 +61,13 @@ export const ContrEmpleado = {
                 estado,
                 IdEmpleado, 
             });
-            res.status(200).json({ response: "Ok" })
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     delEmpleado:async(req, res)=>{
@@ -75,7 +77,6 @@ export const ContrEmpleado = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     getSucursales: async (req, res) => {

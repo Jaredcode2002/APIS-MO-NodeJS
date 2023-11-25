@@ -12,7 +12,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener empleados");
     }
   },
   getEmpleadosInactivos: async () => {
@@ -25,7 +24,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener empleados");
     }
   },
   empleadoExist: async (empleado) => {
@@ -47,7 +45,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear un nuevo empleado");
     }
   },
   getEmpleado: async (empleado) => {
@@ -67,7 +64,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el empleado")
     }
   },
   postInsertEmpleado: async (empleado) => {
@@ -96,7 +92,6 @@ export const ModEmpleados = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear empleado");
       }
     } else {
       return false
@@ -104,30 +99,34 @@ export const ModEmpleados = {
   },
   putUpdateEmpleado: async (empleado) => {
     let conexion
-    try {
-      conexion = await connectDB() //Se agrega de igual manera en el query de actualizacion.
-      const [filas] = await conexion.query("UPDATE tbl_empleado SET  nombre=?, apellido=?, telefonoEmpleado=?, IdSucursal=?, IdGenero=?, numeroIdentidad=?, fechaIngreso=?, fechaSalida=?, fechaCumpleanos=?, estado=? WHERE IdEmpleado=?;",
-        [
-          empleado.nombre,
-          empleado.apellido,
-          empleado.telEmple,
-          empleado.idSucursal,
-          empleado.idGenero,
-          empleado.numId,
-          empleado.fechaIngreso,
-          empleado.fechaSalida,
-          empleado.fechaCumpleanos,
-          empleado.estado,
-          empleado.IdEmpleado,
-        ]
-      );
-      conexion.end()
-      return { estado: "ok" }
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al actualizar el empleado")
+    if (await ModEmpleados.empleadoExist(empleado) == false) {
+      try {
+        conexion = await connectDB() //Se agrega de igual manera en el query de actualizacion.
+        const [filas] = await conexion.query("UPDATE tbl_empleado SET  nombre=?, apellido=?, telefonoEmpleado=?, IdSucursal=?, IdGenero=?, numeroIdentidad=?, fechaIngreso=?, fechaSalida=?, fechaCumpleanos=?, estado=? WHERE IdEmpleado=?;",
+          [
+            empleado.nombre,
+            empleado.apellido,
+            empleado.telEmple,
+            empleado.idSucursal,
+            empleado.idGenero,
+            empleado.numId,
+            empleado.fechaIngreso,
+            empleado.fechaSalida,
+            empleado.fechaCumpleanos,
+            empleado.estado,
+            empleado.IdEmpleado,
+          ]
+        );
+        conexion.end()
+        return { estado: "ok" }
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
+    } else {
+      return false;
     }
+   
   },
   delDeleteEmpleado: async (empleado) => {
     let conexion
@@ -142,7 +141,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el empleado")
     }
   },
   getSucursal: async () => {
@@ -155,7 +153,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener sucursales");
     }
   },
   getGenero: async () => {
@@ -168,7 +165,6 @@ export const ModEmpleados = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener lista de géneros");
     }
   },
 

@@ -73,7 +73,6 @@ export const ModLogin = {
 
     } catch (e) {
       conexion.end()
-      throw e;
     }
   },
 
@@ -95,7 +94,6 @@ export const ModLogin = {
       const match = await bcrypt.compare(claves.psswrd, claves.hashed);
       return match;
     } catch (error) {
-      throw new Error("Error al comparar las contraseñas");
     }
   }
 };

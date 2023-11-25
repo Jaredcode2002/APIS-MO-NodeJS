@@ -19,11 +19,10 @@ export const ContrDescuento = {
         try {
             const  {estado,descPorcent,descPorcentEmpleado}=req.body;
             const result = await ModDescuento.postInsertDescuento({estado,descPorcent,descPorcentEmpleado});
-            res.status(201).json({ id: result.id });
             if (result == false) {
-                res.status(201).json(result);
+                res.status(201).json( result );
               } else {
-                res.status(201).json(result);
+                res.status(201).json( result);
               }
             } catch (error) {
               console.log(error);
@@ -35,7 +34,11 @@ export const ContrDescuento = {
         try {
             const  {estado,descPorcent,descPorcentEmpleado,IdDescuento}=req.body;
             const result = await ModDescuento.putDescuento({estado,descPorcent,descPorcentEmpleado,IdDescuento});
-            res.status(201).json({ id: result.id });
+            if (result == false) {
+                res.status(201).json( result );
+              } else {
+                res.status(201).json( result);
+              }
         } catch (error) {
             console.log(error);
         }

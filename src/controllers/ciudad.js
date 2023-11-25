@@ -17,7 +17,6 @@ export const ContrCiudad = {
       try {
           const  {ciudad, estado}=req.body;
           const result = await ModCiudad.postInsertCiudad({ciudad,estado});
-          res.status(201).json({ id: result.id });
           if (result == false) {
               res.status(201).json(result);
             } else {
@@ -32,7 +31,11 @@ export const ContrCiudad = {
     try {
       const {ciudad,estado,IdCiudad} = req.body;
       const result = await ModCiudad.putUpdateCiudad({ciudad,estado,IdCiudad});
-      res.status(200).json({id: result.id})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +48,6 @@ export const ContrCiudad = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

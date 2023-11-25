@@ -12,7 +12,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las garantias");
     }
   },
   getGarantiasInactivas: async () => {
@@ -25,7 +24,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las garantias");
     }
   },
   getGarantiaExiste: async (garantia) => {
@@ -46,7 +44,6 @@ export const ModGarantia = {
     } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear una nueva garantia");
     }
 }, 
   postInsertGarantia: async (garantia) => {
@@ -67,7 +64,6 @@ export const ModGarantia = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear garantia");
       }
     } else {
       return false
@@ -76,24 +72,28 @@ export const ModGarantia = {
   },
   putUpdateGarantia: async (garantia) => {
     let conexion
-    try {
-      conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, IdProducto= ?, estado= ? where IdGarantia = ?;",
-        [
-          garantia.descripcion,
-          garantia.mesesGarantia,
-          garantia.IdProducto,
-          garantia.estado,
-          garantia.IdGarantia,
-        ]
-      )
-      conexion.end()
-      return { estado: "okss" }
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al actualizar la garantia")
+    if (await ModGarantia.getGarantiaExiste(garantia) == false) {
+      try {
+        conexion = await connectDB()
+        const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, IdProducto= ?, estado= ? where IdGarantia = ?;",
+          [
+            garantia.descripcion,
+            garantia.mesesGarantia,
+            garantia.IdProducto,
+            garantia.estado,
+            garantia.IdGarantia,
+          ]
+        )
+        conexion.end()
+        return { estado: "okss" }
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
+    } else {
+      return false
     }
+  
   },
   delGarantia: async (garantia) => {
     let conexion
@@ -107,7 +107,6 @@ export const ModGarantia = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la garantia");
     }
   },
   
