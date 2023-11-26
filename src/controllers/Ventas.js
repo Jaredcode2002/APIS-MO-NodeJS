@@ -73,9 +73,9 @@ putAnularVentas:async(req,res)=>{
        try {
           conexion = await connectDB(); // Asumiendo que tienes una función connectDB que conecta a la base de datos
           await conexion.beginTransaction();
-           await ModVentas.postRegistroVenta(arrVentas);
+          let result = await ModVentas.postRegistroVenta(arrVentas);
           await conexion.commit();
-          res.status(201).json("ok");
+          res.status(201).json(result);
         } catch (error) {
           console.log(error);
           if (conexion) {
