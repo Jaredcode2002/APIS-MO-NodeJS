@@ -32,11 +32,7 @@ export const ContrMarca = {
     try {
       const {descripcion, estado, IdMarca} = req.body;
       const result = await ModMarca.putUpdateMarca({descripcion, estado, IdMarca});
-      if (result == false) {
-        res.status(201).json(result);
-      } else {
-        res.status(201).json(result);
-      }
+      res.status(200).json({id: result.id})
     } catch (error) {
       console.log(error);
     }

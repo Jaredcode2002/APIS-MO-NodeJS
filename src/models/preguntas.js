@@ -20,7 +20,7 @@ export const ModPreguntas = {
     try {
       conexion = await connectDB();
 
-      // Verificar si ya existe un registro con el mismo Id_Pregunta y Respuesta
+      // Verificar si ya existe un registro con la misma pregunta
       const [existingRows] = await conexion.query(
         "SELECT * FROM tbl_ms_preguntas WHERE Pregunta = ? ",
         [preguntas.pregunta]
@@ -28,6 +28,7 @@ export const ModPreguntas = {
 
       if (existingRows.length > 0) {
         // Ya existe un registro con los mismos valores
+        console.log("ya existe esta pregunta.");
         conexion.end();
       } else {
         const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,?);",
@@ -49,38 +50,71 @@ export const ModPreguntas = {
   },
 
 
-  putPreguntas: async (preguntas) => {
+ /*  ExistePregunta: async (preguntas) => {
     let conexion;
     try {
       conexion = await connectDB();
 
-      // Verificar si la pregunta ya existe
-      const [existingRows] = await conexion.query(
-        "SELECT * FROM tbl_ms_preguntas WHERE Pregunta = ?;",
+      // Verificar si ya existe un registro con la misma pregunta
+      const [filas] = await conexion.query(
+        "SELECT Pregunta FROM tbl_ms_preguntas WHERE `Pregunta`=?",
         [preguntas.pregunta]
       );
 
-      if (existingRows.length > 0) {
-        conexion.end();
+      if (filas.length > 0) {
+        console.log("ya existe esta pregunta.");
+        return true
       } else {
-        const [filas] = await conexion.query(
-          "UPDATE tbl_ms_preguntas SET Pregunta = ?, modificado_por = ?, fecha_modificacion = ? WHERE Id_Pregunta = ?;",
-          [
-            preguntas.pregunta,
-            preguntas.modificado_por,
-            preguntas.fecha_modificacion,
-            preguntas.Id_Pregunta,
-          ]
-        );
-
-        conexion.end();
-        return { estado: "ok" };
+        console.log("No existe ninguna pregunta con ese texto.");
+        return false
       }
     } catch (error) {
-      console.error(error); // Cambiar a console.error en lugar de console.log
+      console.error(error);
       conexion.end();
     }
   },
+ */
+
+  putPreguntas: async (preguntas) => {
+    let conexion;
+    try {
+        conexion = await connectDB();
+
+        const [existingRows] = await conexion.query(
+            "SELECT Pregunta FROM tbl_ms_preguntas WHERE Pregunta = ? AND Id_Pregunta <> ?",
+            [preguntas.pregunta, preguntas.Id_Pregunta]
+        );
+
+        if (existingRows.length > 0) {
+            console.log("Ya existe esta pregunta.");
+            conexion.end();
+            return { estado: "ya_existe" };
+
+        } else {
+            const [filas] = await conexion.query(
+                "UPDATE tbl_ms_preguntas SET Pregunta = ?, modificado_por = ?, fecha_modificacion = ? WHERE Id_Pregunta = ?;",
+                [
+                    preguntas.pregunta,
+                    preguntas.modificado_por,
+                    preguntas.fecha_modificacion,
+                    preguntas.Id_Pregunta,
+                ]
+            );
+            conexion.end();
+            return { estado: "ok" };
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    } finally {
+        if (conexion) {
+            conexion.end();
+        }
+    }
+},
+
+
+
 
   DeletePreguntas: async (preguntas) => {
     let conexion

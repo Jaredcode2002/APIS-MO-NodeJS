@@ -72,26 +72,21 @@ export const ModTipoPago = {
 
   putUpdateTipoPago: async (TipoPago) => {
     let conexion
-    if (await ModTipoPago.getTipoPagoExiste(TipoPago) == false) {
-      try {
-        conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_TipoPago set descripcion = ?, estado=? WHERE IdTipoPago= ?;",
-          [
-            TipoPago.descripcion,
-            TipoPago.estado,
-            TipoPago.IdTipoPago
-          ]
-        )
-        conexion.end()
-        return { estado: "ok" }
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-      }
-    } else {
-      return false
+    try {
+      conexion = await connectDB()
+      const [filas] = await conexion.query("UPDATE tbl_TipoPago set descripcion = ?, estado=? WHERE IdTipoPago= ?;",
+        [
+          TipoPago.descripcion,
+          TipoPago.estado,
+          TipoPago.IdTipoPago
+        ]
+      )
+      conexion.end()
+      return { estado: "ok" }
+    } catch (error) {
+      console.log(error);
+      conexion.end()
     }
-    
   },
   delTipoPago: async (TipoPago) => {
     let conexion

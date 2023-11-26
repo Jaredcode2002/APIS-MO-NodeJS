@@ -72,26 +72,21 @@ export const ModMarca = {
 
   putUpdateMarca: async (marca) => {
     let conexion
-    if (await ModMarca.getMarcaExiste(marca) == false) {
-      try {
-        conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_marca set descripcion = ?, estado=? WHERE IdMarca= ?;",
-          [
-            marca.descripcion,
-            marca.estado,
-            marca.IdMarca,
-          ]
-        )
-        conexion.end()
-        return { estado: "ok" }
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-      }
-    } else {
-      return false;
+    try {
+      conexion = await connectDB()
+      const [filas] = await conexion.query("UPDATE tbl_marca set descripcion = ?, estado=? WHERE IdMarca= ?;",
+        [
+          marca.descripcion,
+          marca.estado,
+          marca.IdMarca,
+        ]
+      )
+      conexion.end()
+      return { estado: "ok" }
+    } catch (error) {
+      console.log(error);
+      conexion.end()
     }
-  
   },
 
   delMarca: async (marca) => {

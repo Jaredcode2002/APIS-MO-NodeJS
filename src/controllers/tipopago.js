@@ -30,11 +30,7 @@ export const ContrTipoPago = {
     try {
       const {descripcion,estado, IdTipoPago} = req.body;
       const result = await ModTipoPago.putUpdateTipoPago({descripcion, estado, IdTipoPago});
-      if (result == false) {
-        res.status(201).json( result );
-      } else {
-        res.status(201).json( result);
-      }
+      res.status(200).json({id: result.id})
     } catch (error) {
       console.log(error);
     }
