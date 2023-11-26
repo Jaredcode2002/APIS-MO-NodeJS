@@ -12,7 +12,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los productos");
     }
   },
   getProductosInactivos: async () => {
@@ -25,7 +24,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los productos");
     }
   },
   postInsertProducto: async (producto) => {
@@ -51,7 +49,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear producto");
     }
   },
   putUpdateProducto: async (producto) => {
@@ -74,7 +71,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el producto")
     }
   },
   delProducto: async (producto) => {
@@ -89,7 +85,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el producto");
     }
   },
   getProductosInv: async () => {
@@ -104,7 +99,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los productos");
     }
   },
   getProducto: async (producto) => {
@@ -119,7 +113,6 @@ export const ModProducto = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el producto");
     }
   },
 };

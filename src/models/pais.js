@@ -12,7 +12,6 @@ export const ModPais = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los paises");
     } 
   },
 
@@ -25,7 +24,6 @@ export const ModPais = {
       
       } catch (error) {
           console.log(error);
-          throw new Error("Error al consultar los descuentos");
       }
   },
 
@@ -48,7 +46,6 @@ export const ModPais = {
     } catch (error) {
       console.long (error);
       conexion.end()
-      throw new Error ("Error al crear una nueva marca")
       
     }
   },
@@ -71,7 +68,6 @@ export const ModPais = {
           console.log(error);
           conexion.end()
           return false
-          throw new Error("Error al crear pais");
         }
     } else{
       return false
@@ -80,22 +76,26 @@ export const ModPais = {
 
   putUpdatePais: async (pais)=>{
     let conexion
+    if (await ModPais.getPaisExiste(pais)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
-        [
-          pais.pais,
-          pais.estado,
-          pais.IdPais,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-        throw new Error("Error al actualizar la pais")
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
+       [
+         pais.pais,
+         pais.estado,
+         pais.IdPais,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      return false;
+    }
+      
   },
   delPais: async (pais) => {
     let conexion
@@ -109,7 +109,6 @@ export const ModPais = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la pais");
     }
   },
 };

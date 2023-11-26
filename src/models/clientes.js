@@ -5,7 +5,7 @@ export const ModClientes = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT c.idCliente, c.nombre,c.apellido, g.descripcion as genero, c.fechaNacimiento, c.direccion, c.telefonoCliente as Telefono, c.correoElectronico as Email, c.COD_CLIENTE from tbl_cliente as c inner join tbl_genero as g on c.IdGenero=g.IdGenero ORDER BY c.COD_CLIENTE DESC;")
+            const [filas] = await conexion.query("SELECT c.idCliente, c.nombre,c.apellido, g.descripcion as genero, g.IdGenero, c.fechaNacimiento, c.direccion, c.telefonoCliente as Telefono, c.correoElectronico as Email, c.COD_CLIENTE from tbl_cliente as c inner join tbl_genero as g on c.IdGenero=g.IdGenero ORDER BY c.COD_CLIENTE DESC;")
             conexion.end()
             return filas
         } catch (error) {
@@ -33,7 +33,6 @@ export const ModClientes = {
        } catch (error) {
            console.log(error);
            conexion.end()
-           throw new Error("Error al crear un nuevo proveedor");
        }
     },
     postCliente: async (Cliente)=>{
@@ -48,7 +47,6 @@ export const ModClientes = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo cliente");
             }
          }else{
             return false
@@ -57,16 +55,21 @@ export const ModClientes = {
     },
     putCliente: async (Cliente)=>{
         let conexion
-        try {
-             conexion = await connectDB()
-            const [filas] = await conexion.query("UPDATE tbl_cliente SET nombre=?, apellido=?, IdGenero=?, fechaNacimiento=?, direccion=?, telefonoCliente=?, correoElectronico= ? where idCliente =?;",
-            [Cliente.nombre,Cliente.apellido,Cliente.idGenero,Cliente.fechaNacimiento,Cliente.direccion,Cliente.telefono,Cliente.correo,Cliente.idCliente])
-            conexion.end()
-            return {estado:"ok"}
-        } catch (error) {
-            console.log(error);
-            conexion.end()
+        conexion = await connectDB()
+        if (await ModClientes.getClienteExiste(Cliente)==false) {
+            try {
+               const [filas] = await conexion.query("UPDATE tbl_cliente SET nombre=?, apellido=?, IdGenero=?, fechaNacimiento=?, direccion=?, telefonoCliente=?, correoElectronico= ? where idCliente =?;",
+               [Cliente.nombre,Cliente.apellido,Cliente.idGenero,Cliente.fechaNacimiento,Cliente.direccion,Cliente.telefono,Cliente.correo,Cliente.idCliente])
+               conexion.end()
+               return {estado:"ok"}
+           } catch (error) {
+               console.log(error);
+               conexion.end()
+           }    
+        } else {
+            return false
         }
+        
     },
     delCliente: async (Cliente)=>{
         let conexion

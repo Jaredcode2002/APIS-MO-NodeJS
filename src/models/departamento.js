@@ -12,7 +12,6 @@ export const ModDepartamento = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los departamentos");
     } 
   },
 
@@ -25,7 +24,6 @@ export const ModDepartamento = {
       
       } catch (error) {
           console.log(error);
-          throw new Error("Error al obtener los departamentos");
       }
   },
 
@@ -48,7 +46,6 @@ export const ModDepartamento = {
       } catch (error) {
         console.long (error);
         conexion.end()
-        throw new Error ("Error al crear una nuevo departamento")
         
       }
     },
@@ -72,7 +69,6 @@ export const ModDepartamento = {
           console.log(error);
           conexion.end()
           return false
-          throw new Error("Error al crear depto");
         }
     } else{
       return false
@@ -80,22 +76,25 @@ export const ModDepartamento = {
   },
   putUpdateDepto: async (departamento)=>{
     let conexion
+    if (await ModDepartamento.getDepartamnetoExiste(departamento)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ?, estado=? WHERE IdDepartamento= ?;",
-        [
-          departamento.departamento,
-          departamento.estado,
-          departamento.IdDepartamento,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-        throw new Error("Error al actualizar la depto")
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ?, estado=? WHERE IdDepartamento= ?;",
+       [
+         departamento.departamento,
+         departamento.estado,
+         departamento.IdDepartamento,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      return false;
+    }
   },
   
   delDepto: async (departamento) => {
@@ -112,7 +111,6 @@ export const ModDepartamento = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el departamento");
     }
   },
 };

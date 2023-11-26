@@ -12,13 +12,16 @@ export const ModExpedienteDetalle = {
         } catch (error) {
             console.log (error);
             conexion.end()
+
             throw new error ("Error al consultar el API");
+
         }
 
     },
 
     postExpedienteDetalle :async (expedientedetalle)=> {
         let conexion
+
  try {
     conexion = await connectDB ();
     const [filas]=await conexion.query("INSERT INTO tbl_expedientedetalle(IdExpediente, diagnostico, Optometrista, AsesorVenta, Antecedentes, ODEsfera, OIEsfera, ODCilindro, OICilindro, ODEje, OIEje, ODAdicion, OIAdicion, ODAltura, OIAltura, ODDistanciaPupilar, OIDistanciaPupilar,fechaConsulta,fechaExpiracion)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
@@ -51,6 +54,7 @@ export const ModExpedienteDetalle = {
     conexion.end()
     throw new error ("Error al consultar el API");
  }
+
     },
 
     putExpedienteDetalle :async (expedientedetalle)=> {
@@ -86,7 +90,9 @@ export const ModExpedienteDetalle = {
         } catch (error) {
             console.log(error);
             conexion.end()
+
       throw new Error("Error al consultar el API")
+
         }
     },
 
@@ -104,7 +110,9 @@ export const ModExpedienteDetalle = {
         } catch (error) {
             console.log(error);
             conexion.end()
+
       throw new Error("Error al consultar el API")
+
         }
     },
 }
