@@ -211,9 +211,7 @@ router.post('/bitacora/ErrorInsertEmpleado', ContrBitacora.postErrorInsertEmplea
 router.post('/bitacora/EliminarEmpleado', ContrBitacora.postEliminarEmpleado)
 //--Usuario--
 router.post('/bitacora/InsertUsuario', ContrBitacora.postInsertUsuario)
-
 router.post('/bitacora/SalirRegistroUsuario', ContrBitacora.postBotonSalirRu)
-
 router.post('/bitacora/ListaUsuario', ContrBitacora.postListaUsuario)
 router.post('/bitacora/SalirListaUsuarios', ContrBitacora.postBotonSalirLU)
 router.post('/bitacora/ActualizacionUsuario', ContrBitacora.postActualizarUsuario)
@@ -227,20 +225,20 @@ router.post('/bitacora/EliminarVenta', ContrBitacora.postEliminarVenta)
 //--Garantia--
 router.post('/bitacora/Garantia', ContrBitacora.postPantallaGarantia)
 router.post('/bitacora/NuevaGarantia', ContrBitacora.postInsertGarantia)
-router.post('/bitacora/ListaGarantia', ContrBitacora.postVerListaGarantia)
+router.post('/bitacora/SalirListaGarantia', ContrBitacora.postSalirListaGarantia)
 router.post('/bitacora/ActualizacionGarantia', ContrBitacora.postActualizarGarantia)
 router.post('/bitacora/EliminarGarantia', ContrBitacora.postEliminarGarantia)
 //--Descuento--
 router.post('/bitacora/Descuento', ContrBitacora.postPantallaDescuento)
-router.post('/bitacora/NuevaGarantia', ContrBitacora.postInsertDescuento)
-router.post('/bitacora/SalirListaGarantia', ContrBitacora.postSalirListaDescuento)
+router.post('/bitacora/NuevoDescuento', ContrBitacora.postInsertDescuento)
+router.post('/bitacora/salirlistadescuento', ContrBitacora.postSalirListaDescuento)
 router.post('/bitacora/ActualizacionDescuento', ContrBitacora.postActualizarDescuento)
 router.post('/bitacora/EliminarDescuento', ContrBitacora.postEliminarDescuento)
-//--Descuento Promocion 
-router.post('/bitacora/NuevaGarantia', ContrBitacora.postInsertBPromocion)
-router.post('/bitacora/SalirListaGarantia', ContrBitacora.postSalirListaPromocion)
-router.post('/bitacora/ActualizacionDescuento', ContrBitacora.postActualizarPromocion)
-router.post('/bitacora/EliminarDescuento', ContrBitacora.postEliminarPromocion)
+//Promocion 
+router.post('/bitacora/NuevaPromocion', ContrBitacora.postInsertBPromocion)
+router.post('/bitacora/SalirListaPromocion', ContrBitacora.postSalirListaPromocion)
+router.post('/bitacora/ActualizacionPromocion', ContrBitacora.postActualizarPromocion)
+router.post('/bitacora/EliminarPromocion', ContrBitacora.postEliminarPromocion)
 //Clientes
 router.post('/bitacora/cliente', ContrBitacora.postPantallaCliente)
 router.post('/bitacora/Nuevacliente', ContrBitacora.postInsertBCliente)
@@ -286,12 +284,14 @@ router.post('/bitacora/eliminarlentes', ContrBitacora.postEliminarLentes)
 router.post('/bitacora/movimientoKardex', ContrBitacora.postMovimientoKardex)
 router.post('/bitacora/salirListaKardex', ContrBitacora.postSalirListaKardex)
 //Inventario
-router.post('/bitacora/PantallaInventarioB', ContrBitacora.postIngresoInventario
-)
+router.post('/bitacora/PantallaInventarioB', ContrBitacora.postIngresoInventario)
 //Compra
 router.post('/bitacora/insertcompra', ContrBitacora.postInsertCompraB)
 //Venta
-router.post('/bitacora/insertventa', ContrBitacora.postInsertVentaB)
+router.post('/bitacora/insertventa', ContrBitacora.postInsertVenta)
+router.post('/bitacora/salir', ContrBitacora.postSalirListaVenta)
+router.post('/bitacora/actualizarventa', ContrBitacora.postActualizacionVenta)
+router.post('/bitacora/eliminarventa', ContrBitacora.postEliminarVenta)
 //Pago
 router.post('/bitacora/insertpago', ContrBitacora.postInsertPagoB)
 //Sucursal
