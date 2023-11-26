@@ -37,7 +37,7 @@ export const ModVentas = {
 
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("select  vd.IdVenta, v.fecha, v.NumeroCAI, s.direccion, concat_ws(' ', c.nombre, c.apellido) as Cliente, v.RTN, concat_ws(' ', e.nombre, e.apellido) as Empleado, v.fechaEntrega, v.fechaLimiteEntrega, tp.descripcion as TipoDePago, p.descripcion as Promocion, pr.descripcion as Producto, g.descripcion as Garantia, g.mesesGarantia as Meses, vd.cantidad, vd.precioAro, l.precio as precioLente, vd.subtotal, vd.rebaja, vd.totalVenta  from tbl_ventadetalle as vd inner join tbl_venta as v on v.IdVenta=vd.IdVenta inner join tbl_garantia as g on vd.IdGarantia=g.IdGarantia inner join tbl_promocion as p on p.IdPromocion=vd.IdPromocion inner join tbl_descuento as d on d.IdDescuento=vd.IdDescuento inner join tbl_producto as pr on pr.IdProducto=vd.IdProducto inner join tbl_cliente as c on c.IdCliente=v.IdCliente inner join tbl_empleado as e on e.IdEmpleado=v.idEmpleado inner join tbl_sucursal as s on s.IdSucursal=e.IdSucursal inner join tbl_pago as pa on pa.IdVenta=v.IdVenta inner join tbl_tipopago as tp on tp.IdTipoPago=pa.IdTipoPago inner join tbl_lente as l on l.IdLente=vd.IdLente where vd.IdVenta=?;",
+            const [filas] = await conexion.query("SELECT v.`IdVenta`,v.fecha, CONCAT(cli.`nombre`, ' ', cli.`apellido`) AS cliente,CONCAT(em.nombre, ' ', em.apellido) as empleado,v.`RTN`, v.`valorVenta`, ga.descripcion 'garantia',prom.descripcion 'promocion',des.`descPorcent` 'descuento', prod.descripcion 'aro', prod.precio, le.lente, le.precio 'precLente', vd.subtotal,vd.rebaja,v.`valorVenta`, vd.cantidad  FROM tbl_venta as v INNER JOIN tbl_cliente as cli on v.`IdCliente`=cli.`idCliente` INNER JOIN tbl_empleado as em on v.`idEmpleado`=em.`IdEmpleado` INNER JOIN tbl_ventadetalle as vd on v.`IdVenta`=vd.`IdVenta` INNER JOIN tbl_garantia as ga on vd.`IdGarantia`=ga.`IdGarantia` INNER JOIN tbl_promocion as prom on vd.`IdPromocion`=prom.`IdPromocion` INNER JOIN tbl_descuento as des on vd.`IdDescuento`=des.`IdDescuento` INNER JOIN tbl_producto as prod on vd.`IdProducto` = prod.`IdProducto` INNER JOIN tbl_lente as le on vd.`IdLente`=le.`IdLente` where v.`IdVenta`=?",
              [ventadetalle.id])
             conexion.end()
             return filas;
@@ -161,7 +161,7 @@ export const ModVentas = {
                 await ModKardex.postKardexVenta(detalle)
                 auxAVenta = await ModVentas.calculosVenta(detalle)
                 total = total + auxAVenta.total
-                await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
+               let insert = await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
                 [
                     idVenta.id,
                     detalle.IdGarantia,
@@ -186,8 +186,8 @@ export const ModVentas = {
                 totalCosto,
                 idVenta.id
             ])
-            conexion.end()
-            return {state:"ok"}
+            conexion.end({id:idVenta.id})
+            return {}
         } catch (error) {
             conexion.end()
             console.log(error);
