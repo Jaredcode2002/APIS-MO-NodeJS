@@ -1564,12 +1564,12 @@ postInsertBSucursal: async (idusuario)=>{
     },
 
     /////////////////////PRODUCTO/////////////////////// AQUI EMPIEZA LO MIO
-    //---------------Nuevo Producto--------------------
+    //---------------Nuevo Producto/ARO--------------------
     postInsertProductoB: async (idusuario) => {
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Insertar","El usuario registro un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Insertar","El usuario registro un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1587,7 +1587,7 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Vista","Se visualizo la Lista de Productos")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Vista","Se visualizo la Lista de Aros")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1606,7 +1606,7 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Salir","Se salio de la Lista de Productos")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Salir","Se salio de la Lista de Aros")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1623,7 +1623,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Actualizacion","El usuario actualizo un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Actualizacion","El usuario actualizo un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1640,7 +1640,7 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Eliminar","El usuario elimino un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Eliminar","El usuario elimino un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             return { estado: "OK" };
