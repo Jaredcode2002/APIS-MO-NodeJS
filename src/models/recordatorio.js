@@ -6,7 +6,7 @@ export const ModRecordatorio = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, r.`Nota`, r.`fecha` FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` WHERE fecha = ?  ORDER BY c.`idCliente` DESC",
+      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, r.`Nota`, r.`fecha` FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` WHERE fecha = ?  ORDER BY r.IdRecordatorio DESC",
         [citas.fecha],
       );
       conexion.end()
@@ -20,7 +20,7 @@ export const ModRecordatorio = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` ORDER BY c.`idCliente` DESC");
+      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` ORDER BY r.IdRecordatorio DESC");
       conexion.end()
       return filas;
     } catch (error) {
