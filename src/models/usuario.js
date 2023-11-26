@@ -15,7 +15,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al obtener usuarios");
     }
   },
   getUsuariosBlockInactivos: async () => {
@@ -30,7 +29,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al obtener usuarios");
     }
   },
   getUsuario: async (usuario) => {
@@ -46,7 +44,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al traer usuario");
     }
   },
 
@@ -69,7 +66,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al traer el usuario");
     }
   },
 
@@ -86,7 +82,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al traer el usuario");
     }
   },
 
@@ -124,7 +119,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al crear usuarios");
     }
   },
   userExist: async (Usuario) => {
@@ -172,7 +166,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al actualizar el usuario");
     }
   },
 
@@ -213,7 +206,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al actualizar el usuario");
     }
   },
 
@@ -229,7 +221,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al eliminar el usuario");
     }
   },
 
@@ -260,7 +251,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al obtener la fecha exp");
     }
   },
   putUpdateEstado: async (usuario) => {
@@ -276,7 +266,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al actualizar el estado");
     }
   },
 
@@ -293,7 +282,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al actualizar el estado");
     }
   },
 
@@ -313,7 +301,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al actualizar la contraseña");
     }
   },
 
@@ -335,7 +322,6 @@ export const ModUsuarios = {
     } catch (error) {
       console.log(error);
       conexion.end();
-      throw new Error("Error al registrar la contraseña");
     }
   },
 };

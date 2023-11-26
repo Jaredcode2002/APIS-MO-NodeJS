@@ -36,10 +36,13 @@ export const ContrModelo = {
       } = req.body;
       const result = await ModModelo.putUpdateModelo({IdMarca,detalle,anio, estado, IdModelo,
       });
-      res.status(200).json({response:"Ok"})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   delModelo: async (req,res)=>{
@@ -49,7 +52,6 @@ export const ContrModelo = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
 };

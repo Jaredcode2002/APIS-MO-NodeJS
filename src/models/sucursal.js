@@ -12,7 +12,6 @@ export const ModSucursal = {
         } catch (error) {
             console.long(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     
@@ -25,7 +24,6 @@ export const ModSucursal = {
         
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el API");
         }
     },
 
@@ -46,7 +44,6 @@ export const ModSucursal = {
         } catch (error) {
           console.long(error);
           conexion.end()
-          throw new Error("Error al crear una nueva marca")
     
         }
       },
@@ -71,7 +68,6 @@ export const ModSucursal = {
             } catch (error) {
                 console.log(error);
                 conexion.end()
-                throw new Error("Error al crear un nueva sucursalr");
             }
         } else {
             return false;
@@ -81,7 +77,7 @@ export const ModSucursal = {
 
     putUpdateSucursal: async (sucursal) => {
         let conexion
-    
+    if (await ModSucursal.getSucursalExiste (sucursal)== false) {
         try {
             conexion = await connectDB();
             const [filas] = await conexion.query("UPDATE tbl_sucursal SET IdDepartamento = ?, IdCiudad = ?, direccion = ?, telefono = ?, estado= ? WHERE (IdSucursal = ?);",
@@ -100,8 +96,11 @@ export const ModSucursal = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al actualizar la sucursal");
         }
+    } else {
+        return false
+    }
+        
     },
 
     deleteSucursal: async (sucursal) => {
@@ -118,7 +117,6 @@ export const ModSucursal = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al eliminar la sucursal");
         }
     },
 

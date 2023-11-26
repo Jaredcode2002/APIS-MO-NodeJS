@@ -12,7 +12,6 @@ export const ModModelo = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener modelos");
     } 
   },
 
@@ -26,7 +25,6 @@ export const ModModelo = {
         } catch (error) {
             console.log(error);
              conexion.end()
-            throw new Error("Error al consumir el API");
         }
     },
 
@@ -50,7 +48,6 @@ export const ModModelo = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al crear un modelo");
         
       }
     },
@@ -75,7 +72,6 @@ export const ModModelo = {
           console.log(error);
       conexion.end()
       return false
-      throw new Error("Error al crear el modelo");
         }
       } else 
       {
@@ -85,24 +81,28 @@ export const ModModelo = {
       
     putUpdateModelo: async (modelo)=>{
     let conexion
+    if (await ModModelo.getModeloExiste(modelo)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
-        [
-          modelo.IdMarca,
-          modelo.detalle,
-          modelo.anio,
-          modelo.estado,
-          modelo.IdModelo,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-        throw new Error("Error al actualizar el modelo")
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
+       [
+         modelo.IdMarca,
+         modelo.detalle,
+         modelo.anio,
+         modelo.estado,
+         modelo.IdModelo,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      false 
+    }
+     
   },
 
   delModelo: async (modelo) => {
@@ -117,7 +117,6 @@ export const ModModelo = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el modelo");
     }
   },
 };

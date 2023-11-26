@@ -30,7 +30,11 @@ export const ContrProveedor= {
         try {
             const{CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico, estado, IdProveedor}= req.body;
             const result = await ModProveedor.putUpdateProveedor({CiaProveedora,encargado,IdPais,IdCiudad,Productos,direccion,telefono,correoElectronico, estado,IdProveedor});
-            res.status(201).json({ id: result });
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
         }
