@@ -30,7 +30,11 @@ export const ContrTipoPago = {
     try {
       const {descripcion,estado, IdTipoPago} = req.body;
       const result = await ModTipoPago.putUpdateTipoPago({descripcion, estado, IdTipoPago});
-      res.status(200).json({id: result.id})
+      if (result == false) {
+        res.status(201).json( result );
+      } else {
+        res.status(201).json( result);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +47,6 @@ export const ContrTipoPago = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

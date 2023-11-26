@@ -72,23 +72,28 @@ export const ModGarantia = {
   },
   putUpdateGarantia: async (garantia) => {
     let conexion
-    try {
-      conexion = await connectDB()
-      const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, IdProducto= ?, estado= ? where IdGarantia = ?;",
-        [
-          garantia.descripcion,
-          garantia.mesesGarantia,
-          garantia.IdProducto,
-          garantia.estado,
-          garantia.IdGarantia,
-        ]
-      )
-      conexion.end()
-      return { estado: "okss" }
-    } catch (error) {
-      console.log(error);
-      conexion.end()
+    if (await ModGarantia.getGarantiaExiste(garantia) == false) {
+      try {
+        conexion = await connectDB()
+        const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, IdProducto= ?, estado= ? where IdGarantia = ?;",
+          [
+            garantia.descripcion,
+            garantia.mesesGarantia,
+            garantia.IdProducto,
+            garantia.estado,
+            garantia.IdGarantia,
+          ]
+        )
+        conexion.end()
+        return { estado: "okss" }
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
+    } else {
+      return false
     }
+  
   },
   delGarantia: async (garantia) => {
     let conexion

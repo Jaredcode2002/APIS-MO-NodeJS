@@ -36,7 +36,11 @@ export const ContrModelo = {
       } = req.body;
       const result = await ModModelo.putUpdateModelo({IdMarca,detalle,anio, estado, IdModelo,
       });
-      res.status(200).json({response:"Ok"})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -109,22 +109,26 @@ export const ModRol = {
   putUpdateRol: async (rol) => {
     let conexion
     conexion = await connectDB();
-    try {
-      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
-        [
-          rol.Rol,
-          rol.Descripcion,
-          rol.estado,
-          rol.Id_Rol,
-
-        ]);
-      conexion.end()
-      return { estado: "OK" };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
+    if (await ModRol.getRolExiste(rol) == false) {
+      try {
+        const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
+          [
+            rol.Rol,
+            rol.Descripcion,
+            rol.estado,
+            rol.Id_Rol,
+  
+          ]);
+        conexion.end()
+        return { estado: "OK" };
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
+    } else {
+      return false;
     }
-
+  
   },
   deleteRol: async (rol) => {
     let conexion

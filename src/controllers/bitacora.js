@@ -1421,4 +1421,127 @@ postEliminarGenero:  async (req,res)=> {
         console.log(error);
     }
 },
+
+//////////////////////////////PROVEEDORES///////////////////
+
+//---------------Nuevo Proveedor--------------------
+postInsertProveedor: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postInsertProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-----------------------Salir de la lista de Proveedor---------------------------
+postSalirListaProveedor: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//------------------------Actualizar datos de Proveedor----------------
+postActualizarProveedor:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postActualizarProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------Eliminar datos Proveedor-----------------
+postEliminarProveedor:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postEliminarProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//////////////////////////////LENTES///////////////////
+
+//---------------Nuevo Proveedor--------------------
+postInsertLentes: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postInsertLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-----------------------Salir de la lista de Proveedor---------------------------
+postSalirListaLentes: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//------------------------Actualizar datos de Lentes----------------
+postActualizarLentes:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postActualizarLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------Eliminar datos Proveedor-----------------
+postEliminarLentes:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postEliminarLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------KARDEX-----------------
+postMovimientoKardex:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postMovimientoKardex({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+//-------------------SALIR KARDEX-----------------
+postSalirListaKardex:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaKardex({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+//INGRESO A LA PANTALLA DE INVENTARIO 
+postIngresoInventario:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postIngresoInventario({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
 }

@@ -84,27 +84,32 @@ export const ModProveedor = {
     putUpdateProveedor: async (proveedor) => {
         let conexion
          conexion = await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?, estado=?  WHERE IdProveedor=?;",
-                [
-                    proveedor.CiaProveedora,
-                    proveedor.encargado,
-                    proveedor.IdPais,
-                    proveedor.IdCiudad,
-                    proveedor.Productos,
-                    proveedor.direccion,
-                    proveedor.telefono,
-                    proveedor.correoElectronico,
-                    proveedor.estado,
-                    proveedor.IdProveedor,
-                ]
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-        }
+         if (await ModProveedor.getProveedor(proveedor)==false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_proveedor  SET  CiaProveedora = ? ,encargado= ?,IdPais= ?,IdCiudad= ?,Productos= ?,direccion= ?,telefono= ?,correoElectronico= ?, estado=?  WHERE IdProveedor=?;",
+                    [
+                        proveedor.CiaProveedora,
+                        proveedor.encargado,
+                        proveedor.IdPais,
+                        proveedor.IdCiudad,
+                        proveedor.Productos,
+                        proveedor.direccion,
+                        proveedor.telefono,
+                        proveedor.correoElectronico,
+                        proveedor.estado,
+                        proveedor.IdProveedor,
+                    ]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                console.log(error);
+                conexion.end()
+            }
+         } else {
+            return false
+         }
+        
     },
 
     deleteProveedor: async (proveedor) => {

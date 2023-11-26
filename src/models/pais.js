@@ -76,21 +76,26 @@ export const ModPais = {
 
   putUpdatePais: async (pais)=>{
     let conexion
+    if (await ModPais.getPaisExiste(pais)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
-        [
-          pais.pais,
-          pais.estado,
-          pais.IdPais,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
+       [
+         pais.pais,
+         pais.estado,
+         pais.IdPais,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      return false;
+    }
+      
   },
   delPais: async (pais) => {
     let conexion

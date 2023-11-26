@@ -76,21 +76,25 @@ export const ModDepartamento = {
   },
   putUpdateDepto: async (departamento)=>{
     let conexion
+    if (await ModDepartamento.getDepartamnetoExiste(departamento)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ?, estado=? WHERE IdDepartamento= ?;",
-        [
-          departamento.departamento,
-          departamento.estado,
-          departamento.IdDepartamento,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_departamento set departamento = ?, estado=? WHERE IdDepartamento= ?;",
+       [
+         departamento.departamento,
+         departamento.estado,
+         departamento.IdDepartamento,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      return false;
+    }
   },
   
   delDepto: async (departamento) => {

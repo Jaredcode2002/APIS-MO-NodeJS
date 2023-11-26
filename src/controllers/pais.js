@@ -31,7 +31,11 @@ export const ContrPais = {
     try {
       const {pais, estado, IdPais} = req.body;
       const result = await ModPais.putUpdatePais({pais,estado,IdPais});
-      res.status(200).json({response:"Ok"})
+      if (result == false) {
+        res.status(201).json(result);
+      } else {
+        res.status(201).json(result);
+      }
     } catch (error) {
       console.log(error);
     }

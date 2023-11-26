@@ -81,23 +81,28 @@ export const ModModelo = {
       
     putUpdateModelo: async (modelo)=>{
     let conexion
+    if (await ModModelo.getModeloExiste(modelo)==false) {
       try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
-        [
-          modelo.IdMarca,
-          modelo.detalle,
-          modelo.anio,
-          modelo.estado,
-          modelo.IdModelo,
-        ]
-        )
-        conexion.end()
-        return {estado:"ok"}
-      } catch (error) {
-        console.log(error);
-        conexion.end()
-      }
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
+       [
+         modelo.IdMarca,
+         modelo.detalle,
+         modelo.anio,
+         modelo.estado,
+         modelo.IdModelo,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      false 
+    }
+     
   },
 
   delModelo: async (modelo) => {
