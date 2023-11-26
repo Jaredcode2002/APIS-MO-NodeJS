@@ -77,26 +77,21 @@ export const ModCiudad = {
 
   putUpdateCiudad: async (ciudad)=>{
     let conexion
-    if (await ModCiudad.getCiudadExiste(ciudad)==false) {
       try {
-        conexion = await connectDB()
-         const [filas] = await conexion.query("UPDATE tbl_ciudad set ciudad = ?, estado=? WHERE IdCiudad= ?;",
-         [
-           ciudad.ciudad,
-           ciudad.estado,
-           ciudad.IdCiudad,
-         ]
-         )
-         conexion.end()
-         return {estado:"ok"}
-       } catch (error) {
-         console.log(error);
-         conexion.end()
-       }
-    } else {
-      return false;
-    }
-     
+       conexion = await connectDB()
+        const [filas] = await conexion.query("UPDATE tbl_ciudad set ciudad = ?, estado=? WHERE IdCiudad= ?;",
+        [
+          ciudad.ciudad,
+          ciudad.estado,
+          ciudad.IdCiudad,
+        ]
+        )
+        conexion.end()
+        return {estado:"ok"}
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
   },
 
   delCiudad: async (ciudad) => {
