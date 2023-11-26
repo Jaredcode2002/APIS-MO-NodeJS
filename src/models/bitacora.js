@@ -566,7 +566,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la pantalla Lista de Garantia)',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la pantalla Lista de Garantia")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -639,37 +639,24 @@ export const ModBitacora = {
             conexion.end()
         }
     },
-    //--------------------Lista de Descuento-----------------
-    postVerListaDescuento: async (idusuario) => {
-        let conexion
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Ingreso a Lista","El usuario ingreso a la pantalla de Ver Lista Descuento")',
-                idusuario.Id,
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-        }
-    },
 
-    //-----------------------Salir de la lista de descuento---------------------------
-    postSalirListaDescuento: async (idusuario) => {
-        conexion = await connectDB();
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la pantalla Lista de Descuento)',
-                [idusuario.Id]
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-        }
-    },
+//-----------------------Salir de la lista de Descuento---------------------------
+        postSalirListaDescuento: async (idusuario) => {
+            let conexion
+    
+            try {
+                const conexion = await connectDB();
+                const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","El usuario salio de la lista de Descuentos")',
+                    [idusuario.Id]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                console.log(error);
+                conexion.end()
+                 
+            }
+        },
 
     //------------------------Actualizar datos de Descuento-----------------
     postActualizarDescuento: async (idusuario) => {
@@ -755,7 +742,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la pantalla Lista de Promocion)',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir de Lista","Se salio de la pantalla Lista de Promocion")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -959,7 +946,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Actualizacion","El usuario realizo una actualizacion en Promocion del Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Actualizacion","El usuario realizo una actualizacion en Clientes")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1253,7 +1240,6 @@ postInsertBSucursal: async (idusuario)=>{
     //-----------------------Salir de la lista de Sucursal---------------------------
     postSalirListaSucursal:async (idusuario)=>{
         let conexion
-    
         try {
             const conexion = await connectDB();
             const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Sucursal")',
@@ -1369,8 +1355,8 @@ postInsertBSucursal: async (idusuario)=>{
         }
     },
 
-    /////////////////////NODELO///////////////////////
-    //---------------Nuevo Nodelo--------------------
+    /////////////////////MARCA///////////////////////
+    //---------------Nuevo Marca--------------------
     postInsertBMarca: async (idusuario) => {
         let conexion
         try {
