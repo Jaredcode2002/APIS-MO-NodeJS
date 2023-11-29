@@ -31,11 +31,7 @@ export const ContrCiudad = {
     try {
       const {ciudad,estado,IdCiudad} = req.body;
       const result = await ModCiudad.putUpdateCiudad({ciudad,estado,IdCiudad});
-      if (result == false) {
-        res.status(201).json(result);
-      } else {
-        res.status(201).json(result);
-      }
+      res.status(200).json({id: result.id})
     } catch (error) {
       console.log(error);
     }
