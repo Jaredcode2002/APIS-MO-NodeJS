@@ -33,7 +33,7 @@ const enviarMail = async (mail) => {
       from: filaCorreo[0].valor,
       to: mail.para,
       subject: mail.titulo,
-      text: mail.texto,
+      html: mail.html, // Cambia de 'text' a 'html'
     };
 
     const transport = nodemailer.createTransport(config);

@@ -46,7 +46,48 @@ export const TokenMod = {
     const mail = {
       para: destinatario.correo,
       titulo: "Codigo de verificacion",
-      texto: `Precaucion, el siguiente codigo es para verificar tu identidad, por favor no lo compartas con nadie\n${codigoVerif}`,
+      html: `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+          h1 {
+            color: #2980B9;
+          }
+          p {
+            color: #555;
+          }
+          a {
+            color: #007BFF;
+            text-decoration: underline;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>MultiOpticas</h1>
+          <h2>Código de verificación</h2>
+          <p>¡Precaución! el siguiente código es para verificar tu identidad. Por favor, no lo compartas con nadie.</p>
+          <p style="color: #007BFF; text-decoration: underline;">${codigoVerif}</p>
+          
+          <p>Este código es válido por 5 minutos.</p>
+        </div>
+      </body>
+    </html>
+  `,
     };
     try {
       //primero se guarda en la base el token para luego enviarlo por correo
