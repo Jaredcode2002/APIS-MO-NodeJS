@@ -6,7 +6,7 @@ export const ModModelo = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT mo.IdModelo, ma.descripcion AS Marca,mo.detalle,mo.color,mo.anio,CASE WHEN mo.estado = 'A' THEN 'Activo'WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido'END AS estado FROM tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.idMarca = mo.idMarca WHERE mo.estado = 'A' ORDER BY mo.IdModelo DESC ");
+      const [filas] = await conexion.query("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado = 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE  mo.estado = 'A' ORDER BY mo.`IdModelo` DESC");
       conexion.end()
       return filas;
     } catch (error) {
@@ -19,7 +19,7 @@ export const ModModelo = {
     let conexion
         try {
         conexion = await connectDB();
-          const [filas] = await conexion.query ("SELECT mo.IdModelo, ma.descripcion AS Marca,mo.detalle,mo.color,mo.anio,CASE WHEN mo.estado = 'A' THEN 'Activo'WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido'END AS estado FROM tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.idMarca = mo.idMarca WHERE mo.estado != 'A' ORDER BY mo.IdModelo DESC;")
+          const [filas] = await conexion.query ("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado = 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE mo.estado != 'A' ORDER BY mo.`IdModelo` DESC;")
         conexion.end()
           return filas;
         } catch (error) {
@@ -58,10 +58,9 @@ export const ModModelo = {
       if (await ModModelo.getModeloExiste(modelo)==false)
       {
         try {
-            const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle, color, anio, estado) values (?,?,?,?,?);", [
+            const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle, anio, estado) values (?,?,?,?);", [
               modelo.IdMarca,
               modelo.detalle,
-              modelo.color,
               modelo.anio,
               modelo.estado
             ]
@@ -85,11 +84,10 @@ export const ModModelo = {
     if (await ModModelo.getModeloExiste(modelo)==false) {
       try {
         conexion = await connectDB()
-       const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, color=? , anio=?, estado=?  WHERE IdModelo= ?;",
+       const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
        [
          modelo.IdMarca,
          modelo.detalle,
-         modelo.color,
          modelo.anio,
          modelo.estado,
          modelo.IdModelo,

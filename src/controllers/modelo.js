@@ -15,8 +15,8 @@ export const ContrModelo = {
   postInsertModelo:async(req,res)=>
     {
         try {
-            const  {IdMarca, detalle, color, anio, estado}=req.body;
-            const result = await ModModelo.postInsertModelo({IdMarca, detalle, color,  anio, estado});
+            const  {IdMarca, detalle, anio, estado}=req.body;
+            const result = await ModModelo.postInsertModelo({IdMarca, detalle, anio, estado});
             //res.status(201).json({ id: result.id });
             if (result == false) {
                 res.status(201).json(result);
@@ -32,9 +32,9 @@ export const ContrModelo = {
     putUpdateModelo: async (req, res) => {
     try {
       const {
-        IdMarca,detalle, color, anio,estado,IdModelo
+        IdMarca,detalle,anio,estado,IdModelo
       } = req.body;
-      const result = await ModModelo.putUpdateModelo({IdMarca,detalle, color, anio, estado, IdModelo,
+      const result = await ModModelo.putUpdateModelo({IdMarca,detalle,anio, estado, IdModelo,
       });
       if (result == false) {
         res.status(201).json(result);
