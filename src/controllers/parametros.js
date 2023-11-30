@@ -18,7 +18,6 @@ export const ContrParametro = {
       res.status(200).json({id: result})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   getIntentos: async (req,res) => {
@@ -56,7 +55,6 @@ export const ContrParametro = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   putIntentos: async (req, res) => {
@@ -68,7 +66,6 @@ export const ContrParametro = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   putPreguntas: async (req, res) => {
@@ -78,7 +75,6 @@ export const ContrParametro = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   putImpuesto: async (req, res) => {
@@ -88,7 +84,6 @@ export const ContrParametro = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   putTiempoDReuintentoLogin: async (req, res) => {
@@ -98,7 +93,6 @@ export const ContrParametro = {
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
   

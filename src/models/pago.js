@@ -6,13 +6,12 @@ export const ModPago = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago,p.fecha, p.saldoAbono, p.saldoRestante,p.estado FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago;");
+      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago,p.fecha, p.saldoAbono, p.saldoRestante,p.estado FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago ORDER BY p.IdPago DESC;");
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los Pagos");
     } 
   },
 
@@ -59,7 +58,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear pago");
     }
   },
   putUpdatePago: async (Pago)=>{
@@ -78,7 +76,6 @@ export const ModPago = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar el pago")
       }
   },
   delPago: async (Pago) => {
@@ -93,7 +90,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el tipo de pago");
     }
   },
 };

@@ -6,24 +6,22 @@ export const ModLente = {
     getLentes: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado = 'Activo' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, CASE  WHEN estado = 'A' THEN 'Activo'  WHEN estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_lente as l where estado = 'A' ORDER BY l.IdLente DESC;")
             return filas;
 
             
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los lentes");
         }
     },
     getLentesInactivos: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado != 'Activo' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, CASE  WHEN estado = 'A' THEN 'Activo'  WHEN estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_lente as l where estado != 'A' ORDER BY l.IdLente DESC;")
             return filas;
 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los lentes");
         }
     },
 
@@ -46,7 +44,6 @@ export const ModLente = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear un nuevo lente");
         }
     }, 
     postInsertLente: async (lente) => {
@@ -66,7 +63,6 @@ export const ModLente = {
             } catch (error) {
                 conexion.end()
                 return false
-                throw new Error("Error al crear un nuevo proveedor");
             }
         } else {
             return false
@@ -75,20 +71,24 @@ export const ModLente = {
 
     putLente: async (lente) => {
         const conexion = await connectDB();
-        try {
-            const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=?, estado=? WHERE  IdLente =?;",
-                [
-                    lente.lente,
-                    lente.precio,
-                    lente.estado,
-                    lente.IdLente
-                ]
-            );
-            return { estado: "OKAY" }
-        } catch (error) {
-            console.log(error);
-            throw new Error("Error al consultar al actualizar el lente");
+        if (await ModLente.getLenteExiste(lente) == false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=?, estado=? WHERE  IdLente =?;",
+                    [
+                        lente.lente,
+                        lente.precio,
+                        lente.estado,
+                        lente.IdLente
+                    ]
+                );
+                return { estado: "OKAY" }
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            return false;
         }
+       
     },
 
     deleteLente: async (lente) => {
@@ -102,7 +102,6 @@ export const ModLente = {
             return { estado: "OKAY" }
         } catch (error) {
             console.log(error);
-            throw new Error("Error al eliminar el lente");
         }
     },
 }

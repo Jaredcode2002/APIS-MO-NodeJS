@@ -6,26 +6,24 @@ export const ModRol = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado = 'Activo' ORDER BY Id_Rol DESC;")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, CASE  WHEN estado = 'A' THEN 'Activo'  WHEN estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado from tbl_ms_roles Where estado = 'A' ORDER BY Id_Rol DESC;")
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los roles");
     }
   },
   getRolesInactivos: async () => {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado!= 'Activo' ORDER BY Id_Rol DESC")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, CASE  WHEN estado = 'A' THEN 'Activo'  WHEN estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado from tbl_ms_roles Where estado != 'A' ORDER BY Id_Rol DESC;")
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los roles");
     }
   },
   getRolExiste: async (rol) => {
@@ -47,7 +45,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear un nuevo rol");
     }
   },
   postRol: async (rol) => {
@@ -100,7 +97,6 @@ export const ModRol = {
         console.log(error);
         conexion.end()
         return false
-        throw new Error("Error al crear un nuevo rol");
       }
     } else {
       return false;
@@ -113,23 +109,26 @@ export const ModRol = {
   putUpdateRol: async (rol) => {
     let conexion
     conexion = await connectDB();
-    try {
-      const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
-        [
-          rol.Rol,
-          rol.Descripcion,
-          rol.estado,
-          rol.Id_Rol,
-
-        ]);
-      conexion.end()
-      return { estado: "OK" };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al actualizar el rol");
+    if (await ModRol.getRolExiste(rol) == false) {
+      try {
+        const [filas] = await conexion.query("UPDATE tbl_ms_roles  SET Rol=?,Descripcion=?, estado=? WHERE  Id_Rol=?",
+          [
+            rol.Rol,
+            rol.Descripcion,
+            rol.estado,
+            rol.Id_Rol,
+  
+          ]);
+        conexion.end()
+        return { estado: "OK" };
+      } catch (error) {
+        console.log(error);
+        conexion.end()
+      }
+    } else {
+      return false;
     }
-
+  
   },
   deleteRol: async (rol) => {
     let conexion
@@ -145,7 +144,6 @@ export const ModRol = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el rol");
     }
   },
 

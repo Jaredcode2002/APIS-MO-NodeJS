@@ -45,7 +45,6 @@ export const ContrMarca = {
       res.status(200).json(result)
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api");
     }
   },
   

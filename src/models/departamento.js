@@ -12,7 +12,6 @@ export const ModDepartamento = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los departamentos");
     } 
   },
 
@@ -25,7 +24,6 @@ export const ModDepartamento = {
       
       } catch (error) {
           console.log(error);
-          throw new Error("Error al obtener los departamentos");
       }
   },
 
@@ -48,7 +46,6 @@ export const ModDepartamento = {
       } catch (error) {
         console.long (error);
         conexion.end()
-        throw new Error ("Error al crear una nuevo departamento")
         
       }
     },
@@ -72,7 +69,6 @@ export const ModDepartamento = {
           console.log(error);
           conexion.end()
           return false
-          throw new Error("Error al crear depto");
         }
     } else{
       return false
@@ -94,7 +90,6 @@ export const ModDepartamento = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar la depto")
       }
   },
   
@@ -112,7 +107,6 @@ export const ModDepartamento = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el departamento");
     }
   },
 };

@@ -12,7 +12,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los parametros");
     }
   },
 
@@ -31,7 +30,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el parametro")
     }
   },
   getIntentos: async () => { //#1
@@ -44,7 +42,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los intentos");
     }
   },
   //Usado en la pantalla del perfil en agregar preguntas según el parámetro
@@ -58,7 +55,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las preguntas");
     }
   },
 
@@ -71,7 +67,6 @@ export const ModParametro = {
       return filas[0].valor;
     } catch (error) {
       console.log(error);
-      throw new Error("Error al obtener las preguntas");
     }
 
   },
@@ -86,7 +81,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el impuesto");
     }
   },
   get_TiempoDReuintentoLogin: async () => {
@@ -99,7 +93,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el impuesto");
     }
   },
   put_Intentos: async (parametro) => {
@@ -114,7 +107,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar los intentos");
     }
   },
   put_Preguntas: async (parametro) => {
@@ -131,7 +123,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el numero de preguntas");
     }
   },
   put_Impuesto: async (parametro) => {
@@ -146,7 +137,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el impuesto");
     }
   },
   put_TiempoDReuintentoLogin: async (parametro) => {
@@ -162,7 +152,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el tiempo de Intentos del Login");
     }
   },
   getBitacora: async () => {
@@ -176,7 +165,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los intentos");
     }
   },
   put_Bitacora: async (parametro) => {
@@ -191,7 +179,6 @@ export const ModParametro = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar el tiempo de Intentos del Login");
     }
   },
 };
