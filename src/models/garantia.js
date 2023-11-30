@@ -6,7 +6,7 @@ export const ModGarantia = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, p.descripcion AS producto,CASE WHEN g.estado = 'A' THEN 'Activo' WHEN g.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where g.estado= 'A' ORDER BY g.IdGarantia DESC;");
+      const [filas] = await conexion.query("SELECT ga.IdGarantia, ga.descripcion, ga.mesesGarantia, CASE  WHEN ga.estado = 'A' THEN 'Activo'   WHEN ga.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_garantia AS ga WHERE ga.estado = 'A' ORDER BY ga.IdGarantia DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -18,7 +18,7 @@ export const ModGarantia = {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT g.IdGarantia, g.descripcion, ma.descripcion as Marca, mo.detalle as Modelo, g.mesesGarantia as Meses, p.descripcion AS producto,CASE WHEN g.estado = 'A' THEN 'Activo' WHEN g.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM tbl_garantia as g inner join tbl_producto as p on g.IdProducto=p.IdProducto inner join tbl_modelo as mo on mo.IdModelo=p.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where g.estado != 'A' ORDER BY g.IdGarantia DESC;");
+      const [filas] = await conexion.query("SELECT ga.IdGarantia, ga.descripcion, ga.mesesGarantia, CASE  WHEN ga.estado = 'A' THEN 'Activo'   WHEN ga.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_garantia AS ga WHERE ga.estado != 'A' ORDER BY ga.IdGarantia DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -51,11 +51,10 @@ export const ModGarantia = {
     conexion = await connectDB();
     if (await ModGarantia.getGarantiaExiste(garantia) == false) {
       try {
-        const [filas] = await conexion.query("INSERT INTO tbl_garantia (descripcion, mesesGarantia, IdProducto, estado) VALUES (?,?,?,?);",
+        const [filas] = await conexion.query("INSERT INTO tbl_garantia (descripcion, mesesGarantia, estado) VALUES (?,?,?);",
           [
             garantia.descripcion,
             garantia.mesesGarantia,
-            garantia.IdProducto,
             garantia.estado,
           ]
         );
@@ -75,11 +74,10 @@ export const ModGarantia = {
     if (await ModGarantia.getGarantiaExiste(garantia) == false) {
       try {
         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, IdProducto= ?, estado= ? where IdGarantia = ?;",
+        const [filas] = await conexion.query("UPDATE tbl_garantia set descripcion=? , mesesGarantia= ?, estado= ? where IdGarantia = ?;",
           [
             garantia.descripcion,
             garantia.mesesGarantia,
-            garantia.IdProducto,
             garantia.estado,
             garantia.IdGarantia,
           ]
