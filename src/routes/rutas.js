@@ -188,6 +188,8 @@ router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
 
 //LLamado a toda la bitacora 
 router.get('/bitacora', ContrBitacora.getBitacora)
+router.delete('/bitacora/eliminar', ContrBitacora.deletBitacora)
+
 //--------Configuracion-----
 router.post('/bitacora/Configuracion', ContrBitacora.postPantallaConfig)
 router.post('/bitacora/ListaBitacora', ContrBitacora.postListaBitacora)
