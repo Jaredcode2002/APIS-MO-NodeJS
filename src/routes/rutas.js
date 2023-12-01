@@ -148,6 +148,7 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 //empleado
 router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/nousuarios', ContrEmpleado.getEmpleadosSinUsuario)
 router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
