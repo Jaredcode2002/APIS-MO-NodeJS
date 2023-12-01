@@ -433,11 +433,11 @@ postInsertDescuento: async (req,res)=> {
     }
 },
 
-//--------------------Lista de Descuento-----------------
-postVerListaDescuento: async (req,res)=> {
+//-----------------------Salir de la lista de Descuento---------------------------
+postSalirListaDescuento: async (req,res)=> {
     try {
         const{Id}=req.body;
-        const result = await ModBitacora.postVerListaDescuento({Id});
+        const result = await ModBitacora.postSalirListaDescuento({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);

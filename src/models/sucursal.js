@@ -77,7 +77,6 @@ export const ModSucursal = {
 
     putUpdateSucursal: async (sucursal) => {
         let conexion
-    if (await ModSucursal.getSucursalExiste (sucursal)== false) {
         try {
             conexion = await connectDB();
             const [filas] = await conexion.query("UPDATE tbl_sucursal SET IdDepartamento = ?, IdCiudad = ?, direccion = ?, telefono = ?, estado= ? WHERE (IdSucursal = ?);",
@@ -97,10 +96,6 @@ export const ModSucursal = {
             console.log(error);
             conexion.end()
         }
-    } else {
-        return false
-    }
-        
     },
 
     deleteSucursal: async (sucursal) => {
