@@ -186,8 +186,8 @@ export const ModVentas = {
                 totalCosto,
                 idVenta.id
             ])
-            conexion.end({id:idVenta.id})
-            return {}
+            conexion.end()
+            return {id:idVenta.id}
         } catch (error) {
             conexion.end()
             console.log(error);

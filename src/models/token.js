@@ -6,7 +6,7 @@ export const TokenMod = {
   guardarToken: async (destinatario, token) => {
     let conexion
     try {
-       conexion = await connectDB();
+      conexion = await connectDB();
       const [filas] = await conexion.query(
         'INSERT INTO tbl_token (`Id_Usuario`,`NombreToken`,`descripcion`) VALUES (?,"Cambio de contraseña",?);',
         [destinatario, token]
@@ -46,7 +46,59 @@ export const TokenMod = {
     const mail = {
       para: destinatario.correo,
       titulo: "Codigo de verificacion",
-      texto: `Precaucion, el siguiente codigo es para verificar tu identidad, por favor no lo compartas con nadie\n${codigoVerif}`,
+      html: `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+          h1 {
+            color: #2980B9;
+          }
+          p {
+            color: #555;
+          }
+          a {
+            color: #007BFF;
+            text-decoration: underline;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+
+        <!-- Inserta la imagen aquí -->
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_YQnyg-K3bcDDmgaPswUDSHC5kopSAh-QPB_sk6dUar6TYqp9zkH1IlMiUez-JiH9gA&usqp=CAU" alt="Logo MultiOpticas" style="max-width: 100%; height: auto;">
+       
+          <h2>Código de Verificación</h2>
+          <p>Estimado/a usuario/a,</p>
+          <p>Le informamos que ha recibido este correo electrónico porque ha solicitado restablecer su contraseña en el sistema MultiOpticas. Por favor, tenga en cuenta los siguientes pasos:</p>
+          <ol>
+            <li>Regrese al sistema MultiOpticas.</li>
+            <li>Ingrese el siguiente código de verificación:</li>
+            <p style="color: #007BFF; text-decoration: underline; font-size: 18px; font-weight: bold;">${codigoVerif}</p>
+            <li>Después de ingresar el código, proceda a cambiar su contraseña.</li>
+          </ol>
+
+          <p>Este código es válido por 5 minutos.</p>
+          <p>Si usted no solicitó un cambio de contraseña por favor comunicarse con el administrador.</p>
+            
+           </div>
+      </body>
+    </html>
+  `,
     };
     try {
       //primero se guarda en la base el token para luego enviarlo por correo
@@ -77,8 +129,8 @@ export const TokenMod = {
   },
   verificarToken: async (Token) => {
     try {
-      
-      const token =await TokenMod.obtenerToken(Token.id);
+
+      const token = await TokenMod.obtenerToken(Token.id);
       if (token) {
         // Verificar y decodificar el token JWT
         const decoded = jwt.verify(token, TokenMod.generarSecretoUsuario(Token.correo));
@@ -96,20 +148,20 @@ export const TokenMod = {
       return false;
     }
   },
-  obtenerId:async (correo)=>{
+  obtenerId: async (correo) => {
     let conexion
     try {
-     conexion = await connectDB()
+      conexion = await connectDB()
       const [rows] = await conexion.query('SELECT `Id_Usuario` FROM tbl_ms_usuario where `Correo_Electronico`=?',
-      [correo.correo])
+        [correo.correo])
       conexion.end()
-      return rows[0].Id_Usuario     
+      return rows[0].Id_Usuario
     } catch (error) {
       conexion.end()
       return error
     }
 
   },
-  
-  
+
+
 };
