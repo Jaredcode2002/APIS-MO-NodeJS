@@ -30,11 +30,7 @@ export const ContrSucursal= {
         try {
             const{IdDepartamento, IdCiudad, direccion, telefono, estado, IdSucursal}= req.body;
             const result = await ModSucursal.putUpdateSucursal({IdDepartamento, IdCiudad, direccion, telefono, estado, IdSucursal});
-            if (result == false) {
-                res.status(201).json(result);
-              } else {
-                res.status(201).json(result);
-              }
+            res.status(201).json({ id: result.id });
         } catch (error) {
             console.log(error);
         }
