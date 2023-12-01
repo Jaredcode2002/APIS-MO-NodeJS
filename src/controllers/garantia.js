@@ -11,8 +11,8 @@ export const ContrGarantia = {
   },
   postGarantia: async (req, res) => {
     try {
-      const { descripcion, mesesGarantia, IdProducto, estado } = req.body;
-      const result = await ModGarantia.postInsertGarantia({ descripcion, mesesGarantia, IdProducto, estado });
+      const { descripcion, mesesGarantia, estado } = req.body;
+      const result = await ModGarantia.postInsertGarantia({ descripcion, mesesGarantia, estado });
       if (result == false) {
         res.status(201).json({ id: result.id });
       } else {
@@ -28,14 +28,12 @@ export const ContrGarantia = {
       const {
         descripcion,
         mesesGarantia,
-        IdProducto,
         estado,
         IdGarantia,
       } = req.body;
       const result = await ModGarantia.putUpdateGarantia({
         descripcion,
         mesesGarantia,
-        IdProducto,
         estado,
         IdGarantia
       });

@@ -148,6 +148,7 @@ router.delete('/ciudad/eliminar', ContrCiudad.delCiudad)
 
 //empleado
 router.get('/empleados', ContrEmpleado.getEmpleados)
+router.get('/empleados/nousuarios', ContrEmpleado.getEmpleadosSinUsuario)
 router.get('/empleados/inactivos', ContrEmpleado.getEmpleadosInactivos)
 //router.get('/empleado/get',ContrEmpleado.getEmpleado)
 router.post('/empleado', ContrEmpleado.postEmpleado)
@@ -188,6 +189,8 @@ router.delete('/proveedor/EliminarProveedor', ContrProveedor.deleteProveedor)
 
 //LLamado a toda la bitacora 
 router.get('/bitacora', ContrBitacora.getBitacora)
+router.delete('/bitacora/eliminar', ContrBitacora.deletBitacora)
+
 //--------Configuracion-----
 router.post('/bitacora/Configuracion', ContrBitacora.postPantallaConfig)
 router.post('/bitacora/ListaBitacora', ContrBitacora.postListaBitacora)
