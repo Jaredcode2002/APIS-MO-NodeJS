@@ -6,7 +6,7 @@ export const ModProveedor = {
         let conexion
         try {
              conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad where p.estado = 'Activo' ORDER BY p.IdProveedor DESC;")
+            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad where p.estado = 'A' ORDER BY p.IdProveedor DESC;")
             conexion.end()
             return filas;
         } catch (error) {
@@ -19,7 +19,7 @@ export const ModProveedor = {
         let conexion
         try {
              conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad  where p.estado != 'Activo' ORDER BY p.IdProveedor DESC;")
+            const [filas] = await conexion.query("SELECT p.IdProveedor, p.CiaProveedora, p.encargado, pa.Pais, c.Ciudad, p.Productos, p.direccion, p.telefono, p.correoElectronico, p.estado, pa.IdPais, c.IdCiudad FROM tbl_proveedor as p inner join tbl_pais as pa on p.IdPais=pa.IdPais inner join tbl_ciudad as c on p.IdCiudad=c.IdCiudad  where p.estado != 'A' ORDER BY p.IdProveedor DESC;")
             conexion.end()
             return filas;
         } catch (error) {

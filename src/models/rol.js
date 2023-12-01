@@ -6,7 +6,7 @@ export const ModRol = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado = 'Activo' ORDER BY Id_Rol DESC;")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado = 'A' ORDER BY Id_Rol DESC;")
       conexion.end()
       return filas;
     } catch (error) {
@@ -18,7 +18,7 @@ export const ModRol = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado!= 'Activo' ORDER BY Id_Rol DESC")
+      const [filas] = await conexion.query("SELECT Id_Rol,Rol,Descripcion, estado from tbl_ms_roles Where estado!= 'A' ORDER BY Id_Rol DESC")
       conexion.end()
       return filas;
     } catch (error) {
