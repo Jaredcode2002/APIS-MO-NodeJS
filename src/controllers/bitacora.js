@@ -11,6 +11,43 @@ getBitacora: async (req,res)=> {
    
 },
 
+
+deletBitacora: async (req,res)=>{
+    try {
+      const {bitacora} = req.body
+      const result = await ModBitacora.deletBitacora({bitacora})
+      res.status(200).json(result)
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+// deletBitacora: async (req, res) => {
+//     try {
+//         const { bitacora } = req.body;
+//         const result = await ModBitacora.deletBitacora({bitacora});
+//         res.status(200).json({ response: "La bitacora se eliminó correctamente." });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Error al eliminar registros de bitácora", error: error.message });
+//     }
+// },
+
+// deletBitacora: async (req,res)=> {
+//     try {
+//         const  {bitacora}= req.body;
+//         const result = await ModBitacora.deletBitacora(
+//             {
+//                 bitacora,
+//             }
+//         );
+//     res.status(200).json ({response:"La bitacora se elimino correctamente."});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json ({mesage: "Error al eliminar registros de bitacora"})
+//     }
+// },
+
 //-----------LOGIN---------------
 
     postInsertLogin : async (req,res)=> {
