@@ -6,7 +6,7 @@ export const ModProducto = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,FORMAT(precio, 2) as precio, p.cantidadMin, p.cantidadMax, mo.IdModelo, CASE  WHEN p.estado = 'A' THEN 'Activo'  WHEN p.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where p.estado = 'A' ORDER BY p.IdProducto DESC;");
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,FORMAT(precio, 2) as precio, p.cantidadMin, p.cantidadMax, p.estado, mo.IdModelo from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where p.estado = 'A' ORDER BY p.IdProducto DESC;");
       conexion.end()
       return filas;
     } catch (error) {
@@ -18,11 +18,7 @@ export const ModProducto = {
     let conexion
     try {
      conexion = await connectDB();
-
-      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,FORMAT(precio, 2) as precio, p.cantidadMin, p.cantidadMax, mo.IdModelo, CASE  WHEN p.estado = 'A' THEN 'Activo'  WHEN p.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where p.estado != 'A' ORDER BY p.IdProducto DESC;");
-
-     // const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,FORMAT(precio, 2) as precio, p.cantidadMin, p.cantidadMax, mo.IdModelo, CASE  WHEN p.estado = 'A' THEN 'Activo'  WHEN p.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where p.estado != 'A' ORDER BY p.IdProducto DESC");
-
+      const [filas] = await conexion.query("Select p.IdProducto, mo.detalle as Modelo, ma.descripcion as Marca, p.descripcion  ,FORMAT(precio, 2) as precio, p.cantidadMin, p.cantidadMax, p.estado, mo.IdModelo from tbl_producto as p inner join tbl_modelo as mo on p.IdModelo=mo.IdModelo inner join tbl_marca as ma on ma.IdMarca=mo.idMarca where p.estado != 'A' ORDER BY p.IdProducto DESC;");
       conexion.end()
       return filas;
     } catch (error) {
