@@ -52,7 +52,7 @@ export const ModInventario = {
     let conexion
     try {
        conexion = await connectDB()
-       console.log(inventario.cantidad +" cantidad\n"+inventario.IdProducto+" idP");
+       console.log(inventario.cantidad +" cantidad\n"+inventario.idProducto +" "+ inventario.IdProducto+" idP");
         const [filas] = await conexion.query("UPDATE tbl_inventario set cantidad = cantidad - ? WHERE IdProducto=?;",
         [
           inventario.cantidad,
