@@ -367,6 +367,7 @@ router.delete('/modelo/eliminar', ContrModelo.delModelo)
 
 //Pago
 router.get('/pagos', ContrPago.getPagos)
+router.post('/pago', ContrPago.getPago)
 router.post('/pagos/crear', ContrPago.postPago)
 router.put('/pagos/actualizar', ContrPago.putPago)
 router.delete('/pagos/eliminar', ContrPago.delPago)
