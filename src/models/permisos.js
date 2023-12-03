@@ -10,7 +10,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -23,7 +23,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -41,7 +41,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -60,7 +60,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -78,7 +78,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -96,7 +96,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -114,7 +114,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -132,7 +132,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -150,7 +150,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -168,7 +168,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },
@@ -186,7 +186,7 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
         }
     },

@@ -5,6 +5,11 @@ export const ContrPago = {
     const Pagos = await ModPago.getPagos();
     res.status(200).json(Pagos);
   },
+  getPago: async(req,res)=>{
+    const {idVenta} = req.body
+    let result = await ModPago.getPago(idVenta)
+    res.status(200).json(result);
+  },
   postPago: async (req, res) => {
     try {
       const { IdVenta, IdTipoPago, saldoAbono, saldoRestante } = req.body;
