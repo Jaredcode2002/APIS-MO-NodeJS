@@ -124,6 +124,7 @@ export const ModVentas = {
         let subtotal=0;
         let rebajas=0
         let aux={}
+        console.log(detalles);
         try {
             conexion = await connectDB();
 
@@ -142,7 +143,7 @@ export const ModVentas = {
                 total:totalAPagar
             }
 
-        
+            console.log(venta);
             return venta
         } catch (error) {
             conexion.end()
@@ -158,7 +159,7 @@ export const ModVentas = {
             const idVenta = await ModVentas.InsertVenta(detalles[0])
             const promises = detalles.map(async (detalle) => {
                 await ModInventario.putUpdateInventarioVentas(detalle)
-                await ModKardex.postKardexVenta(detalle)
+                await ModKardex.postKardexVenta(detalle,idVenta.id)
                 auxAVenta = await ModVentas.calculosVenta(detalle)
                 total = total + auxAVenta.total
                let insert = await conexion.query("INSERT INTO `tbl_ventadetalle` (`IdVenta`, `IdGarantia`, `IdPromocion`, `IdDescuento`, `IdProducto`, `precioAro`, `cantidad`, `subtotal`, `rebaja`, `totalVenta`,`IdLente`) VALUES ( ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?);",
