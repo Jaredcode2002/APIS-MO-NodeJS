@@ -18,7 +18,34 @@ export const ModBitacora = {
         }
     },
 
-
+    deletBitacora:async (bitacora)=>{
+        let conexion
+    try {
+         conexion = await connectDB ()
+        const [filas]=await conexion.query("TRUNCATE TABLE tbl_ms_bitacora;",
+        [
+            bitacora
+        ]);
+        conexion.end()
+        return {estado:"OK"}; 
+    } catch (error) {
+        console.log(error);
+        conexion.end()
+    }
+    },
+    
+    // deletBitacora: async ()=>
+    // {
+    //     let conexion 
+    //   try {
+    //     conexion = await connectDB();
+    //     const [filas] = await conexion.query ("TRUNCATE TABLE tbl_bitacora;", [Bitacora]);       
+    // } catch (error) {
+    //     console.log (error);
+    //     conexion.end()
+    //   }
+    // },
+    
     //-----------LOGIN---------------
 
     postInsertLogin: async (idusuario) => {
