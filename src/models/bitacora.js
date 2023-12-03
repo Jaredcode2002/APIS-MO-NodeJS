@@ -1045,7 +1045,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('INSERT INTO tbl_ms_bitacora (fecha, Id_Usuario, Id_Objeto, accion, descripcion) VALUES (current_timestamp(), ?, 11, "Ingreso a Perfil", "El usuario ingresó a Mi Perfil")',
+            const [filas] = await conexion.query('INSERT INTO tbl_ms_bitacora (fecha, Id_Usuario, Id_Objeto, accion, descripcion) VALUES (current_timestamp(), ?, 11, "Ingreso a Perfil", "El usuario ingreso a Mi Perfil")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1060,7 +1060,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Modificación","El usuario modificó los datos del perfil")',
+            const [filas] = await conexion.query('INSERT INTO tbl_ms_bitacora (fecha, Id_Usuario, Id_Objeto, accion, descripcion) VALUES (current_timestamp(), ?, 11, "Ingreso a Perfil", "El usuario ingresó a Mi Perfil")',
                 idusuario.Id,
             );
             conexion.end()
