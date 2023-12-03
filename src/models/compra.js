@@ -78,7 +78,7 @@ export const ModCompras = {
   
       const promises = detalles.map(async (detalle) => {
         await ModInventario.putUpdateInventarioCompras(detalle)
-        await ModKardex.postKardexCompra(detalle)
+        await ModKardex.postKardexCompra(detalle,compraId)
         await conexion.query(
           "INSERT INTO tbl_compraDetalle (IdCompra, idProveedor, cantidad, idProducto, costoCompra) VALUES (?,?, ?, ?, ?)",
           [compraId, detalle.idProveedor, detalle.cantidad, detalle.idProducto, detalle.costo]

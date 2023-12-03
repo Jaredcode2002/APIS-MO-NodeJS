@@ -6,7 +6,20 @@ export const ModEmpleados = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero where e.estado = 'Activo' ORDER BY IdEmpleado DESC;");
+      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero where e.estado = 'A' ORDER BY IdEmpleado DESC;");
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+    }
+  },
+
+  getEmpleadosSinUsuario: async () => {
+    let conexion
+    try {
+      conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT e.* FROM tbl_empleado e LEFT JOIN tbl_ms_usuario u ON e.idEmpleado = u.idEmpleado WHERE u.idEmpleado IS NULL and estado = 'A'");
       conexion.end()
       return filas;
     } catch (error) {
@@ -18,7 +31,7 @@ export const ModEmpleados = {
     let conexion
     try {
       conexion = await connectDB();
-      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero  where e.estado != 'Activo' ORDER BY IdEmpleado DESC;");
+      const [filas] = await conexion.query("select e.IdEmpleado, e.nombre, e.apellido, e.telefonoEmpleado, e.IdSucursal, s.direccion, g.IdGenero, g.descripcion, e.numeroIdentidad, e.fechaIngreso, e.fechaSalida, e.fechaCumpleanos, e.estado from tbl_empleado as e inner join tbl_sucursal as s on e.IdSucursal=s.IdSucursal INNER JOIN tbl_departamento as d on s.`IdDepartamento`=d.`IdDepartamento`inner join tbl_genero as g on g.IdGenero=e.IdGenero  where e.estado != 'A' ORDER BY IdEmpleado DESC;");
       conexion.end()
       return filas;
     } catch (error) {
