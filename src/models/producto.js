@@ -28,6 +28,7 @@ export const ModProducto = {
   },
   postInsertProducto: async (producto) => {
     let conexion
+    console.log(producto)
     try {
      conexion = await connectDB();
       const [filas] = await conexion.query("INSERT INTO tbl_producto (IdModelo, precio, cantidadMin, cantidadMax, descripcion, estado) VALUES (?,?,?,?,?,?);",
