@@ -6,54 +6,106 @@ export const ModModelo = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT mo.`IdModelo`,ma.descripcion as Marca ,mo.detalle as Modelo, mo.anio FROM tbl_modelo as mo INNER JOIN tbl_marca as ma  ON ma.`idMarca`=mo.`idMarca`");
+      const [filas] = await conexion.query("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado = 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE  mo.estado = 'A' ORDER BY mo.`IdModelo` DESC");
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener modelos");
     } 
   },
-  postInsertModelo: async (modelo) => {
+
+  getModeloslInactivos:async()=> {
     let conexion
-    try {
-    conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle,anio) values (?,?,?);",
-        [
-          modelo.IdMarca,
-          modelo.detalle,
-          modelo.anio,
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al crear modelo");
-    }
-  },
-  putUpdateModelo: async (modelo)=>{
-    let conexion
-      try {
-         conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=? WHERE IdModelo= ?;",
-        [
-          modelo.IdMarca,
-          modelo.detalle,
-          modelo.anio,
-          modelo.IdModelo,
-        ]
-        )
+        try {
+        conexion = await connectDB();
+          const [filas] = await conexion.query ("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado != 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE mo.estado != 'A' ORDER BY mo.`IdModelo` DESC;")
         conexion.end()
-        return {estado:"ok"}
+          return filas;
+        } catch (error) {
+            console.log(error);
+             conexion.end()
+        }
+    },
+
+    getModeloExiste: async(modelo)=>
+    {
+      let conexion 
+      conexion = await connectDB();
+      try {
+        const [filas]=await conexion.query("SELECT *FROM tbl_modelo WHERE detalle =?;",
+        [
+          modelo.detalle
+        ]
+        );
+        conexion.end()
+        if (filas.length >=1)
+        {
+          return true
+        } else{
+          return false
+        }
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar el modelo")
+        
       }
+    },
+
+    postInsertModelo: async (modelo) => {
+      let conexion;
+      console.log(modelo)
+      conexion = await connectDB();
+      if (await ModModelo.getModeloExiste(modelo)==false)
+      {
+        try {
+            const [filas] = await conexion.query("insert into tbl_modelo (IdMarca, detalle, anio, estado) values (?,?,?,?);", [
+              modelo.IdMarca,
+              modelo.detalle,
+              modelo.anio,
+              modelo.estado
+            ]
+            );
+              conexion.end()
+            return { estado: "OK"  };
+        } catch (error)
+        {
+          console.log(error);
+      conexion.end()
+      return false
+        }
+      } else 
+      {
+        return false
+      }
+    },
+      
+    putUpdateModelo: async (modelo)=>{
+    let conexion
+    if (await ModModelo.getModeloExiste(modelo)==false) {
+      try {
+        conexion = await connectDB()
+       const [filas] = await conexion.query("UPDATE tbl_modelo set IdMarca= ?, detalle = ?, anio=?, estado=?  WHERE IdModelo= ?;",
+       [
+         modelo.IdMarca,
+         modelo.detalle,
+         modelo.anio,
+         modelo.estado,
+         modelo.IdModelo,
+       ]
+       )
+       conexion.end()
+       return {estado:"ok"}
+     } catch (error) {
+       console.log(error);
+       conexion.end()
+     }
+    } else {
+      false 
+    }
+     
   },
+
   delModelo: async (modelo) => {
     let conexion
     try {
@@ -66,7 +118,6 @@ export const ModModelo = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el modelo");
     }
   },
 };

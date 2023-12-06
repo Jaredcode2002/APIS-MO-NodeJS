@@ -6,40 +6,83 @@ export const ModCiudad = {
     let conexion 
     try {
       conexion=await connectDB();
-      const [filas] = await conexion.query("select * from tbl_ciudad");
+      const [filas] = await conexion.query("SELECT ci.IdCiudad, ci.ciudad, CASE  WHEN ci.estado = 'A' THEN 'Activo'  WHEN ci.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_ciudad AS ci WHERE ci.estado = 'A' ORDER BY ci.IdCiudad DESC;");
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los cities");
     } 
   },
 
+  getCiudadesInactivas:async()=>
+    {
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query("SELECT ci.IdCiudad, ci.ciudad, CASE  WHEN ci.estado = 'A' THEN 'Activo'  WHEN ci.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_ciudad AS ci WHERE ci.estado != 'A' ORDER BY ci.IdCiudad DESC;");
+            return filas;
+        
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getCiudadExiste: async (ciudad) =>
+    {
+      let conexion
+      conexion = await connectDB();
+      try {
+        const [filas]=await conexion.query ("Select * from tbl_ciudad where ciudad=?;",       
+        [
+          ciudad.ciudad
+        ]);
+        conexion.end()
+        if (filas.length>=1)
+        {
+          return true 
+        } else {
+              return false
+        }
+      } catch (error) {
+        console.long (error);
+        conexion.end()        
+      }
+    },
+
   postInsertCiudad: async (ciudad) => {
     let conexion 
-    try {
-     conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_ciudad (ciudad) values (?);",
-        [
-          ciudad.ciudad,
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al crear ciudad");
+    conexion=await connectDB ();
+    if (await ModCiudad.getCiudadExiste(ciudad)==false)
+    {
+      try {
+        conexion = await connectDB();
+         const [filas] = await conexion.query("insert into tbl_ciudad (ciudad,estado) values (?,?);",
+           [
+             ciudad.ciudad,
+             ciudad.estado,
+           ]
+         );
+         conexion.end()
+         return { estado: "OK" };
+       } catch (error) {
+         console.log(error);
+         conexion.end()
+         return false
+       }
+    } else 
+    {
+      return false
     }
   },
-  putUpdateciudad: async (ciudad)=>{
+
+  putUpdateCiudad: async (ciudad)=>{
     let conexion
       try {
        conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_ciudad set ciudad = ? WHERE IdCiudad= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_ciudad set ciudad = ?, estado=? WHERE IdCiudad= ?;",
         [
           ciudad.ciudad,
+          ciudad.estado,
           ciudad.IdCiudad,
         ]
         )
@@ -48,9 +91,9 @@ export const ModCiudad = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar la ciudad")
       }
   },
+
   delCiudad: async (ciudad) => {
     let conexion
     try {
@@ -63,7 +106,6 @@ export const ModCiudad = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la ciudad");
     }
   },
 };

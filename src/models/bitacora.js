@@ -9,17 +9,43 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT * FROM tbl_ms_bitacora")
+            const [filas] = await conexion.query("SELECT b.IdBitacora, u.Usuario, o.Objeto, b.accion, b.descripcion, DATE_FORMAT(b.fecha, '%Y-%m-%d %H:%i:%s') as fecha FROM tbl_ms_bitacora as b inner join tbl_ms_usuario as u on u.Id_Usuario=b.Id_Usuario inner join tbl_objetos as o on o.Id_Objeto=b.Id_Objeto ORDER BY IdBitacora DESC;")
             conexion.end()
             return filas;
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al obtener la bitacora");
         }
     },
 
-
+    deletBitacora:async (bitacora)=>{
+        let conexion
+    try {
+         conexion = await connectDB ()
+        const [filas]=await conexion.query("TRUNCATE TABLE tbl_ms_bitacora;",
+        [
+            bitacora
+        ]);
+        conexion.end()
+        return {estado:"OK"}; 
+    } catch (error) {
+        console.log(error);
+        conexion.end()
+    }
+    },
+    
+    // deletBitacora: async ()=>
+    // {
+    //     let conexion 
+    //   try {
+    //     conexion = await connectDB();
+    //     const [filas] = await conexion.query ("TRUNCATE TABLE tbl_bitacora;", [Bitacora]);       
+    // } catch (error) {
+    //     console.log (error);
+    //     conexion.end()
+    //   }
+    // },
+    
     //-----------LOGIN---------------
 
     postInsertLogin: async (idusuario) => {
@@ -34,7 +60,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -52,7 +77,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -63,7 +87,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Configuración","Se ingreso a la pantalla de Configuración")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Ingreso","Se ingreso a la pantalla de Configuración")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -71,7 +95,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -80,7 +103,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Lista de Bitácora","Se ingreso al a la pantalla de Lista de Bitácora")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Ingreso a Listas","Se ingreso al a la pantalla de Lista de Bitácora")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -88,7 +111,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -105,7 +127,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -124,7 +145,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -143,7 +163,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -163,7 +182,6 @@ export const ModBitacora = {
         } catch (error) {
             conexion.end()
             console.log(error);
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -180,7 +198,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
     //---------------------Pantalla de Usuarios------------------
@@ -190,7 +207,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Usuario","Se ingreso al a la pantalla de Usuarios")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Ingreso","Se ingreso al a la pantalla de Usuarios")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -198,7 +215,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
     //---------Registro de Empleado-------------
@@ -207,7 +223,7 @@ export const ModBitacora = {
 
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro de empleado","Se hizo un nuevo registro de empleados")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Insertar","Se hizo un nuevo registro de empleados")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -215,7 +231,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -224,7 +239,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de la pantalla Registro de Empleado")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de la pantalla Registro de Empleado")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -232,7 +247,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -241,7 +255,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Ingreso a la Lista de Empleados")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Ingreso a Lista","Ingreso a la Lista de Empleados")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -249,7 +263,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -258,7 +271,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de Lista de Empleados")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de Lista de Empleados")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -266,7 +279,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -275,7 +287,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizar empleado","Se realizaron actualizaciones en los datos del empleado")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Actualizacion","Se realizaron actualizaciones en los datos del empleado")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -283,7 +295,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -291,7 +302,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro incompleto","Se dejaron campos vacios")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Registro incompleto","Se dejaron campos vacios")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -299,7 +310,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -308,7 +318,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Registro incompleto","Se dejaron campos vacios")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Registro incompleto","Se dejaron campos vacios")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -316,7 +326,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -325,7 +334,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar empleado","El usuario elimino registros de empleados")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Eliminar","El usuario elimino registros de empleados")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -333,7 +342,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -344,7 +352,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Usuario nuevo","Se agrego un nuevo usuario")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Ingreso","Se agrego un nuevo usuario")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -352,7 +360,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -369,7 +376,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error)
             conexion.end();
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -378,7 +384,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Lista de usuario","El usuario ingreso a la Lista de Usuarios")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Ingreso a Lista","El usuario ingreso a la Lista de Usuarios")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -386,7 +392,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -403,7 +408,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -412,7 +416,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Actualizar Usuario","Se realizo actualizaciones en Usuario")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Actualizacion","El usuario realizo actualizaciones en Usuario")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -420,7 +424,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -429,7 +432,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Eliminar Usuario","Se elimino un usuario")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Eliminar ","El usuario elimino datos un Usuario")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -437,7 +440,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API")
         }
     },
 
@@ -448,7 +450,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Modulo de ventas","El usuario ingreso al modulo de ventas")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Ingreso","El usuario ingreso a la Pantalla de Ventas")',
                 idusuario.Id,
             );
             conexion.end()
@@ -456,7 +458,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -465,7 +466,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Nueva Venta","El usuario realizo una nueva venta")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Insertar","El usuario realizo una nueva venta")',
                 idusuario.Id,
             );
             conexion.end()
@@ -473,7 +474,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -482,7 +482,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Ver lista de venta","El usuario ingreso a la pantalla de Lista de Venta")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"ingreso a Lista","El usuario ingreso a la pantalla de Lista de Venta")',
                 idusuario.Id,
             );
             conexion.end()
@@ -490,7 +490,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -507,7 +506,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -516,7 +514,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion venta","El usuario realizo una actualizacion en venta")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion","El usuario realizo una actualizacion en venta")',
                 idusuario.Id,
             );
             conexion.end()
@@ -524,7 +522,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -533,7 +530,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar venta","El usuario elimino un registo de una venta")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar","El usuario elimino un registo de una venta")',
                 idusuario.Id,
             );
             conexion.end()
@@ -541,7 +538,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -550,7 +546,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Pantalla de Garantia","El usuario ingreso a Garantia")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Pantalla de Garantia","El usuario ingreso a Garantia")',
                 idusuario.Id,
             );
             conexion.end()
@@ -558,7 +554,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -567,7 +562,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro de Garantia","El usuario registro una nueva garantia")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva garantia")',
                 idusuario.Id,
             );
             conexion.end()
@@ -575,7 +570,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -584,7 +578,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Lista de Garantia","El usuario ingreso a la pantalla de Ver Lista de Garantia")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Ingreso a Listas","El usuario ingreso a la pantalla de Ver Lista de Garantia")',
                 idusuario.Id,
             );
             conexion.end()
@@ -592,7 +586,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -600,7 +593,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de la pantalla Lista de Garantia)',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la pantalla Lista de Garantia")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -608,7 +601,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
         }
     },
 
@@ -617,7 +609,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion Garantia","El usuario realizo una actualizacion en Garantia")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Garantia")',
                 idusuario.Id,
             );
             conexion.end()
@@ -625,7 +617,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -634,7 +625,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar Garantia","El usuario elimino datos en garantia")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en garantia")',
                 idusuario.Id,
             );
             conexion.end()
@@ -642,7 +633,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------------DESCUENTO------------------------
@@ -651,7 +641,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Pantalla de Descuento","El usuario ingreso a Descuento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Pantalla de Descuento","El usuario ingreso a Descuento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -659,7 +649,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------Agregar un nuevo descuento--------------------
@@ -667,7 +656,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro de Descuento","El usuario registro una nueva Descuento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva Descuento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -675,49 +664,33 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
-        }
-    },
-    //--------------------Lista de Descuento-----------------
-    postVerListaDescuento: async (idusuario) => {
-        let conexion
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Lista de Descuento","El usuario ingreso a la pantalla de Ver Lista Descuento")',
-                idusuario.Id,
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
-    //-----------------------Salir de la lista de descuento---------------------------
-    postSalirListaDescuento: async (idusuario) => {
-        conexion = await connectDB();
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de la pantalla Lista de Descuento)',
-                [idusuario.Id]
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-            throw new Error("Error en consumir el API");
-        }
-    },
+//-----------------------Salir de la lista de Descuento---------------------------
+        postSalirListaDescuento: async (idusuario) => {
+            let conexion
+    
+            try {
+                const conexion = await connectDB();
+                const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","El usuario salio de la lista de Descuentos")',
+                    [idusuario.Id]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                console.log(error);
+                conexion.end()
+                 
+            }
+        },
 
     //------------------------Actualizar datos de Descuento-----------------
     postActualizarDescuento: async (idusuario) => {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion Descuento","El usuario realizo una actualizacion en Descuento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Descuento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -725,7 +698,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -734,7 +706,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar Descuento","El usuario elimino datos en Descuento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Descuento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -742,7 +714,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -752,7 +723,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Pantalla de Promociones","El usuario ingreso a Promociones")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Pantalla de Promociones","El usuario ingreso a Promociones")',
                 idusuario.Id,
             );
             conexion.end()
@@ -760,7 +731,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //---------------Nueva Promocion--------------------
@@ -768,7 +738,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro de Promocion","El usuario registro una nueva Promocion")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva Promocion")',
                 idusuario.Id,
             );
             conexion.end()
@@ -776,7 +746,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
     //--------------------Lista de Promocion-----------------
@@ -784,7 +753,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Lista de Promocion","El usuario ingreso a la pantalla de Ver Lista Promocion")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Ingreso a Listas","El usuario ingreso a la pantalla de Ver Lista Promocion")',
                 idusuario.Id,
             );
             conexion.end()
@@ -792,7 +761,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -801,7 +769,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de la pantalla Lista de Promocion)',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir de Lista","Se salio de la pantalla Lista de Promocion")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -809,7 +777,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -818,7 +786,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion Promocion","El usuario realizo una actualizacion en Promocion")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Promocion")',
                 idusuario.Id,
             );
             conexion.end()
@@ -826,7 +794,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -835,7 +803,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar Promocion","El usuario elimino datos en Descuento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Descuento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -843,7 +811,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -853,7 +821,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Pantalla de Promocion del Producto","El usuario ingreso a Promocion del Producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Pantalla de Promocion del Producto","El usuario ingreso a Promocion del Producto")',
                 idusuario.Id,
             );
             conexion.end()
@@ -861,7 +829,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //---------------Nueva Promocion del Producto--------------------
@@ -869,7 +837,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Registro de Promocion del Producto","El usuario registro una nueva Promocion del Producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Insertar","El usuario registro una nueva Promocion del Producto")',
                 idusuario.Id,
             );
             conexion.end()
@@ -877,7 +845,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //--------------------Lista de Promocion del Producto-----------------
@@ -885,7 +853,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Lista de Promocion del Producto","El usuario ingreso a la pantalla de Ver Lista Promocion del Producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Ingreso a Lista","El usuario ingreso a la pantalla de Ver Lista Promocion del Producto")',
                 idusuario.Id,
             );
             conexion.end()
@@ -893,7 +861,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -902,7 +870,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Salir","Se salio de la pantalla Lista de Promocion del Producto)',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Salir","Se salio de la pantalla Lista de Promocion del Producto)',
                 [idusuario.Id]
             );
             conexion.end()
@@ -910,7 +878,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -919,7 +887,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Actualizacion Promocion del Producto","El usuario realizo una actualizacion en Promocion del Producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Actualizacion","El usuario realizo una actualizacion en Promocion del Producto")',
                 idusuario.Id,
             );
             conexion.end()
@@ -927,50 +895,35 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
     //-------------------Eliminar datos de Promocion del Producto-----------------
-    postEliminarPromocionProducto: async (idusuario) => {
-        let conexion
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,9,"Eliminar Promocion","El usuario elimino datos en Descuento")',
-                idusuario.Id,
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-            throw new Error("Error al crear el API");
-        }
-    },
+    // // postEliminarPromocionProducto: async (idusuario) => {
+    // //     let conexion
+    // //     try {
+    // //         conexion = await connectDB();
+    // //         const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Eliminar","El usuario elimino datos en Descuento")',
+    // //             idusuario.Id,
+    // //         );
+    // //         conexion.end()
+    // //         return { estado: "OK" };
+    // //     } catch (error) {
+    // //         console.log(error);
+    // //         conexion.end()
+              
+    // //     }
+    // // },
 
     //-------------------MODULO DE CLIENTES-----------------------------------------------
-    //------------PANTALLA DE CLIENTES-------------------
-    postPantallaCliente: async (idusuario) => {
-        let conexion
-        try {
-            conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Pantalla de Clientes","El usuario ingreso a Promocion del Producto")',
-                idusuario.Id,
-            );
-            conexion.end()
-            return { estado: "OK" };
-        } catch (error) {
-            console.log(error);
-            conexion.end()
-            throw new Error("Error al crear el API");
-        }
-    },
+    
     //---------------------Ingresar un nuevo Cliente----------------
     postInsertBCliente: async (idusuario) => {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Registro de clientes","El usuario registro un nuevo cliente")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Insertar","El usuario registro un nuevo cliente")',
                 idusuario.Id,
             );
             conexion.end()
@@ -978,7 +931,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     //---------------------VER LISTA DE CLIENTES-------------------------------------------
@@ -986,7 +939,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Lista de Clientes","El usuario ingreso a la pantalla de Ver Lista Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Ingreso a Listas","El usuario ingreso a la pantalla de Ver Lista Clientes")',
                 idusuario.Id,
             );
             conexion.end()
@@ -994,7 +947,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1003,7 +956,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir","Se salio de la pantalla Lista de Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir ","El ususario salio de la pantalla Lista de Clientes")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1011,7 +964,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1020,7 +973,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Actualizacion Clientes","El usuario realizo una actualizacion en Promocion del Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Actualizacion","El usuario realizo una actualizacion en Clientes")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1028,7 +981,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1037,7 +989,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Eliminar Clientes","El usuario elimino datos en Clientes")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Eliminar","El usuario elimino datos en Clientes")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1045,7 +997,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1054,7 +1005,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Registro de Expediente","El usuario registro un nuevo Expediente")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Insertar","El usuario registro un nuevo Expediente")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1062,7 +1013,6 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
         }
     },
 
@@ -1071,7 +1021,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Registro de Expediente Detalle","El usuario registro un Expediente Detalle")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Insertar","El usuario registro un Expediente Detalle")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1079,7 +1029,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1088,7 +1038,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Registro de Diagnostico","El usuario registro un nuevo Diagnostico")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Insertar","El usuario registro un nuevo Diagnostico")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1096,7 +1046,24 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
+        }
+    },
+
+    //-----------------------Salir de la lista de Clientes---------------------------
+    postSalirListaExpediente: async (idusuario) => {
+        let conexion
+        try {
+            conexion = await connectDB();
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,4,"Salir","El usuario salio de la pantalla de Lista de Expediente")',
+                [idusuario.Id]
+            );
+            conexion.end()
+            return { estado: "OK" };
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+             
         }
     },
 
@@ -1105,7 +1072,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Ingreso a Perfil","El usuario ingreso a Mi Perfil")',
+            const [filas] = await conexion.query('INSERT INTO tbl_ms_bitacora (fecha, Id_Usuario, Id_Objeto, accion, descripcion) VALUES (current_timestamp(), ?, 11, "Ingreso a Perfil", "El usuario ingreso a Mi Perfil")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1113,7 +1080,22 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
+        }
+    },
+    postPerfilModifi: async (idusuario) => {
+        let conexion
+        try {
+            conexion = await connectDB();
+            const [filas] = await conexion.query('INSERT INTO tbl_ms_bitacora (fecha, Id_Usuario, Id_Objeto, accion, descripcion) VALUES (current_timestamp(), ?, 11, "Ingreso a Perfil", "El usuario ingresó a Mi Perfil")',
+                idusuario.Id,
+            );
+            conexion.end()
+            return { estado: "OK" };
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+              
         }
     },
 
@@ -1121,7 +1103,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Moficacion","El usuario modifico la contraseña")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Modificación","El usuario modificó la contraseña")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1129,7 +1111,23 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
+        }
+    },
+
+    postPreguntasAgg: async (idusuario) => {
+        let conexion
+        try {
+            conexion = await connectDB();
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Insertar","El usuario registró una nueva pregunta de seguridad")',
+                idusuario.Id,
+            );
+            conexion.end()
+            return { estado: "OK" };
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+              
         }
     },
 
@@ -1137,7 +1135,7 @@ export const ModBitacora = {
         let conexion
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Moficacion",""El usuario modifico las preguntas de seguridad")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Modificación","El usuario modificó las preguntas de seguridad")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1145,7 +1143,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1153,7 +1151,7 @@ export const ModBitacora = {
         let conexion  //comentario para karen xd
         try {
             conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Salir de perfil","El usuario salio de Mi Perfil")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,11,"Salir de perfil","El usuario salió de Mi Perfil")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1161,7 +1159,7 @@ export const ModBitacora = {
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1179,7 +1177,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     
@@ -1187,7 +1185,7 @@ export const ModBitacora = {
         let conexion
            try {
                conexion = await connectDB();
-               const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Nueva Cita","El usuario agregó una nueva cita")',
+               const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Insertar","El usuario registró una nueva cita")',
                idusuario.Id,
                );
                conexion.end()
@@ -1195,7 +1193,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     
@@ -1203,7 +1201,7 @@ export const ModBitacora = {
         let conexion
            try {
                conexion = await connectDB();
-               const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Actualizar Cita","El usuario actuzalizó una cita")',
+               const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,5,"Actualizacion","El usuario actuzalizó una cita")',
                idusuario.Id,
                );
                conexion.end()
@@ -1211,7 +1209,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
            }
        },
     
@@ -1227,7 +1225,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
            }
        },
     
@@ -1243,7 +1241,7 @@ export const ModBitacora = {
            } catch (error) {
                console.log(error);
                conexion.end()
-               throw new Error("Error al crear el API");
+                 
             }
        },
     //----------------MANTENIMIENTO------------------------------------
@@ -1253,7 +1251,7 @@ postInsertBSucursal: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Sucursal","El usuario registro unm nuevo Sucursal")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva Sucursal")',
             idusuario.Id,
             );
             conexion.end()
@@ -1261,7 +1259,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1269,10 +1267,9 @@ postInsertBSucursal: async (idusuario)=>{
     //-----------------------Salir de la lista de Sucursal---------------------------
     postSalirListaSucursal:async (idusuario)=>{
         let conexion
-    
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de la Lista de Sucursal")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Sucursal")',
             [idusuario.Id]
             );
             conexion.end()
@@ -1280,7 +1277,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1289,7 +1286,7 @@ postInsertBSucursal: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,15,"Actualizacion Sucursal","El usuario realizo una actualizacion en Sucursal")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Sucursal")',
             idusuario.Id,
             );
             conexion.end()
@@ -1297,7 +1294,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1306,13 +1303,13 @@ postInsertBSucursal: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Sucursal","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Sucursal")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1322,7 +1319,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Modelo","El usuario registro unm nuevo Modelo")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro un nuevo Modelo")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1330,7 +1327,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1349,7 +1346,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1358,7 +1355,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion Modelo","El usuario realizo una actualizacion en Modelo")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Modelo")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1366,7 +1363,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1375,23 +1372,23 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar Modelo","El usuario elimino datos en Modelo")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Modelo")',
                 idusuario.Id,
             );
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
-    /////////////////////NODELO///////////////////////
-    //---------------Nuevo Nodelo--------------------
+    /////////////////////MARCA///////////////////////
+    //---------------Nuevo Marca--------------------
     postInsertBMarca: async (idusuario) => {
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro de Marca","El usuario registro unm nuevo Marca")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva Marca")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1399,7 +1396,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1418,7 +1415,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1427,7 +1424,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion Marca","El usuario realizo una actualizacion en Marca")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Marca")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1435,7 +1432,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1444,24 +1441,24 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar Marca","El usuario elimino datos en Marca")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Marca")',
                 idusuario.Id,
             );
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
 
-    /////////////////////NODELO///////////////////////
-    //---------------Nuevo Nodelo--------------------
+    /////////////////////TIPO PAGO///////////////////////
+    //---------------Metodo de Pago--------------------
     postInsertBMetodopago: async (idusuario) => {
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro unm nuevo Metodo pago")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro un nuevo Metodo pago")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1469,7 +1466,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1488,7 +1485,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1505,7 +1502,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1520,7 +1517,7 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1530,7 +1527,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro unm nuevo Departamento")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Registro","El usuario registro un nuevo Departamento")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1538,7 +1535,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1557,7 +1554,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1574,7 +1571,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1589,17 +1586,17 @@ postInsertBSucursal: async (idusuario)=>{
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
     /////////////////////PRODUCTO/////////////////////// AQUI EMPIEZA LO MIO
-    //---------------Nuevo Producto--------------------
+    //---------------Nuevo Producto/ARO--------------------
     postInsertProductoB: async (idusuario) => {
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Insertar","El usuario registro un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Insertar","El usuario registro un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1607,7 +1604,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1617,7 +1614,7 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Vista","Se visualizo la Lista de Productos")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Vista","Se visualizo la Lista de Aros")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1625,7 +1622,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1636,7 +1633,7 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Productos")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Salir","Se salio de la Lista de Aros")',
                 [idusuario.Id]
             );
             conexion.end()
@@ -1644,7 +1641,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
 
@@ -1653,7 +1650,7 @@ postInsertBSucursal: async (idusuario)=>{
         let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Actualizar","El usuario actualizo un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Actualizacion","El usuario actualizo un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             conexion.end()
@@ -1661,7 +1658,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1670,13 +1667,13 @@ postInsertBSucursal: async (idusuario)=>{
 
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Eliminar","El usuario elimino un producto")',
+            const [filas] = await conexion.query('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,6,"Eliminar","El usuario elimino un producto en la Pantalla de Aros")',
                 idusuario.Id,
             );
             return { estado: "OK" };
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1694,7 +1691,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1711,11 +1708,11 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
-    //---------------Nueva Venta--------------------
+    //---------------Nueva Pago--------------------
     postInsertPagoB: async (idusuario) => {
         let conexion
         try {
@@ -1728,7 +1725,7 @@ postInsertBSucursal: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
 
@@ -1738,7 +1735,7 @@ postInsertBPais: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Pais","El usuario registro unm nuevo Pais")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro un nuevo Pais")',
             idusuario.Id,
             );
             conexion.end()
@@ -1746,7 +1743,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1757,7 +1754,7 @@ postInsertBPais: async (idusuario)=>{
     
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de la Lista de Pais")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Pais")',
             [idusuario.Id]
             );
             conexion.end()
@@ -1765,7 +1762,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1774,7 +1771,7 @@ postInsertBPais: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,15,"Actualizacion Pais","El usuario realizo una actualizacion en Pais")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Pais")',
             idusuario.Id,
             );
             conexion.end()
@@ -1782,7 +1779,7 @@ postInsertBPais: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1791,13 +1788,13 @@ postInsertBPais: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Pais","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en País")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1807,7 +1804,7 @@ postInsertBCiudad: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Ciudad","El usuario registro unm nuevo Ciudad")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro una nueva Ciudad")',
             idusuario.Id,
             );
             conexion.end()
@@ -1815,7 +1812,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1826,7 +1823,7 @@ postInsertBCiudad: async (idusuario)=>{
     
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de la Lista de Ciudad")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Ciudad")',
             [idusuario.Id]
             );
             conexion.end()
@@ -1834,7 +1831,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error en consumir el API");
+             
         }
     },
     
@@ -1843,7 +1840,7 @@ postInsertBCiudad: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,15,"Actualizacion Ciudad","El usuario realizo una actualizacion en Ciudad")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Ciudad")',
             idusuario.Id,
             );
             conexion.end()
@@ -1851,7 +1848,7 @@ postInsertBCiudad: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1860,13 +1857,13 @@ postInsertBCiudad: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Ciudad","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Ciudad")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
         } catch (error) {
             console.log(error);
-            throw new Error("Error al crear el API");
+              
         }
     }, 
     
@@ -1876,7 +1873,7 @@ postInsertBGenero: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,13,"Registro de Genero","El usuario registro unm nuevo Genero")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Insertar","El usuario registro un nuevo Genero")',
             idusuario.Id,
             );
             conexion.end()
@@ -1884,7 +1881,7 @@ postInsertBGenero: async (idusuario)=>{
         } catch (error) {
             console.log(error);
             conexion.end()
-            throw new Error("Error al crear el API");
+              
         }
     },
     
@@ -1895,7 +1892,76 @@ postInsertBGenero: async (idusuario)=>{
     
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,2,"Salir","Se salio de la Lista de Genero")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Salir","Se salio de la Lista de Genero")',
+            [idusuario.Id]
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+             
+        }
+    },
+    
+    //------------------------Actualizar datos de Genero----------------
+    postActualizarGenero: async (idusuario)=>{
+    let conexion
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Actualizacion","El usuario realizo una actualizacion en Genero")',
+            idusuario.Id,
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+              
+        }
+    },
+    
+    //-------------------Eliminar datos de Genero-----------------
+    postEliminarGenero: async (idusuario)=>{
+        
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,8,"Eliminar","El usuario elimino datos en Genero")',
+            idusuario.Id,
+            );
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+              
+        }
+    }, 
+    
+/////////////////////PROVEEDORES///////////////////////
+//---------------Nuevo Proveedor--------------------
+postInsertProveedor: async (idusuario)=>{
+    let conexion
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Insertar","El usuario registro un nuevo Proveedor")',
+            idusuario.Id,
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error al crear el API");
+        }
+    },
+    
+    
+    //-----------------------Salir de la lista de Proveedor---------------------------
+    postSalirListaProveedor:async (idusuario)=>{
+        let conexion
+    
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Salir","Se salio de la Lista de Proveedores")',
             [idusuario.Id]
             );
             conexion.end()
@@ -1907,12 +1973,12 @@ postInsertBGenero: async (idusuario)=>{
         }
     },
     
-    //------------------------Actualizar datos de Genero----------------
-    postActualizarGenero: async (idusuario)=>{
+    //------------------------Actualizar datos de Proveedor----------------
+    postActualizarProveedor: async (idusuario)=>{
     let conexion
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,15,"Actualizacion Genero","El usuario realizo una actualizacion en Genero")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Actualizacion","El usuario realizo una actualizacion en datos de Proveedores")',
             idusuario.Id,
             );
             conexion.end()
@@ -1924,12 +1990,12 @@ postInsertBGenero: async (idusuario)=>{
         }
     },
     
-    //-------------------Eliminar datos de Genero-----------------
-    postEliminarGenero: async (idusuario)=>{
+    //-------------------Eliminar datos de Proveedor-----------------
+    postEliminarProveedor: async (idusuario)=>{
         
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,16,"Eliminar Genero","El usuario elimino datos en País")',
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Eliminar","El usuario elimino datos de un Proveedor")',
             idusuario.Id,
             );
             return {estado:"OK"}; 
@@ -1937,10 +2003,119 @@ postInsertBGenero: async (idusuario)=>{
             console.log(error);
             throw new Error("Error al crear el API");
         }
-    }, 
+    },
+
+ //////////////////////////////LENTES///////////////////////////
+//---------------Nuevo Lentes--------------------
+postInsertLentes: async (idusuario)=>{
+    let conexion
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Insertar","El usuario registro un nuevo Lentes")',
+            idusuario.Id,
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error al crear el API");
+        }
+    },
     
-
-
+    
+    //-----------------------Salir de la lista de Lentes---------------------------
+    postSalirListaLentes:async (idusuario)=>{
+        let conexion
+    
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Salir","Se salio de la Lista de Lentes")',
+            [idusuario.Id]
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error en consumir el API");
+        }
+    },
+    
+    //------------------------Actualizar datos de Lentes----------------
+    postActualizarLentes: async (idusuario)=>{
+    let conexion
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Actualizacion","El usuario realizo una actualizacion en datos de Lentes")',
+            idusuario.Id,
+            );
+            conexion.end()
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            conexion.end()
+            throw new Error("Error al crear el API");
+        }
+    },
+    
+    //-------------------Eliminar datos de Lentes-----------------
+    postEliminarLentes: async (idusuario)=>{
+        
+        try {
+            const conexion = await connectDB();
+            const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Eliminar","El usuario elimino datos de un Lentes")',
+            idusuario.Id,
+            );
+            return {estado:"OK"}; 
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al crear el API");
+        }
+    },   
+//////////KARDEX
+ //-------------------Kardex-----------------
+ postMovimientoKardex: async (idusuario)=>{
+        
+    try {
+        const conexion = await connectDB();
+        const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Kardex","El usuario realizo un nuevo movimiento en Kardex")',
+        idusuario.Id,
+        );
+        return {estado:"OK"}; 
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error al crear el API");
+    }
+}, 
+//SALIR LISTA KARDEX
+postSalirListaKardex: async (idusuario)=>{
+        
+    try {
+        const conexion = await connectDB();
+        const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Salir","El usuario salio de la lista de Kardex")',
+        idusuario.Id,
+        );
+        return {estado:"OK"}; 
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error al crear el API");
+    }
+}, 
+// //INGRESO A LA PANTALLA DE INVENTARIO 
+postIngresoInventario: async (idusuario)=>{
+        
+    try {
+        const conexion = await connectDB();
+        const [filas] = await conexion.query ('Insert into tbl_ms_bitacora (fecha,Id_Usuario,Id_Objeto,accion,descripcion) values(current_timestamp(),?,3,"Ingresar","El usuario ingreso a la Pantalla de Inventario")',
+        idusuario.Id,
+        );
+        return {estado:"OK"}; 
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error al crear el API");
+    }
+}, 
 
 }
 

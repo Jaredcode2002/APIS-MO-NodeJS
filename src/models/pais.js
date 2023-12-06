@@ -6,40 +6,82 @@ export const ModPais = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("select * from tbl_pais");
+      const [filas] = await conexion.query("SELECT pa.IdPais, pa.Pais, CASE  WHEN pa.estado = 'A' THEN 'Activo'  WHEN pa.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_pais AS pa WHERE pa.estado = 'A' ORDER BY pa.IdPais DESC;");
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los paises");
     } 
+  },
+
+  getPaisInactivos:async()=>
+  {
+      try {
+          const conexion = await connectDB();
+          const [filas] = await conexion.query("SELECT pa.IdPais, pa.Pais, CASE  WHEN pa.estado = 'A' THEN 'Activo'  WHEN pa.estado = 'I' THEN 'Inactivo'  ELSE 'Desconocido' END AS estado FROM tbl_pais AS pa WHERE pa.estado != 'A' ORDER BY pa.IdPais DESC;");
+          return filas;
+      
+      } catch (error) {
+          console.log(error);
+      }
+  },
+
+  getPaisExiste: async (pais) =>
+  {
+    let conexion
+    conexion = await connectDB();
+    try {
+      const [filas]=await conexion.query ("Select * from tbl_pais where pais=?;",       
+      [
+        pais.pais
+      ]);
+      conexion.end()
+      if (filas.length>=1)
+      {
+        return true 
+      } else {
+            return false
+      }
+    } catch (error) {
+      console.long (error);
+      conexion.end()
+      
+    }
   },
 
   postInsertPais: async (pais) => {
     let conexion
-    try {
-    conexion = await connectDB();
-      const [filas] = await conexion.query("insert into tbl_pais (pais) values (?);",
-        [
-          pais.pais,
-        ]
-      );
-      conexion.end()
-      return { id: filas.insertId };
-    } catch (error) {
-      console.log(error);
-      conexion.end()
-      throw new Error("Error al crear pais");
+    conexion=await connectDB();
+    if (await ModPais.getPaisExiste(pais)==false)
+    {
+      try {
+          const [filas] = await conexion.query("insert into tbl_pais (pais,estado) values (?,?);",
+            [
+              pais.pais,
+              pais.estado, 
+            ]
+          );
+          conexion.end()
+          return { estado:"OK" };
+        } catch (error) {
+          console.log(error);
+          conexion.end()
+          return false
+        }
+    } else{
+      return false
     }
   },
+
   putUpdatePais: async (pais)=>{
     let conexion
       try {
          conexion = await connectDB()
-        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ? WHERE IdPais= ?;",
+        const [filas] = await conexion.query("UPDATE tbl_pais set pais = ?, estado=? WHERE IdPais= ?;",
         [
           pais.pais,
+          pais.estado,
           pais.IdPais,
         ]
         )
@@ -48,7 +90,6 @@ export const ModPais = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar la pais")
       }
   },
   delPais: async (pais) => {
@@ -63,7 +104,6 @@ export const ModPais = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la pais");
     }
   },
 };

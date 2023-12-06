@@ -1,37 +1,43 @@
 import { ModDepartamento } from "../models/departamento.js";
 
 export const ContrDepto = {
+
   getDepartamentos: async (req,res) => {
     const departamento = await ModDepartamento.getDeptos();
     res.status(200).json(departamento);
   },
-  postDepto: async (req, res) => {
-    try {
-      const { departamento } = req.body;
-      const result = await ModDepartamento.postInsertDepto({departamento,});
-      res.status(201).json({ id: result.id });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error creating depto" });
-    }
+
+  getDepartamentosInactivos: async (req,res) => {
+    const departamento = await ModDepartamento.getDepartamentosInactivos();
+    res.status(200).json(departamento);
   },
-  putDepto: async (req, res) => {
+  
+  postInsertDepto:async(req,res)=>
+  {
+      try {
+          const  {departamento, estado}=req.body;
+          const result = await ModDepartamento.postInsertDepto({departamento,estado});
+          
+          if (result == false) {
+              res.status(201).json(result);
+            } else {
+              res.status(201).json(result);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+  },
+
+  putUpdateDepto: async (req, res) => {
     try {
-      const {
-        departamento,
-        IdDepartamento,
-        
-      } = req.body;
-      const result = await ModDepartamento.putUpdateDepto({
-        departamento,
-        IdDepartamento,
-      });
+      const {departamento, estado, IdDepartamento} = req.body;
+      const result = await ModDepartamento.putUpdateDepto({departamento, estado, IdDepartamento});
       res.status(200).json({response:"Ok"})
     } catch (error) {
       console.log(error);
-      throw new Error("Error al consumir el api")
     }
   },
+
   delDepto: async (req,res)=>{
     try {
       const {IdDepartamento} = req.body

@@ -6,13 +6,38 @@ export const ModPago = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago,p.fecha, p.saldoAbono, p.saldoRestante,p.estado FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago;");
+      const [filas] = await conexion.query("SELECT p.IdPago, p.IdVenta, tp.descripcion as MetodoDePago,p.fecha, p.saldoAbono, p.saldoRestante,p.estado FROM tbl_pago as p inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago ORDER BY p.IdPago DESC;");
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener los Pagos");
+    } 
+  },
+  getPago: async (idVenta) => {
+    let conexion
+    try {
+     conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT CONCAT(cli.nombre, ' ', cli.apellido) AS cliente, p.fecha, p.estado, p.saldoAbono, p.saldoRestante "+
+      " FROM tbl_pago AS p"+
+      " INNER JOIN tbl_venta AS v ON p.IdVenta = v.IdVenta"+
+      " INNER JOIN tbl_cliente AS cli ON v.IdCliente = cli.idCliente"+
+      " WHERE v.IdVenta = ?"+
+      " ORDER BY p.IdPago DESC"+
+      " LIMIT 1",[idVenta]);
+
+      if (filas[0].estado=="Pagado") {
+        conexion.end()
+        return {estado:"Pagado"}
+      }else{
+        const [pagos]= await conexion.query("SELECT CONCAT(cli.nombre,' ',cli.apellido) as cliente,tp.descripcion,p.fecha,p.saldoAbono,p.saldoRestante  FROM tbl_pago as p inner join tbl_venta as v on p.IdVenta=v.IdVenta inner join tbl_cliente as cli on v.IdCliente=cli.idCliente inner join tbl_tipopago as tp on p.IdTipoPago=tp.IdTipoPago")
+        conexion.end()
+        return pagos
+      }
+
+    } catch (error) {
+      console.log(error);
+      conexion.end()
     } 
   },
 
@@ -59,7 +84,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al crear pago");
     }
   },
   putUpdatePago: async (Pago)=>{
@@ -78,7 +102,6 @@ export const ModPago = {
       } catch (error) {
         console.log(error);
         conexion.end()
-        throw new Error("Error al actualizar el pago")
       }
   },
   delPago: async (Pago) => {
@@ -93,7 +116,6 @@ export const ModPago = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar el tipo de pago");
     }
   },
 };

@@ -6,7 +6,7 @@ export const ModRecordatorio = {
     let conexion
     try {
      conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, r.`Nota`, r.`fecha` FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` WHERE fecha = ? ",
+      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, r.`Nota`, r.`fecha` FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` WHERE fecha = ?  ORDER BY r.IdRecordatorio DESC",
         [citas.fecha],
       );
       conexion.end()
@@ -14,22 +14,36 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener las citas");
     }
   },
   getCita: async () => {
     let conexion
     try {
        conexion = await connectDB();
-      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente`");
+
+      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, c.telefonoCliente, c.correoElectronico, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` ORDER BY r.`fecha` ASC");
+
       conexion.end()
       return filas;
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener la cita");
     }
   },
+
+  getClienteEx: async () => {
+    let conexion
+    try {
+       conexion = await connectDB();
+      const [filas] = await conexion.query("SELECT c.`idCliente`,  c.nombre,  c.apellido FROM tbl_expediente AS ex JOIN tbl_cliente AS c On c.`idCliente`=ex.`IdCliente` ORDER BY ex.`IdExpediente` DESC");
+      conexion.end()
+      return filas;
+    } catch (error) {
+      console.log(error);
+      conexion.end()
+    }
+  },
+
 
 
   postInsertCita: async (citas) => {
@@ -61,7 +75,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al ingresar la cita");
     }
   },
 
@@ -77,7 +90,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al eliminar la cita");
     }
   },
 
@@ -97,7 +109,6 @@ export const ModRecordatorio = {
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al actualizar la cita")
     }
 },
 
@@ -116,7 +127,6 @@ let conexion
     } catch (error) {
       console.log(error);
       conexion.end()
-      throw new Error("Error al obtener el registro");
     }
 },
 

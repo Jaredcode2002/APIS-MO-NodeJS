@@ -3,67 +3,105 @@ import { connectDB } from "../config/Conn.js";
 
 export const ModLente = {
 
-    getLentes:async()=>
-    {
+    getLentes: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query ("SELECT * FROM tbl_lente")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado = 'A' ORDER BY l.IdLente DESC;")
             return filas;
-        
+
+            
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consultar los lentes");
         }
     },
-
-    postInsertLente:async(lente)=>
-    {
-        const conexion= await connectDB(); 
+    getLentesInactivos: async () => {
         try {
-            const [filas]=await conexion.query("INSERT INTO tbl_lente (lente,precio) VALUES(?,?);",
-            [
-                lente.lente,
-                lente.precio,
-            ]
-            );
-            return{estado:"OKAY"}
+            const conexion = await connectDB();
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado != 'A' ORDER BY l.IdLente DESC;")
+            return filas;
+
         } catch (error) {
-            onsole.log(error);
-            throw new Error("Error al consultar al insertar el lente");
+            console.log(error);
         }
     },
 
-    putLente:async (lente)=>
-    {
-        const conexion=await connectDB();
+
+     getLenteExiste: async (lente) => {
+        let conexion
+        conexion = await connectDB();
         try {
-            const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=? WHERE  IdLente =?;",
-            [
-                lente.lente,
-                lente.precio,
-                lente.IdLente
-            ]
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio, l.estado FROM tbl_lente as l where l.lente = ?;",
+                [
+                    lente.lente
+                ]
             );
-            return{estado:"OKAY"}
+            conexion.end()
+            if (filas.legth >= 1) {
+                return true
+            } else {
+                return false
+            }
         } catch (error) {
-            onsole.log(error);
-            throw new Error("Error al consultar al actualizar el lente");
+            console.log(error);
+            conexion.end()
+        }
+    }, 
+    postInsertLente: async (lente) => {
+        let conexion
+        conexion = await connectDB();
+        if (await ModLente.getLenteExiste(lente) == false) {
+            try {
+                const [filas]=await conexion.query("INSERT INTO tbl_lente (lente,precio, estado) VALUES(?,?,?);",
+                [
+                    lente.lente,
+                    lente.precio,
+                    lente.estado,
+                ]
+                );
+                conexion.end()
+                return { estado: "OK" };
+            } catch (error) {
+                conexion.end()
+                return false
+            }
+        } else {
+            return false
         }
     },
 
-    deleteLente : async (lente)=>
-    {
+    putLente: async (lente) => {
+        const conexion = await connectDB();
+        if (await ModLente.getLenteExiste(lente) == false) {
+            try {
+                const [filas] = await conexion.query("UPDATE tbl_lente SET lente=?,precio=?, estado=? WHERE  IdLente =?;",
+                    [
+                        lente.lente,
+                        lente.precio,
+                        lente.estado,
+                        lente.IdLente
+                    ]
+                );
+                return { estado: "OKAY" }
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            return false;
+        }
+       
+    },
+
+    deleteLente: async (lente) => {
         try {
             const conexion = await connectDB()
-            const [filas]=await conexion.query("DELETE FROM tbl_lente WHERE  IdLente =?;",
-            [
-                lente.IdLente,
-            ]
+            const [filas] = await conexion.query("DELETE FROM tbl_lente WHERE  IdLente =?;",
+                [
+                    lente.IdLente,
+                ]
             );
-        return{estado:"OKAY"}
+            return { estado: "OKAY" }
         } catch (error) {
             console.log(error);
-      throw new Error("Error al eliminar el lente");
         }
     },
 }

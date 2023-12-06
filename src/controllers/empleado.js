@@ -5,6 +5,14 @@ export const ContrEmpleado = {
         const emple = await ModEmpleados.getEmpleados();
         res.json(emple);
     },
+    getEmpleadosSinUsuario: async (req, res) => {
+        const emple = await ModEmpleados.getEmpleadosSinUsuario();
+        res.json(emple);
+    },
+    getEmpleadosInactivos:async(req, res)=>{
+        const emple = await ModEmpleados.getEmpleadosInactivos();
+        res.json(emple);
+    },
     getEmpleado:async(req, res)=>{
         try {
             const {idEmpleado} = req.body;
@@ -12,12 +20,11 @@ export const ContrEmpleado = {
             res.json(result);
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     postEmpleado: async (req, res) => {
         try {
-            const { id, nombre, apellido, telEmple, idSucursal, idGenero, numId } = req.body;
+            const { id, nombre, apellido, telEmple, idSucursal, idGenero, numId, fechaIngreso, fechaSalida, fechaCumpleanos, estado } = req.body;
             const result = await ModEmpleados.postInsertEmpleado({
                 id,
                 nombre,
@@ -26,8 +33,17 @@ export const ContrEmpleado = {
                 idSucursal,
                 idGenero,
                 numId,
+                fechaIngreso,
+                fechaSalida,
+                fechaCumpleanos,
+                estado
             });
-            res.status(201).json({ id: result.id });
+            //res.status(201).json({ id: result.id });
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: "Error al crear empleado" });
@@ -35,7 +51,7 @@ export const ContrEmpleado = {
     },
     putEmpleado: async (req, res) => {
         try {
-            const { nombre, apellido, telEmple, idSucursal, idGenero, numId, IdEmpleado, } = req.body;
+            const { nombre, apellido, telEmple, idSucursal, idGenero, numId, IdEmpleado,fechaIngreso,fechaSalida,fechaCumpleanos,estado } = req.body;
             const result = await ModEmpleados.putUpdateEmpleado({ 
                 nombre, 
                 apellido, 
@@ -43,12 +59,19 @@ export const ContrEmpleado = {
                 idSucursal, 
                 idGenero, 
                 numId, 
+                fechaIngreso,
+                fechaSalida,
+                fechaCumpleanos,
+                estado,
                 IdEmpleado, 
             });
-            res.status(200).json({ response: "Ok" })
+            if (result ==false) {
+                res.status(201).json(result);
+            }else{
+                res.status(201).json(result);
+            }
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     delEmpleado:async(req, res)=>{
@@ -58,7 +81,6 @@ export const ContrEmpleado = {
             res.status(200).json({ response: "Ok" })
         } catch (error) {
             console.log(error);
-            throw new Error("Error al consumir el api")
         }
     },
     getSucursales: async (req, res) => {

@@ -11,6 +11,43 @@ getBitacora: async (req,res)=> {
    
 },
 
+
+deletBitacora: async (req,res)=>{
+    try {
+      const {bitacora} = req.body
+      const result = await ModBitacora.deletBitacora({bitacora})
+      res.status(200).json(result)
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+// deletBitacora: async (req, res) => {
+//     try {
+//         const { bitacora } = req.body;
+//         const result = await ModBitacora.deletBitacora({bitacora});
+//         res.status(200).json({ response: "La bitacora se eliminó correctamente." });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Error al eliminar registros de bitácora", error: error.message });
+//     }
+// },
+
+// deletBitacora: async (req,res)=> {
+//     try {
+//         const  {bitacora}= req.body;
+//         const result = await ModBitacora.deletBitacora(
+//             {
+//                 bitacora,
+//             }
+//         );
+//     res.status(200).json ({response:"La bitacora se elimino correctamente."});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json ({mesage: "Error al eliminar registros de bitacora"})
+//     }
+// },
+
 //-----------LOGIN---------------
 
     postInsertLogin : async (req,res)=> {
@@ -433,11 +470,11 @@ postInsertDescuento: async (req,res)=> {
     }
 },
 
-//--------------------Lista de Descuento-----------------
-postVerListaDescuento: async (req,res)=> {
+//-----------------------Salir de la lista de Descuento---------------------------
+postSalirListaDescuento: async (req,res)=> {
     try {
         const{Id}=req.body;
-        const result = await ModBitacora.postVerListaDescuento({Id});
+        const result = await ModBitacora.postSalirListaDescuento({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);
@@ -728,7 +765,16 @@ postSalirListaClientes: async (req,res)=> {
         console.log(error);
     }
 },
-
+//--------------------------Salir de lista expediente------------------------
+postSalirListaExpediente: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaExpediente({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
 //------------------------Actualizar Cliente-----------------
 postActualizarClientes: async (req,res)=> {
     try {
@@ -786,10 +832,30 @@ postIngresoPerfil: async (req,res)=> {
     }
 },
 
+postPerfilModifi: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postPerfilModifi({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
 postContrModifi: async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postContrModifi({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+postPreguntasAgg: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postPreguntasAgg({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);
@@ -1387,6 +1453,129 @@ postEliminarGenero:  async (req,res)=> {
     try {
         const{Id}=req.body;
         const result = await ModBitacora.postEliminarGenero({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//////////////////////////////PROVEEDORES///////////////////
+
+//---------------Nuevo Proveedor--------------------
+postInsertProveedor: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postInsertProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-----------------------Salir de la lista de Proveedor---------------------------
+postSalirListaProveedor: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//------------------------Actualizar datos de Proveedor----------------
+postActualizarProveedor:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postActualizarProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------Eliminar datos Proveedor-----------------
+postEliminarProveedor:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postEliminarProveedor({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//////////////////////////////LENTES///////////////////
+
+//---------------Nuevo Proveedor--------------------
+postInsertLentes: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postInsertLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-----------------------Salir de la lista de Proveedor---------------------------
+postSalirListaLentes: async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//------------------------Actualizar datos de Lentes----------------
+postActualizarLentes:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postActualizarLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------Eliminar datos Proveedor-----------------
+postEliminarLentes:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postEliminarLentes({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+//-------------------KARDEX-----------------
+postMovimientoKardex:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postMovimientoKardex({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+//-------------------SALIR KARDEX-----------------
+postSalirListaKardex:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postSalirListaKardex({Id});
+        res.status(201).json({ id: result.id });
+    } catch (error) {
+        console.log(error);
+    }
+},
+//INGRESO A LA PANTALLA DE INVENTARIO 
+postIngresoInventario:  async (req,res)=> {
+    try {
+        const{Id}=req.body;
+        const result = await ModBitacora.postIngresoInventario({Id});
         res.status(201).json({ id: result.id });
     } catch (error) {
         console.log(error);

@@ -6,13 +6,12 @@ export const ModPermisos = {
         let conexion
         try {
          conexion = await connectDB();
-            const [filas] = await conexion.query("select p.Id_Rol, r.Rol, p.Permiso_Insercion, p.Permiso_Eliminacion, p.Permiso_Actualizacion, p.Permiso_Consultar, p.creado_por, p.fecha_creacion, p.modificado_por, p.fecha_modificacion from tbl_permisos as p inner join tbl_ms_roles as r on p.Id_Rol=r.Id_Rol;")
+            const [filas] = await conexion.query("select p.Id_Rol, o.Objeto, r.Rol, p.Permiso_Insercion, p.Permiso_Eliminacion, p.Permiso_Actualizacion, p.Permiso_Consultar, p.creado_por, p.fecha_creacion, p.modificado_por, p.fecha_modificacion from tbl_permisos as p inner join tbl_ms_roles as r on p.Id_Rol=r.Id_Rol inner join tbl_objetos as o on o.Id_Objeto=p.Id_Objeto;")
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     getPermisosXRol: async (permisos) => {
@@ -24,9 +23,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ1: async (permisos) => {
@@ -43,9 +41,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ2: async (permisos) => {
@@ -63,9 +60,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ3: async (permisos) => {
@@ -82,9 +78,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ4: async (permisos) => {
@@ -101,9 +96,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ5: async (permisos) => {
@@ -120,9 +114,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ6: async (permisos) => {
@@ -139,9 +132,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ7: async (permisos) => {
@@ -158,9 +150,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ8: async (permisos) => {
@@ -177,9 +168,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     putPermisosXRolOBJ9: async (permisos) => {
@@ -196,9 +186,8 @@ export const ModPermisos = {
             conexion.end()
             return filas;
         } catch (error) {
-            console.long(error);
+            console.log(error);
             conexion.end()
-            throw new error("Error al consumir el API")
         }
     },
     postPermisosObj:async (permisos)=>{
