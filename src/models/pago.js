@@ -30,8 +30,9 @@ export const ModPago = {
         conexion.end()
         return {estado:"Pagado"}
       }else{
-        const [pagos]= await conexion.query("SELECT CONCAT(cli.nombre,' ',cli.apellido) as cliente,tp.descripcion,p.fecha,p.`saldoAbono`,p.`saldoRestante`  FROM tbl_pago as p inner join tbl_venta as v on p.`IdVenta`=v.`IdVenta` inner join tbl_cliente as cli on v.`IdCliente`=cli.`idCliente` inner join tbl_tipopago as tp on p.`IdTipoPago`=tp.`IdTipoPago`")
+        const [pagos]= await conexion.query("SELECT CONCAT(cli.nombre,' ',cli.apellido) as cliente,tp.descripcion,p.fecha,p.`saldoAbono`,p.`saldoRestante`  FROM tbl_pago as p inner join tbl_venta as v on p.`IdVenta`=v.`IdVenta` inner join tbl_cliente as cli on v.`IdCliente`=cli.`idCliente` inner join tbl_tipopago as tp on p.`IdTipoPago`=tp.`IdTipoPago` where v.`IdVenta`=?",[idVenta])
         conexion.end()
+        console.log(pagos);
         return pagos
       }
 
