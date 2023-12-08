@@ -19,7 +19,7 @@ export const ModModelo = {
     let conexion
         try {
         conexion = await connectDB();
-          const [filas] = await conexion.query ("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado = 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE mo.estado != 'A' ORDER BY mo.`IdModelo` DESC;")
+          const [filas] = await conexion.query ("SELECT mo.`IdModelo`, ma.descripcion AS Marca, mo.detalle AS Modelo, mo.anio, CASE WHEN mo.estado != 'A' THEN 'Activo' WHEN mo.estado = 'I' THEN 'Inactivo' ELSE 'Desconocido' END AS estado FROM  tbl_modelo AS mo INNER JOIN tbl_marca AS ma ON ma.`idMarca` = mo.`idMarca` WHERE mo.estado != 'A' ORDER BY mo.`IdModelo` DESC;")
         conexion.end()
           return filas;
         } catch (error) {
@@ -54,6 +54,7 @@ export const ModModelo = {
 
     postInsertModelo: async (modelo) => {
       let conexion;
+      console.log(modelo)
       conexion = await connectDB();
       if (await ModModelo.getModeloExiste(modelo)==false)
       {
