@@ -8,7 +8,7 @@ export const ModUsuarios = {
     try {
       conexion = await connectDB();
       const [filas] = await conexion.query(
-        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Id_Rol,u.Estado_Usuario,u.idEmpleado, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`='Activo' ORDER BY u.`Id_Usuario` DESC;"
+        "SELECT e.nombre,e.apellido, u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Id_Rol,u.Estado_Usuario,u.idEmpleado, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` INNER JOIN tbl_empleado as e on e.idEmpleado = u.idEmpleado where u.`Estado_Usuario`='Activo' ORDER BY u.`Id_Usuario` DESC;"
       );
       conexion.end();
       return filas;
@@ -22,7 +22,7 @@ export const ModUsuarios = {
     try {
       conexion = await connectDB();
       const [filas] = await conexion.query(
-        "SELECT u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` where u.`Estado_Usuario`!='Activo' ORDER BY u.`Id_Usuario` DESC"
+        "SELECT e.nombre,e.apellido,u.id_Usuario,u.Usuario,u.Nombre_Usuario,r.rol,u.Estado_Usuario, u.Correo_Electronico,u.Contrasenia,u.Fecha_Ultima_Conexion,u.Fecha_Vencimiento FROM tbl_ms_usuario as u INNER JOIN tbl_ms_roles as r on u.`Id_Rol` = r.`Id_Rol` INNER JOIN tbl_empleado as e on e.idEmpleado = u.idEmpleado where u.`Estado_Usuario`!='Activo' ORDER BY u.`Id_Usuario` DESC"
       );
       conexion.end();
       return filas;
