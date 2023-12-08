@@ -31,11 +31,11 @@ export const ModPreguntas = {
         console.log("ya existe esta pregunta.");
         conexion.end();
       } else {
-        const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,?);",
+        const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas (Pregunta,creado_por,fecha_creacion) values(?,?,current_timestamp());",
           [
             preguntas.pregunta,
             preguntas.creadoPor,
-            preguntas.FechaCrea,
+
 
           ]
         );
@@ -81,7 +81,7 @@ export const ModPreguntas = {
         conexion = await connectDB();
 
         const [existingRows] = await conexion.query(
-            "SELECT Pregunta FROM tbl_ms_preguntas WHERE Pregunta = ? AND Id_Pregunta <> ?",
+            "SELECT Pregunta FROM tbl_ms_preguntas WHERE Pregunta = ? AND Id_Pregunta = ?",
             [preguntas.pregunta, preguntas.Id_Pregunta]
         );
 
@@ -92,11 +92,11 @@ export const ModPreguntas = {
 
         } else {
             const [filas] = await conexion.query(
-                "UPDATE tbl_ms_preguntas SET Pregunta = ?, modificado_por = ?, fecha_modificacion = ? WHERE Id_Pregunta = ?;",
+                "UPDATE tbl_ms_preguntas SET Pregunta = ?, modificado_por = ?, fecha_modificacion = current_timestamp() WHERE Id_Pregunta = ?;",
                 [
                     preguntas.pregunta,
                     preguntas.modificado_por,
-                    preguntas.fecha_modificacion,
+                   
                     preguntas.Id_Pregunta,
                 ]
             );
@@ -160,13 +160,13 @@ export const ModPreguntas = {
         conexion.end();
       }
 
-      const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas_usuario (Id_Usuario,Respuesta,Id_Pregunta,creado_por,fecha_creacion) values(?,?,?,?,?);",
+      const [filas] = await conexion.query("INSERT INTO tbl_ms_preguntas_usuario (Id_Usuario,Respuesta,Id_Pregunta,creado_por,fecha_creacion) values(?,?,?,?,current_timestamp());",
         [
           respuestas.idUser,
           respuestas.respuesta,
           respuestas.idPregunta,
           respuestas.creadoPor,
-          respuestas.fechaCrea,
+        
         ]
       );
       conexion.end()
