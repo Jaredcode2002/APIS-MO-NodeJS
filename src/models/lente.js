@@ -6,7 +6,7 @@ export const ModLente = {
     getLentes: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado = 'A' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio as precio, l.estado FROM tbl_lente as l where estado = 'A' ORDER BY l.IdLente DESC;")
             return filas;
 
             
@@ -17,7 +17,7 @@ export const ModLente = {
     getLentesInactivos: async () => {
         try {
             const conexion = await connectDB();
-            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, FORMAT(precio, 2) as precio, l.estado FROM tbl_lente as l where estado != 'A' ORDER BY l.IdLente DESC;")
+            const [filas] = await conexion.query("SELECT l.IdLente, l.lente, l.precio as precio, l.estado FROM tbl_lente as l where estado != 'A' ORDER BY l.IdLente DESC;")
             return filas;
 
         } catch (error) {
