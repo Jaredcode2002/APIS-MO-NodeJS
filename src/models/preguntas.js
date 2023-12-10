@@ -81,8 +81,8 @@ export const ModPreguntas = {
         conexion = await connectDB();
 
         const [existingRows] = await conexion.query(
-            "SELECT Pregunta FROM tbl_ms_preguntas WHERE Pregunta = ? AND Id_Pregunta = ?",
-            [preguntas.pregunta, preguntas.Id_Pregunta]
+            "SELECT Pregunta FROM tbl_ms_preguntas WHERE Pregunta = ?",
+            [preguntas.pregunta]
         );
 
         if (existingRows.length > 0) {
