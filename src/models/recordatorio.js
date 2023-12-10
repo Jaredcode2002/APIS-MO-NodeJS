@@ -21,7 +21,7 @@ export const ModRecordatorio = {
     try {
        conexion = await connectDB();
 
-      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, c.telefonoCliente, c.correoElectronico, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` ORDER BY r.`fecha` ASC");
+      const [filas] = await conexion.query("SELECT r.`IdRecordatorio`, r.`IdCliente`, c.nombre, c.apellido, c.telefonoCliente, c.correoElectronico, r.`Nota`, DATE(r.`fecha`)as fecha FROM tbl_recordatorio as r INNER JOIN tbl_cliente as c ON r.`IdCliente`=c.`idCliente` ORDER BY r.`fecha` DESC;");
 
       conexion.end()
       return filas;

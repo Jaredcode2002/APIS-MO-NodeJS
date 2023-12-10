@@ -38,7 +38,7 @@ export const ModKardex = {
         "CONCAT(ma.descripcion, ' - ', mo.detalle), " +
         "k.fechayHora, " +
         "k.descripcion " +
-        "ORDER BY k.idKardex"
+        "ORDER BY k.idKardex DESC;"
       );
       return filas;
     } catch (error) {
