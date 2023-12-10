@@ -34,11 +34,11 @@ export const ContrPreguntas = {
 
     putPreguntas: async (req, res) => {
         try {
-            const { pregunta, modificado_por, fecha_modificacion, Id_Pregunta } = req.body;
+            const { pregunta, modificado_por, /* fecha_modificacion, */ Id_Pregunta } = req.body;
             const result = await ModPreguntas.putPreguntas({
                 pregunta,
                 modificado_por,
-                fecha_modificacion,
+               /*  fecha_modificacion, */
                 Id_Pregunta,
             });
     
